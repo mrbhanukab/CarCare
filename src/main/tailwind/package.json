@@ -2,12 +2,17 @@
   "name": "tailwind",
   "private": true,
   "devDependencies": {
-    "tailwindcss": "^4.0.15"
+    "npm-run-all": "^4.1.5",
+    "@tailwindcss/cli": "^4.0.15"
   },
   "scripts": {
-    "build:main": "tailwindcss -i ./main.css -o ../resources/static/css/main.css",
-    "build:admin": "tailwindcss -i ./admin.css -o ../resources/static/css/admin.css",
-    "build:client": "tailwindcss -i ./client.css -o ../resources/static/css/client.css",
-    "build": "npm run build:main && npm run build:admin && npm run build:client"
+    "build:main": "npx @tailwindcss/cli -i ./home.css -o ../resources/static/css/home.css",
+    "build:admin": "npx @tailwindcss/cli -i ./admin.css -o ../resources/static/css/admin.css",
+    "build:client": "npx @tailwindcss/cli -i ./client.css -o ../resources/static/css/client.css",
+    "build": "npm run build:main && npm run build:admin && npm run build:client",
+    "watch:home": "npx @tailwindcss/cli -i ./home.css --watch",
+    "watch:admin": "npx @tailwindcss/cli -i ./admin.css --watch",
+    "watch:client": "npx @tailwindcss/cli -i ./client.css --watch",
+    "dev": "npm-run-all --parallel watch:home watch:admin watch:client"
   }
 }
