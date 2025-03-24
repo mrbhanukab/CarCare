@@ -1,18 +1,19 @@
 {
   "name": "tailwind",
-  "private": true,
-  "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "@tailwindcss/cli": "^4.0.15"
-  },
+  "main": "index.js",
   "scripts": {
-    "build:main": "npx @tailwindcss/cli -i ./home.css -o ../resources/static/css/home.css",
-    "build:admin": "npx @tailwindcss/cli -i ./admin.css -o ../resources/static/css/admin.css",
-    "build:client": "npx @tailwindcss/cli -i ./client.css -o ../resources/static/css/client.css",
+    "build:main": "npx @tailwindcss/cli -i ./home.css -o ../resources/static/css/home.css  --minify",
+    "build:admin": "npx @tailwindcss/cli -i ./admin.css -o ../resources/static/css/admin.css  --minify",
+    "build:client": "npx @tailwindcss/cli -i ./client.css -o ../resources/static/css/client.css  --minify",
     "build": "npm run build:main && npm run build:admin && npm run build:client",
-    "watch:home": "npx @tailwindcss/cli -i ./home.css --watch",
-    "watch:admin": "npx @tailwindcss/cli -i ./admin.css --watch",
-    "watch:client": "npx @tailwindcss/cli -i ./client.css --watch",
+    "watch:home": "npx @tailwindcss/cli --watch -i ./home.css -o ../resources/static/css/home.css  --minify",
+    "watch:admin": "npx @tailwindcss/cli --watch -i ./admin.css -o ../resources/static/css/admin.css  --minify",
+    "watch:client": "npx @tailwindcss/cli --watch -i ./client.css -o ../resources/static/css/client.css  --minify",
     "dev": "npm-run-all --parallel watch:home watch:admin watch:client"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.15",
+    "npm-run-all": "^4.1.5",
+    "tailwindcss": "^4.0.15"
   }
 }
