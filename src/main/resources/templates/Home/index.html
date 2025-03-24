@@ -1,0 +1,17 @@
+<html lang="en"
+      layout:decorate="~{Layouts/home}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <title>Home</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <form>
+        <label for="vin" hidden="hidden">Enter your username:</label>
+        <input id="vin" name="vin" placeholder="Enter Your Vehicle's VIN to Get Start ..." required type="text"/>
+        <button style="background-color: rebeccapurple" type="submit">Login</button>
+    </form>
+</section>
+</body>
+</html>

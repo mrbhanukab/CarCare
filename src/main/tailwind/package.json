@@ -1,0 +1,13 @@
+{
+  "name": "tailwind",
+  "private": true,
+  "devDependencies": {
+    "tailwindcss": "^4.0.15"
+  },
+  "scripts": {
+    "build:main": "tailwindcss -i ./main.css -o ../resources/static/css/main.css",
+    "build:admin": "tailwindcss -i ./admin.css -o ../resources/static/css/admin.css",
+    "build:client": "tailwindcss -i ./client.css -o ../resources/static/css/client.css",
+    "build": "npm run build:main && npm run build:admin && npm run build:client"
+  }
+}
