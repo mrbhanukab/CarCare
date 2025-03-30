@@ -1,0 +1,8 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<img class="w-full h-full object-cover rounded-lg filter brightness-50"
+     id="dynamic-image" th:alt="${imagePath}"
+     th:fragment="dynamicImage (imagePath)"
+     th:src="${imagePath}"/>
+</body>
+</html>

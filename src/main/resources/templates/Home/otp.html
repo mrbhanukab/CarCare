@@ -1,0 +1,41 @@
+<div class="w-screen h-screen flex items-center justify-center z-50 bg-neutral-800/70 backdrop-blur" id="otp-popup">
+    <form
+            class="h-fit py-6 bg-white [box-shadow:var(--shadow)] flex flex-col gap-3 items-center justify-center rounded-xl"
+            hx-post="/client/auth" hx-swap="outerHTML">
+        <h6 class="text-2xl font-bold">OTP Verification</h6>
+
+        <div class="grid grid-flow-col grid-cols-6 gap-3 items-center justify-center justify-items-center">
+            <label class="hidden" th:each="i : ${#numbers.sequence(1, 6)}" th:for="'otp' + ${i}"
+                   th:text="'OTP ' + ${i}"></label>
+            <input
+                    aria-disabled="false"
+                    aria-invalid="false"
+                    autocomplete="one-time-code"
+                    class="otp-input aria-[disabled='true']:cursor-not-allowed aria-[disabled='true']:opacity-50 block focus:placeholder:opacity-0 placeholder:text-muted-foreground/80 placeholder:text-[24px] text-[20px] leading-[20px] font-bold text-center h-10 w-10 max-w-full rounded-md p-0 border border-input bg-white [box-shadow:var(--shadow)] transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-0 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-[#2f81f7] focus-visible:ring-offset-0 placeholder:select-none"
+                    inputmode="numeric"
+                    maxlength="1"
+                    placeholder="○"
+                    required
+                    spellcheck="false"
+                    th:each="i : ${#numbers.sequence(1, 6)}"
+                    th:id="'otp' + ${i}"
+                    th:name="'otp' + ${i}"
+                    type="tel"
+            />
+        </div>
+
+        <p class="relative text-zinc-500 text-xs text-center w-3/5">
+            Please enter the 6-digits one time password (OTP) that we sent to your email
+            <span class="font-bold" th:text="${email}"></span>.
+        </p>
+        <button
+                class="relative text-base text-white font-medium tracking-wider rounded-md px-5 py-1 transition-colors duration-200 border border-solid border-transparent bg-sky-500 hover:bg-sky-600/80 cursor-pointer"
+                type="submit"
+        >
+            Continue
+        </button>
+        <button class="text-xs text-slate-600/70 cursor-pointer" hx-post="/client/wrong-email" hx-swap="outerHTML">
+            Wrong Email?
+        </button>
+    </form>
+</div>

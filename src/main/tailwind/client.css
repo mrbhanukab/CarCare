@@ -1,3 +1,4 @@
 @import "tailwindcss";
 
 @source "../resources/templates/Client/**";
+@source "../resources/templates/Layouts/client.html";
