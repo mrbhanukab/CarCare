@@ -10,192 +10,31 @@
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Client Area</title>
 </head>
 <body class="min-h-screen flex">
-<header class="flex h-screen w-16 flex-col justify-between border-e border-gray-100 bg-white">
+<header class="flex h-screen p-2 flex-col justify-between border-e border-gray-100 bg-white">
     <div>
-        <nav class="inline-flex size-10 items-center justify-center place-content-center rounded-lg bg-gray-100">
-        </nav>
-
-        <div class="border-t border-gray-100">
-            <div class="px-2">
-                <div class="py-4">
-                    <a
-                            class="t group relative flex justify-center rounded-sm bg-blue-50 px-2 py-1.5 text-blue-700"
-                            href="#"
-                    >
-                        <svg
-                                class="size-5 opacity-75"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                            <path
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                        </svg>
-
-                        <span
-                                class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
-                        >
-              General
-            </span>
-                    </a>
-                </div>
-
-                <ul class="space-y-1 border-t border-gray-100 pt-4">
-                    <li>
-                        <a
-                                class="group relative flex justify-center rounded-sm px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                href="#"
-                        >
-                            <svg
-                                    class="size-5 opacity-75"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                />
-                            </svg>
-
-                            <span
-                                    class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
-                            >
-                Teams
-              </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                                class="group relative flex justify-center rounded-sm px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                href="#"
-                        >
-                            <svg
-                                    class="size-5 opacity-75"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                />
-                            </svg>
-
-                            <span
-                                    class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
-                            >
-                Billing
-              </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                                class="group relative flex justify-center rounded-sm px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                href="#"
-                        >
-                            <svg
-                                    class="size-5 opacity-75"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                        d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                />
-                            </svg>
-
-                            <span
-                                    class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
-                            >
-                Invoices
-              </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                                class="group relative flex justify-center rounded-sm px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                href="#"
-                        >
-                            <svg
-                                    class="size-5 opacity-75"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                />
-                            </svg>
-
-                            <span
-                                    class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
-                            >
-                Account
-              </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <nav th:replace="Client/fragments/nav :: navItem('size-8','Account', '<circle cx=&quot;12&quot; cy=&quot;9&quot; r=&quot;3&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;></circle><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;></circle><path d=&quot;M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;></path>', ${active == 'Account'})"></nav>
+        <div class="flex flex-col justify-evenly gap-3 border-t border-gray-100 pt-4">
+            <a href="#" hx-get="/client/dashboard" hx-swap="innerHTML" hx-target="#content">
+                <nav th:replace="Client/fragments/nav :: navItem('size-6','Dashboard', '<path d=&quot;M22 22L2 22&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;></path><path d=&quot;M3 22.0001V11.3472C3 10.4903 3.36644 9.67432 4.00691 9.10502L10.0069 3.77169C11.1436 2.76133 12.8564 2.76133 13.9931 3.77169L19.9931 9.10502C20.6336 9.67432 21 10.4903 21 11.3472V22.0001&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;></path><path d=&quot;M10 9H14&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;></path><path d=&quot;M9 15.5H15&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;></path><path d=&quot;M9 18.5H15&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;></path><path d=&quot;M18 22V16C18 14.1144 18 13.1716 17.4142 12.5858C16.8284 12 15.8856 12 14 12H10C8.11438 12 7.17157 12 6.58579 12.5858C6 13.1716 6 14.1144 6 16V22&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;></path>', ${active == 'Dashboard'})"></nav>
+            </a>
+            <a href="#" hx-get="/client/garage" hx-swap="innerHTML" hx-target="#content">
+                <nav th:replace="Client/fragments/nav :: navItem('size-6','Garage', '&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;6&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;2&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/circle&gt;&lt;path d=&quot;M6 12L10 12&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M14 12L18 12&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M9 17.1963L11 13.7322&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M13 10.2681L15 6.80396&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M15 17.1963L13 13.7322&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M11 10.2681L9 6.80396&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;', ${active == 'Garage'})"></nav>
+            </a>
+            <a href="#" hx-get="/client/schedule" hx-swap="innerHTML" hx-target="#content">
+                <nav th:replace="Client/fragments/nav :: navItem('size-6','Schedule', '&lt;path d=&quot;M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M7 4V2.5&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M17 4V2.5&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M2.5 9H21.5&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z&quot; fill=&quot;#000000&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z&quot; fill=&quot;#000000&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z&quot; fill=&quot;#000000&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z&quot; fill=&quot;#000000&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z&quot; fill=&quot;#000000&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z&quot; fill=&quot;#000000&quot;&gt;&lt;/path&gt;', ${active == 'Schedule'})"></nav>
+            </a>
+            <a href="#" hx-get="/client/history" hx-swap="innerHTML" hx-target="#content">
+                <nav th:replace="Client/fragments/nav :: navItem('size-6','History', '&lt;path d=&quot;M22 14V12C22 8.22876 22 6.34315 20.8284 5.17157C19.6569 4 17.7712 4 14 4H10C6.22876 4 4.34315 4 3.17157 5.17157C2 6.34315 2 8.22876 2 12V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M7 4V2.5&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M17 4V2.5&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;circle cx=&quot;18&quot; cy=&quot;18&quot; r=&quot;3&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/circle&gt;&lt;path d=&quot;M20.5 20.5L22 22&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M2.5 9H21.5&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;', ${active == 'History'})"></nav>
+            </a>
+            <a href="#" hx-get="/client/vip-contact" hx-swap="innerHTML" hx-target="#content">
+                <nav th:replace="Client/fragments/nav :: navItem('size-6','VIP Contact', '&lt;g id=&quot;SVGRepo_bgCarrier&quot; stroke-width=&quot;0&quot;&gt;&lt;/g&gt;&lt;g id=&quot;SVGRepo_tracerCarrier&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;/g&gt;&lt;g id=&quot;SVGRepo_iconCarrier&quot;&gt;&lt;path d=&quot;M17 12C19.7614 12 22 9.76142 22 7C22 4.23858 19.7614 2 17 2C14.2386 2 12 4.23858 12 7C12 7.79984 12.1878 8.55582 12.5217 9.22624C12.6105 9.4044 12.64 9.60803 12.5886 9.80031L12.2908 10.9133C12.1615 11.3965 12.6035 11.8385 13.0867 11.7092L14.1997 11.4114C14.392 11.36 14.5956 11.3895 14.7738 11.4783C15.4442 11.8122 16.2002 12 17 12Z&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M8.03759 7.31617L8.6866 8.4791C9.2723 9.52858 9.03718 10.9053 8.11471 11.8278C8.11471 11.8278 8.11471 11.8278 8.11471 11.8278C8.11459 11.8279 6.99588 12.9468 9.02451 14.9755C11.0525 17.0035 12.1714 15.8861 12.1722 15.8853C12.1722 15.8853 12.1722 15.8853 12.1722 15.8853C13.0947 14.9628 14.4714 14.7277 15.5209 15.3134L16.6838 15.9624C18.2686 16.8468 18.4557 19.0692 17.0628 20.4622C16.2258 21.2992 15.2004 21.9505 14.0669 21.9934C12.1588 22.0658 8.91828 21.5829 5.6677 18.3323C2.41713 15.0817 1.93421 11.8412 2.00655 9.93309C2.04952 8.7996 2.7008 7.77423 3.53781 6.93723C4.93076 5.54428 7.15317 5.73144 8.03759 7.31617Z&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;/g&gt;', ${active == 'VIP Contact'})"></nav>
+            </a>
         </div>
     </div>
-
-    <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
-        <a
-                class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                href="#"
-        >
-            <svg
-                    class="size-5 opacity-75"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                />
-            </svg>
-
-            <span
-                    class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
-            >
-        Logout
-      </span>
-        </a>
-    </div>
+    <nav th:replace="Client/fragments/nav :: navItem('size-5','Logout', '&lt;path d=&quot;M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M15 12L2 12M2 12L5.5 9M2 12L5.5 15&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; stroke-width=&quot;1.5&quot;&gt;&lt;/path&gt;', false)"></nav>
 </header>
-<section class="min-h-full w-full bg-gray-100" layout:fragment="content">
+<section class="min-h-full w-full bg-gray-100" id="content" layout:fragment="content">
+    <div hx-get="/client/dashboard" hx-swap="innerHTML" hx-target="#content" hx-trigger="load"></div>
 </section>
 </body>
 </html>

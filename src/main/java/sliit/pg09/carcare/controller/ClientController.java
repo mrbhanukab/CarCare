@@ -10,8 +10,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ClientController {
     @GetMapping("/client")
-    public String client() {
-        return "Client/index";
+    public String client(Model model) {
+        model.addAttribute("active", "Dashboard");
+        return "Layouts/client";
+    }
+
+    @GetMapping("/client/dashboard")
+    public String getDashboard() {
+        return "Client/dashboard";
+    }
+
+    @GetMapping("/client/garage")
+    public String getGarage() {
+        return "Client/garage";
+    }
+
+    @GetMapping("/client/schedule")
+    public String getSchedule() {
+        return "Client/schedule";
+    }
+
+    @GetMapping("/client/history")
+    public String getHistory() {
+        return "Client/history";
+    }
+
+    @GetMapping("/client/vip-contact")
+    public String getVipContact() {
+        return "Client/vip-contact";
     }
 
     @PostMapping("/client/wrong-email")
