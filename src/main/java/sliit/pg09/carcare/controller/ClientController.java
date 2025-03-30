@@ -16,27 +16,32 @@ public class ClientController {
     }
 
     @GetMapping("/client/dashboard")
-    public String getDashboard() {
+    public String getDashboard(Model model) {
+        model.addAttribute("active", "Dashboard");
         return "Client/dashboard";
     }
 
     @GetMapping("/client/garage")
-    public String getGarage() {
+    public String getGarage(Model model) {
+        model.addAttribute("active", "Garage");
         return "Client/garage";
     }
 
     @GetMapping("/client/schedule")
-    public String getSchedule() {
+    public String getSchedule(Model model) {
+        model.addAttribute("active", "Schedule");
         return "Client/schedule";
     }
 
     @GetMapping("/client/history")
-    public String getHistory() {
+    public String getHistory(Model model) {
+        model.addAttribute("active", "History");
         return "Client/history";
     }
 
     @GetMapping("/client/vip-contact")
-    public String getVipContact() {
+    public String getVipContact(Model model) {
+        model.addAttribute("active", "VipContact");
         return "Client/vip-contact";
     }
 
