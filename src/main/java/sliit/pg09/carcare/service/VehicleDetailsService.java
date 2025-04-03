@@ -4,10 +4,10 @@ import org.springframework.stereotype.Service;
 import sliit.pg09.carcare.repository.VehicleDetailsRespository;
 
 @Service
-public class VehicleDetailsServiceImpl {
+public class VehicleDetailsService {
     private final VehicleDetailsRespository vehicleDetailsRespository;
 
-    public VehicleDetailsServiceImpl(VehicleDetailsRespository vehicleDetailsRespository) {
+    public VehicleDetailsService(VehicleDetailsRespository vehicleDetailsRespository) {
         this.vehicleDetailsRespository = vehicleDetailsRespository;
     }
 

@@ -7,10 +7,10 @@ import sliit.pg09.carcare.repository.ClientRepository;
 import java.util.List;
 
 @Service
-public class ClientServiceImpl {
+public class ClientService {
     private final ClientRepository clientRepository;
 
-    public ClientServiceImpl(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
