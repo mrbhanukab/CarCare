@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -29,4 +30,7 @@ public class Client {
     private LocalDate created;
     @UpdateTimestamp
     private LocalDate updated;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Vehicle> vehicles;
 }

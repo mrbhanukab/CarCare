@@ -1,8 +1,6 @@
 package sliit.pg09.carcare.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +11,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "vehicles")
 public class Vehicle {
     @Id
-    private String vin;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String VIN;
+    private String vehicleModel;
 
+    @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL)
+    private VehicleDetails vehicleDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 }
