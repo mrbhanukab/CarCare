@@ -21,10 +21,15 @@ public class SecurityConfig {
                 })
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/")
-                        .successHandler((request, response, authentication) -> {
-                            response.sendRedirect("/client");
-                        })
+                        .defaultSuccessUrl("/client")
                 )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                )
+//                .formLogin(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .build();
     }
