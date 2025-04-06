@@ -40,8 +40,7 @@
                 </ul>
             </nav>
         </header>
-        <form class="flex flex-col justify-evenly px-2 py-4 gap-1" hx-post="/client/otp" hx-swap="outerHTML"
-              hx-target="#otp-popup">
+        <form action="/oauth2/authorization/google" class="flex flex-col justify-evenly px-2 py-4 gap-1" method="GET">
             <div class="flex flex-col justify-between gap-2 ml-2">
                 <h1 class="text-white font-light text-5xl w-2/5">
                     Unlock your vehicle's <br/>
@@ -55,32 +54,27 @@
                     to maximize
                     your driving experience.</p>
             </div>
-            <div class="flex items-center gap-3 w-fit bg-white p-2 px-4 mt-3 rounded-full">
-                <label for="email" hidden="hidden">email:</label>
-                <input class="outline-none"
-                       id="email" name="email"
-                       placeholder="Enter Your Email ..."
-                       required
-                       type="email"
-                />
-                <button class="min-w-fit h-fit" type="submit">
-                    <svg class="h-8 duration-500 hover:scale-125" fill="#000000" stroke="#000000"
-                         stroke-width="0.00024000000000000003"
-                         viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <g>
-                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M10 11H2.05C2.55 5.947 6.814 2 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10c-5.185 0-9.449-3.947-9.95-9H10v3l5-4-5-4v3z"></path>
-                            </g>
-                        </g>
-                    </svg>
-                </button>
-            </div>
+            <button class="w-fit h-fit bg-white p-2 px-4 mt-3 button flex gap-3 relative overflow-hidden font-bold rounded-full items-center border border-black outline-none"
+                    type="submit">
+                <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path class="blue"
+                          d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+                          fill="#4285F4"></path>
+                    <path class="green"
+                          d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+                          fill="#34A853"></path>
+                    <path class="yellow"
+                          d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+                          fill="#FBBC05"></path>
+                    <path class="red"
+                          d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+                          fill="#EB4335"></path>
+                </svg>
+                <span class="text z-10 text-sm">Continue with Google</span>
+            </button>
         </form>
     </div>
-    <div class="relative z-10" id="otp-popup"></div>
 </section>
 </body>
 </html>

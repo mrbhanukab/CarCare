@@ -1,4 +1,4 @@
-package sliit.pg09.carcare;
+package sliit.pg09.carcare.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
