@@ -12,12 +12,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/").permitAll();
-                    request.requestMatchers("/scripts/*").permitAll();
-                    request.requestMatchers("/css/*").permitAll();
-                    request.requestMatchers("/images/**").permitAll();
-                    request.requestMatchers("/next-image").permitAll();
-                    request.anyRequest().authenticated();
+                    request
+                            .requestMatchers("/", "/scripts/*", "/css/*", "/images/**", "/next-image").permitAll()
+                            .anyRequest().authenticated();
                 })
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/")
@@ -29,7 +26,6 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                 )
-//                .formLogin(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .build();
     }
