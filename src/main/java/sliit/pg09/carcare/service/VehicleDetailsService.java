@@ -1,14 +1,14 @@
 package sliit.pg09.carcare.service;
 
 import org.springframework.stereotype.Service;
-import sliit.pg09.carcare.repository.VehicleDetailsRespository;
+import sliit.pg09.carcare.repository.VehicleDetailsRepository;
 
 @Service
 public class VehicleDetailsService {
-    private final VehicleDetailsRespository vehicleDetailsRespository;
+    private final VehicleDetailsRepository vehicleDetailsRepository;
 
-    public VehicleDetailsService(VehicleDetailsRespository vehicleDetailsRespository) {
-        this.vehicleDetailsRespository = vehicleDetailsRespository;
+    public VehicleDetailsService(VehicleDetailsRepository vehicleDetailsRepository) {
+        this.vehicleDetailsRepository = vehicleDetailsRepository;
     }
 
 
