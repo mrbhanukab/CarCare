@@ -32,12 +32,13 @@ public class ClientController {
         var x = ((OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAttributes();
 
         clients.findById(x.get("email").toString()).ifPresentOrElse(u -> model.addAttribute("user", u), () -> {
-            var user = clients.save(new Client(
-                    x.get("name").toString(),
-                    x.get("email").toString(),
-                    x.get("picture").toString()
-            ));
-            model.addAttribute("user", user);
+            model.addAttribute("user",
+                    clients.save(new Client(
+                            x.get("name").toString(),
+                            x.get("email").toString(),
+                            x.get("picture").toString()
+                    ))
+            );
         });
 
         return "Client/dashboard";
