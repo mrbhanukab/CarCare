@@ -1,4 +1,5 @@
 @import "tailwindcss";
 
+@source "../resources/templates/fragments/**";
 @source "../resources/templates/Client/**";
 @source "../resources/templates/Layouts/client.html";
