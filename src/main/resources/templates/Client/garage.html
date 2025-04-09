@@ -1,14 +1,13 @@
 <html
         lang="en"
-        layout:decorate="~{Layouts/admin}"
+        layout:decorate="~{Layouts/client}"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head>
-    <title>Title</title>
+    <title>Garage</title>
 </head>
 <body>
-<div class="flex flex-col w-full h-full px-2 py-3" layout:fragment="content">
-
+<section layout:fragment="content">
     <div class="p-4 w-[300px] rounded-lg border dark:border-gray-800">
         <h1 class="text-2xl font-bold">History</h1>
         <div class="grid gap-4 mt-2">
@@ -47,7 +46,6 @@
             </div>
         </div>
     </div>
-
-</div>
+</section>
 </body>
 </html>

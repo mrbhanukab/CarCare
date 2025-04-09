@@ -1,13 +1,13 @@
 <html
         lang="en"
-        layout:decorate="~{Layouts/admin}"
+        layout:decorate="~{Layouts/client}"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head>
     <title>Dashboard</title>
 </head>
 <body>
-<div class="flex flex-col w-full h-full px-2 py-3" layout:fragment="content">
+<section layout:fragment="content">
     <div class="grid grid-flow-col grid-cols-2 gap-2">
         <div class="flex flex-col  justify-evenly gap-6 bg-white rounded-3xl p-8">
             <div class="flex flex-col justify-evenly gap-1 items-start">
@@ -33,7 +33,7 @@
                 <p class="text-sm text-gray-500">Schedule an appointment to request vehicle service, excluding routine
                     maintenance.</p>
             </div>
-            <button th:replace="~{Client/fragments/button :: button('Schedule an Appointment', '')}"></button>
+            <button th:replace="~{fragments/button :: button('Schedule an Appointment', '')}"></button>
         </div>
         <div class="flex flex-col  justify-evenly gap-6 bg-white rounded-3xl p-8">
             <div class="flex flex-col justify-evenly gap-1 items-start">
@@ -60,19 +60,19 @@
                 <p class=" text-sm text-gray-500">Click the button to share your location with us and initiate a phone
                     call.</p>
             </div>
-            <button th:replace="~{Client/fragments/button :: button('Get started','')}"></button>
+            <button th:replace="~{fragments/button :: button('Get started','')}"></button>
         </div>
     </div>
     <h1 class="text-2xl p-4">Upcoming Routine Maintenance</h1>
     <section class="flex flex-col justify-evenly gap-2">
-        <article th:replace="~{Client/fragments/rouine-maintenance :: rouine-maintenance()}"></article>
-        <article th:replace="~{Client/fragments/rouine-maintenance :: rouine-maintenance()}"></article>
-        <article th:replace="~{Client/fragments/rouine-maintenance :: rouine-maintenance()}"></article>
-        <article th:replace="~{Client/fragments/rouine-maintenance :: rouine-maintenance()}"></article>
-        <article th:replace="~{Client/fragments/rouine-maintenance :: rouine-maintenance()}"></article>
-        <article th:replace="~{Client/fragments/rouine-maintenance :: rouine-maintenance()}"></article>
-        <article th:replace="~{Client/fragments/rouine-maintenance :: rouine-maintenance()}"></article>
+        <article th:replace="~{fragments/rouine-maintenance :: rouine-maintenance()}"></article>
+        <article th:replace="~{fragments/rouine-maintenance :: rouine-maintenance()}"></article>
+        <article th:replace="~{fragments/rouine-maintenance :: rouine-maintenance()}"></article>
+        <article th:replace="~{fragments/rouine-maintenance :: rouine-maintenance()}"></article>
+        <article th:replace="~{fragments/rouine-maintenance :: rouine-maintenance()}"></article>
+        <article th:replace="~{fragments/rouine-maintenance :: rouine-maintenance()}"></article>
+        <article th:replace="~{fragments/rouine-maintenance :: rouine-maintenance()}"></article>
     </section>
-</div>
+</section>
 </body>
 </html>
