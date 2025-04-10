@@ -1,5 +1,4 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<body>
 <nav class="flex justify-center group relative cursor-pointer rounded-lg p-1"
      th:classappend="${active} ? 'bg-blue-50' : 'hover:bg-gray-100'"
      th:fragment="navItem (size,text,svgContent,active)">
@@ -15,5 +14,4 @@
                 <span th:text="${text}">Account</span>
             </span>
 </nav>
-</body>
 </html>

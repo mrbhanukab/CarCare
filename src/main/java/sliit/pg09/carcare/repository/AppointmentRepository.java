@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import sliit.pg09.carcare.model.Appointment;
 
 @Repository
-public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 }

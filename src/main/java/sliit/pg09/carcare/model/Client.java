@@ -13,24 +13,30 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "clients")
 public class Client {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
     private String email;
+    private String name;
+
     private String phone;
     private String address;
     private String nic;
+    private String imageUrl;
+
     @CreationTimestamp
     private LocalDate created;
+
     @UpdateTimestamp
     private LocalDate updated;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Vehicle> vehicles;
+
+    public Client(String name, String email, String imageUrl) {
+        this.name = name;
+        this.email = email;
+        this.imageUrl = imageUrl;
+    }
 }

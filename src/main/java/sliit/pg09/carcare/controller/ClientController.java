@@ -1,85 +1,68 @@
 package sliit.pg09.carcare.controller;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import sliit.pg09.carcare.model.Client;
+import sliit.pg09.carcare.repository.ClientRepository;
 
 @Controller
+@RequestMapping("/client")
 public class ClientController {
-    @GetMapping("/client")
-    public String client(Model model) {
-        model.addAttribute("active", "Dashboard");
-        return "Layouts/client";
-    }
 
-    @GetMapping("/client/dashboard")
+    @Autowired
+    ClientRepository clients;
+
+    @GetMapping("/dashboard")
     public String getDashboard(Model model) {
         model.addAttribute("active", "Dashboard");
+
+        var x = ((OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAttributes();
+
+        clients.findById(x.get("email").toString()).ifPresentOrElse(u -> model.addAttribute("user", u), () -> {
+            model.addAttribute("user",
+                    clients.save(new Client(
+                            x.get("name").toString(),
+                            x.get("email").toString(),
+                            x.get("picture").toString()
+                    ))
+            );
+        });
+
         return "Client/dashboard";
     }
 
-    @GetMapping("/client/garage")
+    @GetMapping("/garage")
     public String getGarage(Model model) {
         model.addAttribute("active", "Garage");
         return "Client/garage";
     }
 
-    @GetMapping("/client/schedule")
+    @GetMapping("/schedule")
     public String getSchedule(Model model) {
         model.addAttribute("active", "Schedule");
         return "Client/schedule";
     }
 
-    @GetMapping("/client/history")
+    @GetMapping("/history")
     public String getHistory(Model model) {
         model.addAttribute("active", "History");
         return "Client/history";
     }
 
-    @GetMapping("/client/vip-contact")
+    @GetMapping("/vip-contact")
     public String getVipContact(Model model) {
-        model.addAttribute("active", "VipContact");
+        model.addAttribute("active", "VIP Contact");
         return "Client/vip-contact";
     }
 
-    @PostMapping("/client/wrong-email")
-    public ResponseEntity<String> wrongEmail() {
-        System.out.println("Wrong email");
-        return ResponseEntity.ok().body("<meta http-equiv=\"refresh\" content=\"0\">");
-    }
-
-    @PostMapping("/client/otp")
-    public String sendOTP(@RequestParam("email") String email, Model model) {
-        // Print email to console
-        System.out.println("Email received: " + email);
-
-        // Generate OTP (for simplicity, using a fixed OTP)
-        String otp = "123456";
-
-        // Add email and OTP to the model
-        model.addAttribute("email", email);
-        model.addAttribute("otp", otp);
-
-        return "Home/otp";
-    }
-
-    @PostMapping("/client/auth")
-    public ResponseEntity<String> authenticate(@RequestParam("otp1") String otp1,
-                                               @RequestParam("otp2") String otp2,
-                                               @RequestParam("otp3") String otp3,
-                                               @RequestParam("otp4") String otp4,
-                                               @RequestParam("otp5") String otp5,
-                                               @RequestParam("otp6") String otp6) {
-        // Concatenate OTP parts
-        String otp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
-
-        // Print OTP to console
-        System.out.println("OTP received: " + otp);
-
-        // Redirect to /client
-        return ResponseEntity.ok().body("<meta http-equiv=\"refresh\" content=\"0; URL=/client\">");
+    @GetMapping("/account")
+    public String getAccount(Model model) {
+        model.addAttribute("active", "Account");
+        return "Client/account";
     }
 }

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import sliit.pg09.carcare.model.Vehicle;
 
 @Repository
-public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
+public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 }

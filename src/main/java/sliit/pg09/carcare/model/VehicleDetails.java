@@ -8,14 +8,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "vehicle-details")
 public class VehicleDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long VIN;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int VIN;
     private String vehicleType;
     private String vehicleModel;
     private String vehicleColor;
