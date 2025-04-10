@@ -14,7 +14,9 @@
 <header class="flex h-screen p-2 flex-col justify-between border-e border-gray-100 bg-white">
     <div>
         <a href="/client/account">
-            <nav th:replace="~{fragments/nav :: navItem('size-8','Account', '<circle cx=&quot;12&quot; cy=&quot;9&quot; r=&quot;3&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;></circle><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot; stroke=&quot;#000000&quot; stroke-width=&quot;1.5&quot;></circle><path d=&quot;M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20&quot; stroke=&quot;#000000&quot; stroke-linecap=&quot;round&quot; stroke-width=&quot;1.5&quot;></path>', ${active == 'Account'})}"></nav>
+            <img alt="Profile Image" class="cursor-pointer size-8 p-1 rounded-full"
+                 referrerPolicy="no-referrer"
+                 th:src="${user.imageUrl}"/>
         </a>
         <div class="flex flex-col justify-evenly gap-3 border-t border-gray-100 pt-4">
             <a href="/client/dashboard">
