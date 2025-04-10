@@ -11,7 +11,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(Model model) {
-        String[][] links = {{"About", "#about"}, {"Contact", "/contact"}};
+        String[][] links = {{"About", "#about"}, {"Contact", "#contact"}, {"Test", "/client"}};
         model.addAttribute("links", links);
         model.addAttribute("imagePath", "/images/home/1.webp");
         return "Home/index";
