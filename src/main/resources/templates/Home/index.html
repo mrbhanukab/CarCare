@@ -75,15 +75,98 @@
         </form>
     </div>
 </section>
-<section class="relative min-h-fit w-screen flex flex-col items-center justify-center bg-white py-16 px-4">
-    <div class="max-w-4xl text-center">
-        <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">About Us</h2>
-        <p class="text-lg text-gray-600 mb-8">
-            Welcome to our world! We're passionate about creating meaningful digital experiences. Whether it's crafting beautiful web applications or building smart tech solutions, we’re all about innovation, creativity, and simplicity.
-        </p>
-        <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-2xl text-lg font-medium hover:bg-blue-700 transition">
-            Get in Touch
-        </a>
+
+<!-- Newly merged About Us section with black and gold theme -->
+<section class="relative min-h-fit w-screen flex flex-col items-center justify-center bg-black py-16 px-4">
+    <div class="container mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-2">
+            <span class="text-yellow-400">About</span> <span class="text-white">Us</span>
+        </h2>
+        <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+
+        <!-- Main content -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <div class="flex flex-col justify-center">
+                <h3 class="text-2xl font-semibold mb-6 text-yellow-400">Your Vehicle's Best Companion</h3>
+                <p class="text-gray-300 mb-6">
+                    At LuxAuto, we believe vehicle maintenance shouldn't be complicated. Our team of automotive enthusiasts
+                    and tech experts came together to create a solution that makes tracking your vehicle's maintenance
+                    history effortless and intuitive.
+                </p>
+                <p class="text-gray-300 mb-8">
+                    We understand the importance of proper maintenance for vehicle longevity, safety, and performance.
+                    Our platform provides comprehensive tracking tools, timely reminders, and detailed insights to help you
+                    keep your vehicle in peak condition while saving time and money.
+                </p>
+                <div class="flex flex-wrap gap-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center">
+                            <span class="text-black font-bold text-xl">10K+</span>
+                        </div>
+                        <span class="ml-3 text-gray-300">Active Users</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center">
+                            <span class="text-black font-bold text-xl">98%</span>
+                        </div>
+                        <span class="ml-3 text-gray-300">Customer Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image column -->
+            <div class="flex items-center justify-center">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-yellow-400 opacity-20 rounded-lg transform rotate-3"></div>
+                    <img
+                            alt="Luxury car maintenance"
+                            class="relative z-10 rounded-lg shadow-xl w-full max-w-lg object-cover"
+                            th:src="@{/images/home/2.webp}"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <!-- Mission and values -->
+        <div class="mt-24 max-w-6xl mx-auto">
+            <h3 class="text-2xl font-semibold text-center mb-12 text-yellow-400">Our Mission & Values</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-900 p-6 rounded-lg border border-yellow-400 border-opacity-30">
+                    <div class="w-12 h-12 rounded-full bg-yellow-400 mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-white">Simplicity</h4>
+                    <p class="text-gray-400">We believe in creating tools that are powerful yet simple to use, making car maintenance tracking accessible to everyone.</p>
+                </div>
+                <div class="bg-gray-900 p-6 rounded-lg border border-yellow-400 border-opacity-30">
+                    <div class="w-12 h-12 rounded-full bg-yellow-400 mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-white">Reliability</h4>
+                    <p class="text-gray-400">We're committed to providing dependable service and accurate information to help you maintain your vehicle with confidence.</p>
+                </div>
+                <div class="bg-gray-900 p-6 rounded-lg border border-yellow-400 border-opacity-30">
+                    <div class="w-12 h-12 rounded-full bg-yellow-400 mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-white">Innovation</h4>
+                    <p class="text-gray-400">We continuously evolve our platform with new features and improvements to better serve your car maintenance needs.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA button -->
+        <div class="mt-16 text-center">
+            <a href="#contact" class="inline-block bg-yellow-400 text-black px-8 py-4 rounded-full text-lg font-bold hover:bg-yellow-500 transition shadow-lg">
+                Get Started Today
+            </a>
+        </div>
     </div>
 </section>
 </body>
