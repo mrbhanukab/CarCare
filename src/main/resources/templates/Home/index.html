@@ -5,8 +5,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <link rel="stylesheet" th:href="@{/css/home.css}"/>
     <script th:src="@{/scripts/htmx.min.js}"></script>
-    <link rel="icon" th:href="@{/images/home/LOGO.png}" type="image/png"/>
-    <link rel="shortcut icon" th:href="@{/images/home/LOGO.png}" type="image/png"/>
+    <link rel="icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
+    <link rel="shortcut icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
     <title>LuxAuto - Premium Vehicle Care</title>
     <style>
@@ -27,7 +27,7 @@
     <div class="absolute flex h-full w-full flex-col justify-between p-8 lg:p-12">
         <header class="flex h-fit w-full items-center justify-between">
             <a aria-label="LuxAuto Home" class="block" href="#">
-                <img alt="LuxAuto Logo" class="h-16 w-auto" th:src="@{/images/home/LOGO.png}"/>
+                <img alt="LuxAuto Logo" class="h-16 w-auto" th:src="@{/images/LOGO.webp}"/>
             </a>
 
             <nav aria-label="Global" class="hidden lg:block">
@@ -133,7 +133,7 @@
 <section class="bg-lighter-dark relative px-6 py-24" id="about">
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-gold tracking-wide text-sm tracking-widest">EXCLUSIVE SERVICE</span>
+            <span class="text-gold tracking-wide text-sm">EXCLUSIVE SERVICE</span>
             <h2 class="font-playfair mt-4 mb-6 text-4xl text-white md:text-5xl">The LuxAuto Difference</h2>
             <div class="divider mx-auto my-6 w-24"></div>
             <p class="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400">Where precision engineering meets
@@ -242,7 +242,7 @@
 <section class="bg-lighter-dark px-6 py-24">
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-gold tracking-wide text-sm tracking-widest">OUR OFFERINGS</span>
+            <span class="text-gold tracking-wide text-sm">OUR OFFERINGS</span>
             <h2 class="font-playfair mt-4 mb-6 text-4xl text-white md:text-5xl">Bespoke Automotive Care</h2>
             <div class="divider mx-auto my-6 w-24"></div>
             <p class="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400">Comprehensive services designed to
@@ -317,7 +317,7 @@
     <div class="absolute inset-0 -z-10 bg-[url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920')] bg-cover bg-center opacity-10"></div>
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-gold tracking-wide text-sm tracking-widest">CLIENT TESTIMONIALS</span>
+            <span class="text-gold tracking-wide text-sm">CLIENT TESTIMONIALS</span>
             <h2 class="font-playfair mt-4 mb-6 text-4xl text-white md:text-5xl">Voices of Distinction</h2>
             <div class="divider mx-auto my-6 w-24"></div>
         </div>
@@ -326,7 +326,7 @@
             <div class="bg-lighter-dark border-gold hover-scale relative border-l-4 p-10 transition-transform duration-300">
                 <div class="text-gold text-opacity-10 font-playfair absolute top-10 left-10 text-7xl">"</div>
                 <p class="relative z-10 mb-8 text-lg leading-relaxed text-gray-300 italic">LuxAuto's attention to detail
-                    is unmatched. They treat my Ferrari like it's their own, and the performance tuning they did took
+                    is unmatched. They treat my Ferrari like it's their own, and the performance tuning they did take
                     the car to another level while maintaining perfect reliability.</p>
                 <div class="flex items-center gap-4">
                     <div class="h-12 w-12 overflow-hidden rounded-full bg-gray-700">
@@ -373,7 +373,7 @@
     <div class="mx-auto max-w-7xl">
         <div class="grid grid-cols-1 gap-16 lg:grid-cols-2">
             <div>
-                <span class="text-gold tracking-wide text-sm tracking-widest">GET IN TOUCH</span>
+                <span class="text-gold tracking-wide text-sm">GET IN TOUCH</span>
                 <h2 class="font-playfair mt-4 mb-6 text-4xl text-white md:text-5xl">Contact Our Concierge</h2>
                 <div class="divider my-6 w-24"></div>
                 <p class="mb-10 leading-relaxed text-white">Our team is available 24/7 to assist with your inquiries.
@@ -510,7 +510,7 @@
         <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
             <div>
                 <img alt="LuxAuto Logo" class="mb-6 h-16 w-auto"
-                     th:src="@{/images/LOGO_medium_res-removebg-preview.png}"/>
+                     th:src="@{/images/LOGO.webp}"/>
                 <p class="text-sm leading-relaxed text-gray-400">Premium automotive care for the most discerning
                     enthusiasts. LuxAuto delivers unparalleled service and craftsmanship.</p>
             </div>
@@ -569,9 +569,11 @@
                 <h4 class="mb-4 text-lg font-medium text-white">Newsletter</h4>
                 <p class="mb-4 text-sm text-gray-400">Subscribe for exclusive updates and offers</p>
                 <form class="flex">
-                    <input class="focus:border-gold w-full border border-gray-800 bg-gray-900 px-4 py-3 text-sm text-white focus:outline-none"
-                           placeholder="Your email"
-                           type="email"/>
+                    <label>
+                        <input class="focus:border-gold w-full border border-gray-800 bg-gray-900 px-4 py-3 text-sm text-white focus:outline-none"
+                               placeholder="Your email"
+                               type="email"/>
+                    </label>
                     <button class="bg-gold flex items-center justify-center px-4 text-black" type="submit">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path clip-rule="evenodd"
