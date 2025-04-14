@@ -8,7 +8,9 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <div th:replace="~{fragments/input :: input('test','test','email')}"></div>
+    <form>
+        <div th:replace="~{fragments/input :: input('test','test','email',${user.name})}"></div>
+    </form>
 </section>
 </body>
 </html>
