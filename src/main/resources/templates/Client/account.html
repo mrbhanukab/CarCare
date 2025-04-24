@@ -5,12 +5,283 @@
 >
 <head>
     <title>Account</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9;
+        }
+    </style>
+    <script>
+        // Handle profile image upload
+        document.getElementById('profile-image').addEventListener('change', function (e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('profile-preview').src = event.target.result;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        // Handle edit buttons
+        document.querySelectorAll('.edit-button').forEach(button => {
+            button.addEventListener('click', function () {
+                const fieldName = this.getAttribute('data-field');
+                const displayElement = document.getElementById(`${fieldName}-display`);
+                const editContainer = this.closest('.space-y-2').querySelector('.field-edit');
+                const editField = document.getElementById(fieldName);
+
+                if (editContainer.classList.contains('hidden')) {
+                    // Switch to edit mode
+                    displayElement.classList.add('hidden');
+                    editContainer.classList.remove('hidden');
+                    this.innerHTML = '<i class="fas fa-times text-sm"></i><span class="sr-only">Cancel</span>';
+                } else {
+                    // Cancel edit
+                    displayElement.classList.remove('hidden');
+                    editContainer.classList.add('hidden');
+                    this.innerHTML = '<i class="fas fa-pencil-alt text-sm"></i><span class="sr-only">Edit</span>';
+                    // Reset value to original
+                    if (fieldName === 'address') {
+                        editField.value = displayElement.textContent;
+                    } else {
+                        editField.value = displayElement.textContent;
+                    }
+                }
+            });
+        });
+
+        // Handle form submission
+        document.getElementById('account-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            document.getElementById('confirm-modal').classList.remove('hidden');
+        });
+
+        // Handle confirmation dialog
+        document.getElementById('confirm-save').addEventListener('click', function () {
+            // Update display values with edited values
+            document.querySelectorAll('.field-edit').forEach(editContainer => {
+                const input = editContainer.querySelector('input, textarea');
+                const fieldName = input.id;
+                const displayElement = document.getElementById(`${fieldName}-display`);
+                displayElement.textContent = input.value;
+            });
+
+            // Hide all edit fields and show displays
+            document.querySelectorAll('.field-edit').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.field-display').forEach(el => el.classList.remove('hidden'));
+
+            // Reset edit buttons
+            document.querySelectorAll('.edit-button').forEach(button => {
+                button.innerHTML = '<i class="fas fa-pencil-alt text-sm"></i><span class="sr-only">Edit</span>';
+            });
+
+            // Close modal
+            document.getElementById('confirm-modal').classList.add('hidden');
+
+            // Here you would typically send the data to your backend
+            console.log('Changes saved!');
+        });
+
+        document.getElementById('cancel-save').addEventListener('click', function () {
+            document.getElementById('confirm-modal').classList.add('hidden');
+        });
+    </script>
 </head>
 <body>
-<section layout:fragment="content">
-    <form>
-        <div th:replace="~{fragments/input :: input('test','test','email',${user.name})}"></div>
-    </form>
+<!--<section layout:fragment="content">-->
+<!--&lt;!&ndash;    <form>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div th:replace="~{fragments/input :: input('test','test','email',${user.name})}"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </form>&ndash;&gt;-->
+<!--</section>-->
+
+<section class="min-h-screen bg-gray-100 p-4 md:p-8" layout:fragment="content">
+    <div class="mx-auto max-w-4xl">
+        <h1 class="mb-6 text-3xl font-bold tracking-tight">Account</h1>
+
+        <!-- Account Card -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="border-b border-gray-200 px-6 py-4">
+                <h2 class="text-xl font-semibold">Personal Information</h2>
+            </div>
+
+            <div class="p-6">
+                <form class="space-y-6" id="account-form">
+                    <!-- Profile Picture and Form Fields -->
+                    <div class="flex flex-col items-center space-y-4 sm:flex-row sm:items-start sm:space-x-6 sm:space-y-0">
+                        <!-- Profile Picture -->
+                        <div class="relative">
+                            <div class="h-24 w-24 rounded-full bg-gray-200 overflow-hidden">
+                                <img
+                                        alt="Profile"
+                                        class="h-full w-full object-cover" id="profile-preview"
+                                        referrerPolicy="no-referrer"
+                                        src="https://via.placeholder.com/96"
+                                        th:src="${user.imageUrl}">
+                            </div>
+                            <label class="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black text-white shadow-md hover:bg-gray-800"
+                                   for="profile-image">
+                                <i class="fas fa-camera text-sm"></i>
+                                <span class="sr-only">Upload profile picture</span>
+                            </label>
+                            <input accept="image/*" class="hidden" id="profile-image" type="file">
+                        </div>
+
+                        <!-- Form Fields -->
+                        <div class="w-full space-y-4">
+                            <!-- Name Field -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm font-medium" for="name">Full Name</label>
+                                    <button class="edit-button h-8 px-2 text-gray-500 hover:text-black"
+                                            data-field="name"
+                                            type="button">
+                                        <i class="fas fa-pencil-alt text-sm"></i>
+                                        <span class="sr-only">Edit Full Name</span>
+                                    </button>
+                                </div>
+                                <div class="field-display rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
+                                     id="name-display">John Doe
+                                </div>
+                                <div class="field-edit hidden">
+                                    <input class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                                           id="name" name="name" type="text"
+                                           value="John Doe">
+                                </div>
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm font-medium" for="email">Email</label>
+                                    <button class="edit-button h-8 px-2 text-gray-500 hover:text-black"
+                                            data-field="email"
+                                            type="button">
+                                        <i class="fas fa-pencil-alt text-sm"></i>
+                                        <span class="sr-only">Edit Email</span>
+                                    </button>
+                                </div>
+                                <div class="field-display rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
+                                     id="email-display">john.doe@example.com
+                                </div>
+                                <div class="field-edit hidden">
+                                    <input class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                                           id="email" name="email" type="email"
+                                           value="john.doe@example.com">
+                                </div>
+                            </div>
+
+                            <!-- NIC Field -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm font-medium" for="nic">National ID (NIC)</label>
+                                    <button class="edit-button h-8 px-2 text-gray-500 hover:text-black" data-field="nic"
+                                            type="button">
+                                        <i class="fas fa-pencil-alt text-sm"></i>
+                                        <span class="sr-only">Edit National ID</span>
+                                    </button>
+                                </div>
+                                <div class="field-display rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
+                                     id="nic-display">123456789X
+                                </div>
+                                <div class="field-edit hidden">
+                                    <input class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                                           id="nic" name="nic" type="text"
+                                           value="123456789X">
+                                </div>
+                            </div>
+
+                            <!-- Phone Field -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm font-medium" for="phone">Phone Number</label>
+                                    <button class="edit-button h-8 px-2 text-gray-500 hover:text-black"
+                                            data-field="phone"
+                                            type="button">
+                                        <i class="fas fa-pencil-alt text-sm"></i>
+                                        <span class="sr-only">Edit Phone Number</span>
+                                    </button>
+                                </div>
+                                <div class="field-display rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
+                                     id="phone-display">+1 (555) 123-4567
+                                </div>
+                                <div class="field-edit hidden">
+                                    <input class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                                           id="phone" name="phone" type="tel"
+                                           value="+1 (555) 123-4567">
+                                </div>
+                            </div>
+
+                            <!-- Address Field -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm font-medium" for="address">Address</label>
+                                    <button class="edit-button h-8 px-2 text-gray-500 hover:text-black"
+                                            data-field="address"
+                                            type="button">
+                                        <i class="fas fa-pencil-alt text-sm"></i>
+                                        <span class="sr-only">Edit Address</span>
+                                    </button>
+                                </div>
+                                <div class="field-display rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
+                                     id="address-display">123 Main Street, Apt 4B, New York, NY 10001
+                                </div>
+                                <div class="field-edit hidden">
+                                    <textarea
+                                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                                            id="address" name="address"
+                                            rows="3">123 Main Street, Apt 4B, New York, NY 10001</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end pt-4">
+                        <button class="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                                type="submit">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal hidden" id="confirm-modal">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+            <div class="p-6">
+                <h3 class="text-lg font-medium mb-2">Confirm Changes</h3>
+                <p class="text-gray-500 mb-4">Are you sure you want to save these changes to your account
+                    information?</p>
+                <div class="flex space-x-4 justify-end">
+                    <button class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                            id="confirm-save">
+                        <i class="fas fa-check mr-2"></i>Yes, save changes
+                    </button>
+                    <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                            id="cancel-save">
+                        <i class="fas fa-times mr-2"></i>Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
 </body>
 </html>
