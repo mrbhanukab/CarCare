@@ -34,34 +34,28 @@ public class ClientController {
         model.addAttribute("active", "Dashboard");
         return manageUser("Client/dashboard", model);
     }
-
-    @GetMapping("/garage")
-    public String getGarage(Model model) {
-        model.addAttribute("active", "Garage");
-        return manageUser("Client/garage", model);
-    }
-
-    @GetMapping("/schedule")
-    public String getSchedule(Model model) {
-        model.addAttribute("active", "Schedule");
-        return manageUser("Client/schedule", model);
-    }
-
-    @GetMapping("/history")
-    public String getHistory(Model model) {
-        model.addAttribute("active", "History");
-        return manageUser("Client/history", model);
-    }
-
-    @GetMapping("/vip-contact")
-    public String getVipContact(Model model) {
-        model.addAttribute("active", "VIP Contact");
-        return manageUser("Client/vip-contact", model);
-    }
-
-    @GetMapping("/account")
-    public String getAccount(Model model) {
-        model.addAttribute("active", "Account");
-        return manageUser("Client/account", model);
-    }
+//
+//    @GetMapping("/garage")
+//    public String getGarage(Model model) {
+//        model.addAttribute("active", "Garage");
+//        return manageUser("Client/garage", model);
+//    }
+//
+//    @GetMapping("/schedule")
+//    public String getSchedule(Model model) {
+//        model.addAttribute("active", "Schedule");
+//        return manageUser("Client/schedule", model);
+//    }
+//
+//    @GetMapping("/history")
+//    public String getHistory(Model model) {
+//        model.addAttribute("active", "History");
+//        return manageUser("Client/history", model);
+//    }
+//
+//    @GetMapping("/account")
+//    public String getAccount(Model model) {
+//        model.addAttribute("active", "Account");
+//        return manageUser("Client/account", model);
+//    }
 }

@@ -1,6 +1,69 @@
 @import "tailwindcss";
 
-@plugin "@tailwindcss/forms";
+@layer components {
+
+    * {
+        font-family: 'Lufga', sans-serif;
+        @apply text-gray-900;
+    }
+
+    .dashboard-grid {
+        @apply grid gap-4 h-screen w-full relative;
+        grid-template-columns: 3fr auto 2fr;
+        grid-template-areas: "header header header"
+                            "car-info . cards";
+    }
+
+    .header-area {
+        @apply z-30;
+        grid-area: header;
+    }
+
+    .car-info-area {
+        @apply z-10;
+        grid-area: car-info;
+    }
+
+    .cards-area {
+        @apply z-20;
+        grid-area: cards;
+    }
+
+    @media (max-width: 1024px) {
+        .dashboard-grid {
+            @apply grid-cols-1 h-auto overflow-auto;
+            grid-template-areas: "header"
+                                "car-info"
+                                "cards";
+        }
+
+        .car-info-area {
+            @apply h-auto;
+            min-height: 50vh;
+        }
+
+        .cards-area {
+            @apply w-full p-4;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .car-info-area h2 {
+            @apply text-4xl;
+        }
+    }
+
+    .grid-background {
+        @apply h-full w-full fixed opacity-30 inset-0 -z-20;
+        background-image: linear-gradient(to right, #000000 1px, transparent 1px),
+        linear-gradient(to bottom, #000000 1px, transparent 1px);
+        background-size: 15px 15px;
+    }
+
+    .glassmorphism {
+        @apply backdrop-blur-[1.7px] border border-gray-50 rounded-lg;
+    }
+}
 
 @source "../resources/templates/fragments/**";
 @source "../resources/templates/Client/**";
