@@ -1,56 +1,58 @@
 @import "tailwindcss";
 
-@layer components {
 
+* {
+    --sb-track-color: #1f2937;
+    --sb-thumb-color: #08d3f2;
+    --sb-size: 14px;
+}
+
+*::-webkit-scrollbar {
+    width: var(--sb-size)
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 30px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 30px;
+    border: 5px solid #232E33;
+}
+
+@supports not selector(::-webkit-scrollbar) {
     * {
-        font-family: 'Lufga', sans-serif;
-        @apply text-gray-900;
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+}
+
+@layer utilities {
+    .bg-grid-pattern {
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 20px 20px;
     }
 
-    .dashboard-grid {
-        @apply grid gap-4 h-screen w-full relative;
-        grid-template-columns: 3fr auto 2fr;
-        grid-template-areas: "header header header"
-                            "car-info . cards";
+    .animate-fadeIn {
+        animation: fadeIn 0.3s ease-in-out;
     }
 
-    .header-area {
-        @apply z-30;
-        grid-area: header;
+    .perspective-1000 {
+        perspective: 1000px;
     }
 
-    .car-info-area {
-        @apply z-10;
-        grid-area: car-info;
+    .glow-effect {
+        animation: glow 2s infinite;
     }
 
-    .cards-area {
-        @apply z-20;
-        grid-area: cards;
+    .neon-text {
+        text-shadow: 0 0 5px rgba(56, 189, 248, 0.7), 0 0 10px rgba(56, 189, 248, 0.5);
     }
 
-    @media (max-width: 1024px) {
-        .dashboard-grid {
-            @apply grid-cols-1 h-auto overflow-auto;
-            grid-template-areas: "header"
-                                "car-info"
-                                "cards";
-        }
-
-        .car-info-area {
-            @apply h-auto;
-            min-height: 50vh;
-        }
-
-        .cards-area {
-            @apply w-full p-4;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .car-info-area h2 {
-            @apply text-4xl;
-        }
+    .neon-border {
+        box-shadow: 0 0 5px rgba(56, 189, 248, 0.5), 0 0 10px rgba(56, 189, 248, 0.3);
     }
 
     .grid-background {
@@ -59,12 +61,32 @@
         linear-gradient(to bottom, #000000 1px, transparent 1px);
         background-size: 15px 15px;
     }
+}
 
-    .glassmorphism {
-        @apply backdrop-blur-[1.7px] border border-gray-50 rounded-lg;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-@source "../resources/templates/fragments/**";
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(56, 189, 248, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(56, 189, 248, 0.3);
+    }
+}
+
+
+@source "../resources/templates/Components/**";
 @source "../resources/templates/Client/**";
 @source "../resources/templates/Layouts/client.html";
