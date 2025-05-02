@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
+     th:fragment="scheduleService(vehicle)"
+     x-data="{
+        step: 1,
+        selectedServices: [],
+        selectedDates: ['', '', ''],
+        notes: '',
+        isSubmitted: false,
+        errors: {},
+        activeDateSlot: null,
+        calendarView: null,
+        selectedDate: null,
+        selectedTime: null,
+        services: [
+            { id: 'oil', name: 'Oil Change', icon: 'oil' },
+            { id: 'repair', name: 'General Repair', icon: 'repair' },
+            { id: 'parts', name: 'Parts Replacement', icon: 'parts' },
+            { id: 'inspection', name: 'Full Inspection', icon: 'inspection' },
+            { id: 'electrical', name: 'Electrical System', icon: 'electrical' },
+            { id: 'ac', name: 'A/C Service', icon: 'ac' }
+        ],
+
+        generateAvailableDates() {
+            const dates = [];
+            const today = new Date();
+            for (let i = 0; i < 30; i++) {
+                const date = new Date();
+                date.setDate(today.getDate() + i);
+                if (date.getDay() !== 0) {
+                    dates.push(date.toISOString().split('T')[0]);
+                }
+            }
+            return dates;
+        },
+
+        generateAvailableTimes() {
+            const times = [];
+            const now = new Date();
+            const currentHour = now.getHours();
+            const today = now.toISOString().split('T')[0];
+            const isToday = this.selectedDate === today;
+
+            for (let hour = 8; hour <= 18; hour++) {
+                if (!(isToday && hour <= currentHour + 1)) {
+                    times.push(`${hour.toString().padStart(2, '0')}:00`);
+                    if (hour < 18) {
+                        times.push(`${hour.toString().padStart(2, '0')}:30`);
+                    }
+                }
+            }
+            return times;
+        },
+
+        handleServiceToggle(serviceId) {
+            const index = this.selectedServices.indexOf(serviceId);
+            if (index === -1) {
+                this.selectedServices.push(serviceId);
+            } else {
+                this.selectedServices.splice(index, 1);
+            }
+            if (this.errors.services) {
+                delete this.errors.services;
+            }
+        },
+
+        handleDateSlotClick(index) {
+            this.activeDateSlot = index;
+            this.calendarView = 'date';
+            this.selectedDate = null;
+            this.selectedTime = null;
+        },
+
+        handleDateSelect(date) {
+            this.selectedDate = date;
+            this.calendarView = 'time';
+        },
+
+        handleTimeSelect(time) {
+            this.selectedTime = time;
+            if (this.selectedDate && this.activeDateSlot !== null) {
+                const formattedDate = new Date(this.selectedDate);
+                const formattedDateStr = formattedDate.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                const [hours, minutes] = time.split(':');
+                const hour = parseInt(hours, 10);
+                const ampm = hour >= 12 ? 'PM' : 'AM';
+                const hour12 = hour % 12 || 12;
+                const formattedTime = `${hour12}:${minutes} ${ampm}`;
+
+                const formattedDateTime = `${formattedDateStr} at ${formattedTime}`;
+                this.selectedDates[this.activeDateSlot] = formattedDateTime;
+                this.calendarView = null;
+                this.activeDateSlot = null;
+
+                if (this.errors.dates) {
+                    delete this.errors.dates;
+                }
+            }
+        },
+
+        handleClearDateSlot(index) {
+            this.selectedDates[index] = '';
+        },
+
+        validateStep(currentStep) {
+            this.errors = {};
+            if (currentStep === 1 && this.selectedServices.length === 0) {
+                this.errors.services = 'Please select at least one service';
+            }
+            if (currentStep === 2 && !this.selectedDates.some(date => date !== '')) {
+                this.errors.dates = 'Please select at least one preferred date and time';
+            }
+            return Object.keys(this.errors).length === 0;
+        },
+
+        handleNext() {
+            if (!this.validateStep(this.step)) {
+                return;
+            }
+            if (this.step < 3) {
+                this.step++;
+            } else {
+                const formData = {
+                    vehicle: this.vehicle,
+                    services: this.selectedServices,
+                    dates: this.selectedDates.filter(Boolean),
+                    notes: this.notes
+                };
+                console.log(formData);
+                this.isSubmitted = true;
+            }
+        },
+
+        handleBack() {
+            if (this.step > 1) {
+                this.step--;
+            }
+        }
+     }">
+
+    <div class="bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full mx-4 overflow-hidden border border-gray-700">
+        <div class="p-6 border-b border-gray-700">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-cyan-400">Schedule Service</h2>
+                <button @click="$el.closest('[x-data]').remove()"
+                        class="text-gray-400 hover:text-gray-200">
+                    <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex items-center mt-4">
+                <template :key="i" x-for="i in 3">
+                    <div class="flex items-center">
+                        <div :class="`flex items-center justify-center w-8 h-8 rounded-full ${step >= i ? 'bg-cyan-600 text-white' : 'bg-gray-700 text-gray-400'}`"
+                             x-text="i"></div>
+                        <template x-if="i < 3">
+                            <div :class="`flex-1 h-1 mx-2 ${step > i ? 'bg-cyan-600' : 'bg-gray-700'}`"></div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="p-6 max-h-[70vh] overflow-y-auto">
+            <template x-if="step === 1">
+                <div>
+                    <h3 class="text-lg font-medium text-cyan-400 mb-4">Select Services</h3>
+
+                    <div class="mb-4 p-4 bg-gray-700/50 rounded-lg flex items-center gap-3 border border-gray-600">
+                        <img class="w-16 h-12 object-contain" th:alt="${vehicle.brand + ' ' + vehicle.model}"
+                             th:src="${vehicle.image}"/>
+                        <div>
+                            <div class="font-medium text-white" th:text="${vehicle.brand + ' ' + vehicle.model}"></div>
+                            <div class="text-sm text-gray-300" th:text="${vehicle.year}"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg text-red-400 text-sm"
+                         x-show="errors.services"
+                         x-text="errors.services"></div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                        <template :key="service.id" x-for="service in services">
+                            <button
+                                    :class="`p-4 rounded-lg border ${selectedServices.includes(service.id) ? 'border-cyan-500 bg-cyan-900/20 text-cyan-300' : 'border-gray-600 hover:border-gray-500 text-gray-300'} flex flex-col items-center justify-center gap-2 transition-colors`"
+                                    @click="handleServiceToggle(service.id)">
+                                <div :class="`w-12 h-12 rounded-full ${selectedServices.includes(service.id) ? 'bg-cyan-900/30' : 'bg-gray-700'} flex items-center justify-center`">
+                                    <!-- Service icon -->
+                                </div>
+                                <span class="font-medium" x-text="service.name"></span>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+            <template x-if="step === 2">
+                <div>
+                    <h3 class="text-lg font-medium text-cyan-400 mb-4">Select Preferred Dates</h3>
+                    <p class="text-sm text-gray-300 mb-4">Please select up to 3 preferred dates and times for your
+                        service appointment.</p>
+
+                    <div class="mb-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg text-red-400 text-sm"
+                         x-show="errors.dates"
+                         x-text="errors.dates"></div>
+
+                    <template x-if="calendarView">
+                        <div class="mb-6 bg-gray-700/50 p-4 rounded-lg border border-gray-600 animate-fadeIn">
+                            <!-- Calendar or Time Selection UI -->
+                        </div>
+                    </template>
+
+                    <template x-if="!calendarView">
+                        <div class="space-y-4 mb-6">
+                            <template :key="index" x-for="(date, index) in selectedDates">
+                                <div class="bg-gray-700/50 p-4 rounded-lg border border-gray-600">
+                                    <!-- Date slot UI -->
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template x-if="step === 3">
+                <div>
+                    <h3 class="text-lg font-medium text-cyan-400 mb-4">Additional Information</h3>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-300 mb-1" for="notes">Notes (Optional)</label>
+                        <textarea
+                                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                                id="notes"
+                                placeholder="Please provide any additional details about your service request..."
+                                rows="4"
+                                x-model="notes">
+                        </textarea>
+                    </div>
+
+                    <div class="bg-gray-700/50 p-4 rounded-lg mb-6 border border-gray-600">
+                        <!-- Summary content -->
+                    </div>
+                </div>
+            </template>
+
+            <div class="flex justify-between">
+                <button @click="handleBack"
+                        class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                        x-show="step > 1">
+                    Back
+                </button>
+                <button @click="handleNext"
+                        class="px-4 py-2 bg-cyan-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800 shadow-[0_0_10px_rgba(56,189,248,0.3)]"
+                        x-text="step < 3 ? 'Next' : 'Submit Request'">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
