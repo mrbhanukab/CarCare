@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import sliit.pg09.carcare.old.model.Vehicle;
+import sliit.pg09.carcare.vehicle.Vehicle;
 
 import java.time.LocalDate;
 import java.util.List;

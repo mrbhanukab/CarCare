@@ -1,11 +1,11 @@
-package sliit.pg09.carcare.old.configs;
+package sliit.pg09.carcare.common.configs;
 
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ThymeleafConfig {
+public class Thymeleaf {
 
     @Bean
     public LayoutDialect layoutDialect() {

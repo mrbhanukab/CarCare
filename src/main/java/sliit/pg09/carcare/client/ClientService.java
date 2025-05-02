@@ -4,9 +4,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import sliit.pg09.carcare.old.repository.ClientRepository;
-
-import java.util.Objects;
 
 @Service
 public class ClientService {
@@ -20,9 +17,9 @@ public class ClientService {
         var userEmail = (((OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAttributes()).get("email").toString();
         return clientRepository.findById(userEmail).map(user -> {
             model.addAttribute("user", user);
-            if (user.getNic() == null && !Objects.equals(file, "Client/account")) {
-                return "redirect:/client/account";
-            }
+//            if (user.getNic() == null && !Objects.equals(file, "Client/account")) {
+//                return "redirect:/client/account";
+//            }
             return file;
         }).orElse("redirect:/");
     }

@@ -1,4 +1,4 @@
-package sliit.pg09.carcare.old.configs;
+package sliit.pg09.carcare.common.configs;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,12 +12,13 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import sliit.pg09.carcare.old.repository.ClientRepository;
+import sliit.pg09.carcare.client.Client;
+import sliit.pg09.carcare.client.ClientRepository;
 
 import java.io.IOException;
 
 @Configuration
-public class SecurityConfig {
+public class Security {
 
     @Autowired
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -55,7 +56,7 @@ public class SecurityConfig {
             var user = ((OAuth2User) authentication.getPrincipal()).getAttributes();
 
             clients.findById(user.get("email").toString()).ifPresentOrElse(u -> {
-            }, () -> clients.save(new sliit.pg09.carcare.old.model.Client(
+            }, () -> clients.save(new Client(
                     user.get("name").toString(),
                     user.get("email").toString(),
                     user.get("picture").toString()
