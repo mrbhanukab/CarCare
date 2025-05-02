@@ -1,4 +1,4 @@
-package sliit.pg09.carcare.controller;
+package sliit.pg09.carcare.old.controller;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sliit.pg09.carcare.repository.ClientRepository;
+import sliit.pg09.carcare.old.repository.ClientRepository;
 
 import java.util.Map;
 import java.util.Objects;

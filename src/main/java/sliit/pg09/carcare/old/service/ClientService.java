@@ -1,10 +1,7 @@
-package sliit.pg09.carcare.service;
+package sliit.pg09.carcare.old.service;
 
 import org.springframework.stereotype.Service;
-import sliit.pg09.carcare.model.Client;
-import sliit.pg09.carcare.repository.ClientRepository;
-
-import java.util.List;
+import sliit.pg09.carcare.old.repository.ClientRepository;
 
 @Service
 public class ClientService {
@@ -12,9 +9,5 @@ public class ClientService {
 
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-    }
-
-    public List<Client> findAll() {
-        return clientRepository.findAll();
     }
 }

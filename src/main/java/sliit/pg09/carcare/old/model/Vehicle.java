@@ -1,7 +1,8 @@
-package sliit.pg09.carcare.model;
+package sliit.pg09.carcare.old.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

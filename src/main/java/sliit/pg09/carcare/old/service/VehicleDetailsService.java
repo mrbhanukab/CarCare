@@ -1,7 +1,7 @@
-package sliit.pg09.carcare.service;
+package sliit.pg09.carcare.old.service;
 
 import org.springframework.stereotype.Service;
-import sliit.pg09.carcare.repository.VehicleDetailsRepository;
+import sliit.pg09.carcare.old.repository.VehicleDetailsRepository;
 
 @Service
 public class VehicleDetailsService {

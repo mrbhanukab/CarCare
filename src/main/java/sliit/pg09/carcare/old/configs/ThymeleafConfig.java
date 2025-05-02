@@ -1,4 +1,4 @@
-package sliit.pg09.carcare.configs;
+package sliit.pg09.carcare.old.configs;
 
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.context.annotation.Bean;
