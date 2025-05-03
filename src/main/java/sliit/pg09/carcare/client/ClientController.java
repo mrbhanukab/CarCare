@@ -57,4 +57,26 @@ public class ClientController {
                             """);
         }
     }
+
+    @HxRequest
+    @PostMapping("/create")
+    public ResponseEntity<Object> createClient(@RequestParam String email,
+                                               @RequestParam String name,
+                                               @RequestParam String phone,
+                                               @RequestParam String address){
+        Client newClient = new Client();
+        newClient.setEmail(email);
+        newClient.setName(name);
+        newClient.setPhone(phone);
+        newClient.setAddress(address);
+
+        if(clientService.createClient(newClient))
+            return ResponseEntity.ok()
+                    .body("<div class= 'alert-success'>Client created successfully.<div>");
+
+        else
+            return ResponseEntity.ok()
+                    .body("<div class= 'alert alert-danger'>Client could not be created successfully. Email may already exist.<div>");
+    }
+
 }

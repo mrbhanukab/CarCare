@@ -43,4 +43,17 @@ public class ClientService {
         return clientRepository.findById(userEmail);
     }
 
+    public boolean createClient (Client client) {
+        if(client == null || client.getEmail() == null) {
+            return false;
+        }
+
+        if(clientRepository.existsById(client.getEmail())) {
+            return false;
+        }
+
+        clientRepository.save(client);
+        return true;
+    }
+
 }
