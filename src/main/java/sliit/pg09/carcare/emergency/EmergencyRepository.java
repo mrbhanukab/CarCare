@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmergencyRepository extends JpaRepository<Emergency, Emergency.EmergencyId> {
+    Emergency findEmergencyByVehicle_License(String vehicleLicense);
 }

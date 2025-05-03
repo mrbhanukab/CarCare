@@ -18,6 +18,10 @@ public class EmergencyService {
         this.vehicleService = vehicleService;
     }
 
+    public boolean vehicleHasEmergency(String vehicleLicense) {
+        return emergencyRepository.findEmergencyByVehicle_License(vehicleLicense).isHandled();
+    }
+
     public void createEmergency(String vehicleLicence, Double latitude, Double longitude, LocalDateTime timestamp) {
 
         Vehicle vehicle = vehicleService.findVehicle(vehicleLicence);
