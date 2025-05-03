@@ -1,6 +1,7 @@
 package sliit.pg09.carcare.emergency;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sliit.pg09.carcare.vehicle.Vehicle;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Emergency {
     @EmbeddedId
