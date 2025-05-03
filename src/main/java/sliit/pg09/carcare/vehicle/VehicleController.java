@@ -30,9 +30,6 @@ public class VehicleController {
             Vehicle vehicle = vehicleService.getVehicleByLicense(license);
             return vehicle != null ? ResponseEntity.ok(vehicle) : ResponseEntity.notFound().build();
         }
-
-
-
     }
 
     @Controller
@@ -41,6 +38,8 @@ public class VehicleController {
         private final VehicleRepository vehicleRepository;
         @Autowired
         private ModelRepository modelRepository;
+        @Autowired
+        private ModelService modelService;
 
         public AdminVehicleController(VehicleRepository vehicleRepository) {
             this.vehicleRepository = vehicleRepository;
@@ -51,9 +50,6 @@ public class VehicleController {
             vehicleRepository.deleteById(license);
             return ResponseEntity.ok("Vehicle deleted");
         }
-
-        @Autowired
-        private ModelService modelService;
 
         @PostMapping("/vehicle-model")
         public ResponseEntity<String> addModel(@RequestBody Model model) {
