@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" th:href="@{/css/home.css}" />
-  <link rel="icon" th:href="@{/images/home/LuxAutoLonge-removebg-preview.webp}" type="image/png" />
-  <link rel="shortcut_icon" th:href="@{/images/home/LuxAutoLonge-removebg-preview.webp}" type="image/png" />
+  <link rel="icon" th:href="@{/images/home/LuxAutoLonge-removebg-preview.webp.webp}" type="image/png" />
+  <link rel="shortcut_icon" th:href="@{/images/home/LuxAutoLonge-removebg-preview.webp.webp}" type="image/png" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <script src="https://unpkg.com/htmx.org@1.9.6"></script>
@@ -102,113 +102,6 @@
       left: 120%;
     }
 
-    /* Enhanced Logo Styles */
-    .logo-container {
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .logo-container:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
-    }
-
-    .logo-border {
-      position: absolute;
-      inset: -5px;
-      border: 2px solid transparent;
-      border-image: linear-gradient(45deg, #3B82F6, #FFD700) 1;
-      border-image-slice: 1;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 5;
-    }
-
-    .logo-container:hover .logo-border {
-      opacity: 1;
-      animation: borderPulse 2s infinite;
-    }
-
-    @keyframes borderPulse {
-      0%, 100% { border-image-source: linear-gradient(45deg, #3B82F6, #FFD700); }
-      50% { border-image-source: linear-gradient(45deg, #FFD700, #3B82F6); }
-    }
-
-    /* Enhanced Navigation Styles */
-    .nav-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: transparent;
-      padding: 1rem 2rem;
-    }
-
-    .nav-item {
-      position: relative;
-      transition: color 0.3s ease;
-    }
-
-    .nav-item::before {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background: linear-gradient(to right, #3B82F6, #FFD700);
-      visibility: hidden;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .nav-item:hover::before {
-      visibility: visible;
-      width: 100%;
-    }
-
-    .nav-item.active::before {
-      visibility: visible;
-      width: 100%;
-    }
-
-    .nav-item:hover {
-      color: #FFD700;
-    }
-
-    /* Enhanced Sign In Button */
-    .google-button-wrapper .button {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(45deg, #ffffff, #e0e0e0);
-      transition: all 0.3s ease;
-    }
-
-    .google-button-wrapper .button:hover {
-      background: linear-gradient(45deg, #3B82F6, #FFD700);
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-    }
-
-    .google-button-wrapper .button::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: rgba(255, 255, 255, 0.2);
-      transform: rotate(45deg);
-      transition: all 0.5s ease;
-      opacity: 0;
-    }
-
-    .google-button-wrapper .button:hover::after {
-      left: 100%;
-      opacity: 1;
-    }
-
-    /* Additional styles from original code */
     .scroll-highlight {
       position: relative;
       overflow: hidden;
@@ -258,6 +151,32 @@
       animation: fadeInUp 0.8s cubic-bezier(0.5, 0, 0, 1) forwards;
     }
 
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #3B82F6;
+      visibility: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .nav-item:hover::before {
+      visibility: visible;
+      width: 100%;
+    }
+
+    .nav-item.active::before {
+      visibility: visible;
+      width: 100%;
+    }
+
     .text-shadow-sm {
       text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
@@ -293,16 +212,22 @@
   <div class="hero-overlay absolute inset-0 -z-40"></div>
 
   <div class="absolute flex h-full w-full flex-col justify-between p-8 lg:p-12">
-    <header class="nav-container flex h-fit w-full items-center justify-between">
-      <a class="block logo-container" href="#" aria-label="LuxAuto Home">
+    <header class="sticky top-0 flex h-fit w-full items-center justify-between">
+      <a class="block" href="#" aria-label="LuxAuto Home">
         <div class="relative inline-block">
-          <div class="logo-border"></div>
           <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent z-0 mix-blend-overlay"></div>
           <div class="absolute inset-0 z-0"
                style="mask-image: radial-gradient(circle at center, transparent 70%, black 100%);
                       backdrop-filter: blur(3px);"></div>
+
           <div class="relative">
-            <img th:src="@{/images/home/LuxAutoLonge-removebg-preview.webp}" alt="LuxAuto Logo" class="h-32 w-auto relative z-10" />
+            <img src="/images/home/LuxAutoLonge-removebg-preview.webp" alt="LuxAuto Logo" class="h-32 w-auto relative z-10" />
+
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent z-0 mix-blend-overlay"></div>
+
+            <div class="absolute inset-0 z-0"
+                 style="mask-image: radial-gradient(circle at center, transparent 70%, black 100%);
+                      backdrop-filter: blur(3px);"></div>
           </div>
         </div>
       </a>
@@ -320,17 +245,15 @@
             </a>
           </li>
           <li>
-            <form action="/oauth2/authorization/google" class="google-button-wrapper" method="GET">
-              <button class="button relative flex h-fit w-fit items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100" type="submit">
-                <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg">
-                  <path class="blue" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22 LADY774 38.875-56.282 38.875-96.027" fill="#4285F4"></path>
-                  <path class="green" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853"></path>
-                  <path class="yellow" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"></path>
-                  <path class="red" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"></path>
-                </svg>
-                <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
-              </button>
-            </form>
+            <button class="button relative flex h-fit w-fit items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100" type="submit">
+              <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg">
+                <path class="blue" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"></path>
+                <path class="green" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853"></path>
+                <path class="yellow" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"></path>
+                <path class="red" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"></path>
+              </svg>
+              <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
+            </button>
           </li>
         </ul>
       </nav>
@@ -342,46 +265,54 @@
       </button>
     </header>
 
-    <div class="mx-auto flex h-full w-full max-w-5xl flex-col justify-center px-6">
-      <div class="animate__animated animate__fadeInUp mb-12">
-        <h1 class="luxury-font mb-5 text-4xl leading-tight font-medium text-white md:text-5xl lg:text-6xl xl:text-7xl">
+    <div class="mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4">
+      <div class="animate__animated animate__fadeInUp mb-16">
+        <h1 class="luxury-font mb-6 text-5xl leading-tight font-medium text-white md:text-6xl lg:text-7xl xl:text-8xl">
           <span class="block">Elevate Your</span>
           <span class="bg-gradient-to-r from-blue-300 via-blue-200 to-blue-400 bg-clip-text text-transparent">Driving Experience</span>
         </h1>
-        <br>
-        <p class="mb-8 max-w-xl text-lg leading-relaxed font-light opacity-90 md:text-xl">Precision care for your luxury vehicle. Our concierge-level service ensures peak performance and timeless elegance.</p>
-        <br>
-        <div class="flex flex-col gap-5 sm:flex-row">
-          <a href="#contact" class="shine-effect bg-blue-600 hover:bg-opacity-90 relative flex transform items-center justify-center overflow-hidden rounded-sm px-6 py-3 text-base font-medium tracking-wider text-white transition-all duration-300 [transform:scale(1.05) smooth-scroll">
+
+        <p class="mb-10 max-w-2xl text-xl leading-relaxed font-light opacity-90 md:text-2xl">Precision care for your luxury vehicle. Our concierge-level service ensures peak performance and timeless elegance.</p>
+
+        <div class="flex flex-col gap-6 sm:flex-row">
+          <a href="#contact" class="shine-effect bg-blue-600 hover:bg-opacity-90 relative flex transform items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 smooth-scroll">
             <span>Request Consultation</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
           </a>
 
-          <a href="#about" class="border-blue-500 text-blue-400 hover:bg-blue-500 hover:bg-opacity-10 flex transform items-center justify-center rounded-sm border px-6 py-3 text-base font-medium tracking-wider transition-all duration-300 hover:scale-105 smooth-scroll">
+          <a href="#about" class="border-blue-500 text-blue-400 hover:bg-blue-500 hover:bg-opacity-10 flex transform items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105 smooth-scroll">
             <span>Explore Services</span>
           </a>
         </div>
       </div>
 
       <div class="animate__animated animate__fadeIn animate__delay-1s">
-        <div class="flex items-center justify-center gap-8 lg:justify-start">
-          <div class="flex items-center gap-2">
-            <div class="bg-blue-500 h-2 w-2 rounded-full"></div>
-            <span class="text-xs tracking-wider">PREMIUM CARE</span>
+        <div class="flex items-center justify-center gap-6 lg:justify-start">
+          <div class="flex items-center gap-3">
+            <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
+            <span class="text-sm tracking-wider">PREMIUM CARE</span>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="bg-blue-500 h-2 w-2 rounded-full"></div>
-            <span class="text-xs tracking-wider">CERTIFIED TECHNICIANS</span>
+          <div class="flex items-center gap-3">
+            <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
+            <span class="text-sm tracking-wider">CERTIFIED TECHNICIANS</span>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="bg-blue-500 h-2 w-2 rounded-full"></div>
-            <span class="text-xs tracking-wider">DISCRETE SERVICE</span>
+          <div class="flex items-center gap-3">
+            <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
+            <span class="text-sm tracking-wider">DISCRETE SERVICE</span>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
+    <a href="#about" class="text-blue-400 smooth-scroll">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </a>
   </div>
 </section>
 
@@ -550,7 +481,6 @@
       <div class="divider mx-auto my-6 w-24"></div>
     </div>
     <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
-      <!-- Testimonial 1 -->
       <div class="bg-lighter-dark border-gold hover-scale relative border-l-4 p-10 transition-transform duration-300">
         <div class="text-gold text-opacity-10 luxury-font absolute top-10 left-10 text-7xl">"</div>
         <p class="relative z-10 mb-8 text-lg leading-relaxed text-gray-300 italic">LuxAuto's attention to detail is unmatched. They treat my Ferrari like it's their own, and the performance tuning they did took the car to another level while maintaining perfect reliability.</p>
@@ -586,7 +516,7 @@
     <h2 class="luxury-font mt-4 mb-6 text-4xl text-gray-300 md:text-5xl">Experience The LuxAuto Standard</h2>
     <div class="divider bg-opacity-30 mx-auto my-6 w-24 bg-gray-300"></div>
     <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white">Schedule a consultation with our specialists to discuss your vehicle's unique needs.</p>
-    <a href="#contact" class="hover:bg-opacity-90 inline-block transform rounded-sm bg-black px-10 py-5 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 smooth-scroll"> Contact Our Concierge </a>
+    <a href="#contact" class="hover:bg-opacity-90 inline-block transform rounded-sm bg-black px-10 py-5 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105"> Contact Our Concierge </a>
   </div>
 </section>
 
@@ -693,7 +623,7 @@
   <div class="mx-auto max-w-7xl">
     <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
       <div>
-        <img th:src="@{/images/home/LuxAutoLonge-removebg-preview.webp}" alt="LuxAuto Logo" class="mb-6 h-32 w-auto" />
+        <img src="/images/home/LuxAutoLonge-removebg-preview.webp" alt="LuxAuto Logo" class="mb-6 h-16 w-auto" />
         <p class="text-sm leading-relaxed text-gray-400">Premium automotive care for the most discerning enthusiasts. LuxAuto delivers unparalleled service and craftsmanship.</p>
       </div>
       <div>
@@ -731,7 +661,7 @@
           </a>
           <a href="#" class="hover:bg-gold flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 transition-colors duration-300 hover:text-black">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072 ambivalence4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.163c-2.21 0-4.001-1.791-4.001-4.001s1.791-4.001 4.001-4.001 4.001 1.791 4.001 4.001-1.791 4.001-4.001 4.001zm5.406-10.163c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25 .56 1.25 1.25-.56 1.25-1.25 1.25z"></path>
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.163c-2.21 0-4.001-1.791-4.001-4.001s1.791-4.001 4.001-4.001 4.001 1.791 4.001 4.001-1.791 4.001-4.001 4.001zm5.406-10.163c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25 .56 1.25 1.25-.56 1.25-1.25 1.25z"></path>
             </svg>
           </a>
         </div>
@@ -759,7 +689,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Original animation code
     const animateOnScroll = function() {
       const elements = document.querySelectorAll('.hover-scale, .shine-effect');
       elements.forEach(element => {
@@ -774,7 +703,6 @@
     window.addEventListener('scroll', animateOnScroll);
     animateOnScroll();
 
-    // Add smooth scroll functionality
     const smoothScrollLinks = document.querySelectorAll('.smooth-scroll, .nav-item');
 
     smoothScrollLinks.forEach(link => {
@@ -785,7 +713,6 @@
         const targetSection = document.querySelector(targetId);
 
         if (targetSection) {
-          // Highlight active nav item
           document.querySelectorAll('.nav-item').forEach(item => {
             item.classList.remove('active');
           });
@@ -794,10 +721,8 @@
             this.classList.add('active');
           }
 
-          // Add special effects before scrolling
           targetSection.classList.add('section-target');
 
-          // Create a glow effect that travels down to the target section
           const glowEffect = document.createElement('div');
           glowEffect.classList.add('scroll-glow-effect');
           glowEffect.style.position = 'fixed';
@@ -811,7 +736,6 @@
           glowEffect.style.pointerEvents = 'none';
           document.body.appendChild(glowEffect);
 
-          // Add a brief flash effect to the target section
           const flashEffect = document.createElement('div');
           flashEffect.classList.add('flash-effect');
           flashEffect.style.position = 'absolute';
@@ -826,10 +750,9 @@
           targetSection.style.position = 'relative';
           targetSection.appendChild(flashEffect);
 
-          // Animate the glow effect
           let start = null;
           const targetTop = targetSection.getBoundingClientRect().top + window.pageYOffset;
-          const duration = 800; // milliseconds
+          const duration = 800;
 
           function animateScroll(timestamp) {
             if (!start) start = timestamp;
@@ -837,11 +760,9 @@
             const easeProgress = Math.min(progress / duration, 1);
             const easedProgress = easeInOutCubic(easeProgress);
 
-            // Update glow height based on scroll progress
             const maxHeight = targetTop - window.pageYOffset;
             glowEffect.style.height = `${easedProgress * maxHeight}px`;
 
-            // Scroll to target with easing
             const currentPosition = window.pageYOffset;
             const distance = targetTop - currentPosition;
             window.scrollTo(0, currentPosition + distance * easedProgress);
@@ -849,12 +770,9 @@
             if (progress < duration) {
               window.requestAnimationFrame(animateScroll);
             } else {
-              // End of animation
-              // Show flash effect
               flashEffect.style.transition = 'opacity 0.5s ease';
               flashEffect.style.opacity = '1';
 
-              // Clean up after animation
               setTimeout(() => {
                 glowEffect.remove();
                 flashEffect.style.opacity = '0';
@@ -863,7 +781,6 @@
                 }, 500);
               }, 300);
 
-              // Apply fade-in-up animation to child elements
               const childElements = targetSection.querySelectorAll('h2, h3, p, .divider, .grid > div');
               childElements.forEach((el, index) => {
                 el.style.opacity = '0';
@@ -881,12 +798,10 @@
       });
     });
 
-    // Easing function for smooth animation
     function easeInOutCubic(t) {
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
 
-    // Highlight active section based on scroll position
     function highlightActiveSection() {
       const sections = document.querySelectorAll('section[id]');
       const navItems = document.querySelectorAll('.nav-item');
