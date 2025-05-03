@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" th:href="@{/css/home.css}" />
-  <link rel="icon" th:href="@{/images/home/LuxAutoLonge.webp}" type="image/png" />
-  <link rel="shortcut_icon" th:href="@{/images/home/LuxAutoLonge.webp}" type="image/png" />
+  <link rel="icon" th:href="@{/images/home/LuxAutoLonge-removebg-preview.webp}" type="image/png" />
+  <link rel="shortcut_icon" th:href="@{/images/home/LuxAutoLonge-removebg-preview.webp}" type="image/png" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <script src="https://unpkg.com/htmx.org@1.9.6"></script>
@@ -223,7 +223,7 @@
                       backdrop-filter: blur(3px);"></div>
 
           <div class="relative">
-            <img th:src="@{/images/home/LuxAutoLonge.webp}" alt="LuxAuto Logo" class="h-32 w-auto relative z-10" />
+            <img th:src="@{/images/home/LuxAutoLonge-removebg-preview.webp}" alt="LuxAuto Logo" class="h-32 w-auto relative z-10" />
 
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent z-0 mix-blend-overlay"></div>
 
@@ -248,24 +248,16 @@
           </li>
           <li>
             <form action="/oauth2/authorization/google" class="google-button-wrapper" method="GET">
-              <button class="google-button" type="submit">
-                <svg class="z-10 h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path class="blue"
-                        d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
-                        fill="#4285F4"></path>
-                  <path class="green"
-                        d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
-                        fill="#34A853"></path>
-                  <path class="yellow"
-                        d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
-                        fill="#FBBC05"></path>
-                  <path class="red"
-                        d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
-                        fill="#EB4335"></path>
+              <button class="button relative flex h-fit w-fit items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100" type="submit">
+                <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg">
+                  <path class="blue" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"></path>
+                  <path class="green" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853"></path>
+                  <path class="yellow" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"></path>
+                  <path class="red" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"></path>
                 </svg>
                 <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
               </button>
+            </form>
           </li>
         </ul>
       </nav>
@@ -636,7 +628,7 @@
   <div class="mx-auto max-w-7xl">
     <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
       <div>
-        <img th:src="@{/images/home/LOGO.png}" alt="LuxAuto Logo" class="mb-6 h-16 w-auto" />
+        <img th:src="@{/images/home/LuxAutoLonge-removebg-preview.webp}" alt="LuxAuto Logo" class="mb-6 h-16 w-auto" />
         <p class="text-sm leading-relaxed text-gray-400">Premium automotive care for the most discerning enthusiasts. LuxAuto delivers unparalleled service and craftsmanship.</p>
       </div>
       <div>
