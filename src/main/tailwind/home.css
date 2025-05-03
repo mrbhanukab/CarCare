@@ -1,109 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 @source "../resources/templates/Home/**";
 
-@theme{
-    --font-monteserrat: 'Montserrat', sans-serif;
-    --font-playfair: 'PlayfairDisplay', serif;
-    --color-gold: #D4AF37;
-    --color-dark: #0F0F0F;
-    --color-lighter-dark: #1A1A1A;
-}
-
-@layer components {
-    .hover-scale {
-        @apply transition-transform duration-300 ease-in-out;
-    }
-
-    .hover-scale:hover {
-        @apply scale-105;
-    }
-
-    .shine-effect {
-        @apply relative overflow-hidden;
-    }
-
-    .shine-effect::after {
-        content: '';
-        @apply absolute top-[-50%] left-[-60%] w-[40%] h-[200%] bg-white/13 rotate-30 transition-all duration-700 ease-in-out;
-        background-image: linear-gradient(
-                to right,
-                rgba(255, 255, 255, 0.13) 0%,
-                rgba(255, 255, 255, 0.13) 77%,
-                rgba(255, 255, 255, 0.5) 92%,
-                rgba(255, 255, 255, 0) 100%
-        );
-    }
-
-    .shine-effect:hover::after {
-        left: 120%;
-    }
-
-    .divider {
-        @apply h-[2px];
-        background-image: linear-gradient(90deg, transparent 0%, #D4AF37 50%, transparent 100%);
-    }
-
-    .google-button-wrapper {
-        @apply flex flex-col justify-evenly px-2 py-4 gap-1;
-    }
-
-    .google-button {
-        @apply relative flex h-fit w-fit items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100;
-    }
-
-    .google-button:hover .text {
-        animation: text forwards 0.3s;
-    }
-
-    .google-button:hover::before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 9%;
-        transform: translate(-50%, -50%);
-        width: 0;
-        height: 0;
-        opacity: 0;
-        border-radius: 300px;
-        animation: wave1 2.5s ease-in-out forwards;
-    }
-
-    .google-button:hover::after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 9%;
-        transform: translate(-50%, -50%);
-        width: 0;
-        height: 0;
-        opacity: 0;
-        border-radius: 300px;
-        animation: wave2 2.5s ease-in-out forwards;
-    }
-
-    .google-button:hover .red {
-        animation: disappear 0.1s forwards;
-        animation-delay: 0.1s;
-    }
-
-    .google-button:hover .yellow {
-        animation: disappear 0.1s forwards;
-        animation-delay: 0.3s;
-    }
-
-    .google-button:hover .green {
-        animation: disappear 0.1s forwards;
-        animation-delay: 0.7s;
-    }
-
-    .google-button:hover .blue {
-        animation: disappear 0.1s forwards;
-        animation-delay: 1.1s;
-    }
+.button:hover .text {
+    animation: text forwards 0.3s;
 }
 
 @keyframes text {
@@ -114,6 +14,38 @@
     to {
         color: white;
     }
+}
+
+.svg {
+    z-index: 6;
+}
+
+.button:hover::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 9%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    opacity: 0;
+    border-radius: 300px;
+    animation: wave1 2.5s ease-in-out forwards;
+}
+
+.button:hover::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 9%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    opacity: 0;
+    border-radius: 300px;
+    animation: wave2 2.5s ease-in-out forwards;
 }
 
 @keyframes wave1 {
@@ -230,6 +162,26 @@
         height: 800px;
         opacity: 1;
     }
+}
+
+.button:hover .red {
+    animation: disappear 0.1s forwards;
+    animation-delay: 0.1s;
+}
+
+.button:hover .yellow {
+    animation: disappear 0.1s forwards;
+    animation-delay: 0.3s;
+}
+
+.button:hover .green {
+    animation: disappear 0.1s forwards;
+    animation-delay: 0.7s;
+}
+
+.button:hover .blue {
+    animation: disappear 0.1s forwards;
+    animation-delay: 1.1s;
 }
 
 @keyframes disappear {
