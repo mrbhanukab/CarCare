@@ -61,7 +61,7 @@ public class Security {
                     user.get("email").toString(),
                     user.get("picture").toString()
             )));
-            response.sendRedirect("/client/dashboard");
+            response.sendRedirect("/client");
         }
     }
 }
