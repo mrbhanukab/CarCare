@@ -20,6 +20,7 @@ public class Emergency {
     private Location location;
 
     private boolean handled;
+
     @MapsId("vehicleLicense")
     @ManyToOne
     @JoinColumn(name = "vehicle")
