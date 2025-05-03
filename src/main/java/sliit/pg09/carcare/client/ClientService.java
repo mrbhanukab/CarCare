@@ -6,6 +6,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,20 +16,6 @@ public class ClientService {
     public ClientService(ClientRepository clientRepository) {
 
         this.clientRepository = clientRepository;
-    }
-
-    public String verifyUserStatus(String file, Model model) {
-        return getCurrentUser()
-                .map(user -> {
-                    model.addAttribute("user", user);
-                    return file;
-                })
-                .orElse("redirect:/");
-    }
-
-    public void updateClient(Client client) {
-
-        clientRepository.save(client);
     }
 
     public Optional<Client> getCurrentUser() {
@@ -45,17 +32,35 @@ public class ClientService {
         return clientRepository.findById(userEmail);
     }
 
-    public boolean createClient (Client client) {
-        if(client == null || client.getEmail() == null) {
-            return false;
-        }
+    public String verifyUserStatus(String file, Model model) {
+        return getCurrentUser()
+                .map(user -> {
+                    model.addAttribute("user", user);
+                    return file;
+                })
+                .orElse("redirect:/");
+    }
 
-        if(clientRepository.existsById(client.getEmail())) {
-            return false;
-        }
+    public void updateClient(Client client) {
 
         clientRepository.save(client);
-        return true;
+    }
+
+    public List<Client> searchClientsByGeneralQuery(String query) {
+        if (query == null || query.isBlank()) {
+            return clientRepository.findAll();
+        }
+        return clientRepository.searchByNameEmailOrVehicle(query.toLowerCase());
+    }
+
+    public void createClient(Client client) {
+        if (client == null || client.getEmail() == null) {
+            throw new IllegalArgumentException("Client or email cannot be null");
+        }
+        if (clientRepository.existsById(client.getEmail())) {
+            throw new IllegalStateException("Client with email " + client.getEmail() + " already exists");
+        }
+        clientRepository.save(client);
     }
 
 }
