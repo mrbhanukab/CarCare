@@ -1,58 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<div
-        class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
-        th:fragment="accountDetails(user)"
-        x-data="{
-validateForm() {
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const address = document.getElementById('address').value.trim();
-        let isValid = true;
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
+     th:fragment="accountDetails(user)"
+     x-data="{
+        isLoading: false,
+        submitForm() {
+            if (this.validateForm()) {
+                this.isLoading = true;
+                htmx.trigger('#accountForm', 'submit');
+            }
+        },
+        validateForm() {
+            const requiredFields = ['name', 'phone', 'address'];
+            let isValid = true;
 
-        // Reset errors
-        document.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
-        document.querySelectorAll('input').forEach(el => el.classList.remove('border-red-500'));
+            // Reset errors
+            document.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('input').forEach(el => el.classList.remove('border-red-500'));
 
-        if (!name) {
-            document.getElementById('nameError').textContent = 'Name is required';
-            document.getElementById('nameError').classList.remove('hidden');
-            document.getElementById('name').classList.add('border-red-500');
-            isValid = false;
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    const errorEl = document.getElementById(field + 'Error');
+                    errorEl.textContent = field.charAt(0).toUpperCase() + field.slice(1) + ' is required';
+                    errorEl.classList.remove('hidden');
+                    input.classList.add('border-red-500');
+                    isValid = false;
+                }
+            });
+
+            return isValid;
         }
-
-        if (!email) {
-            document.getElementById('emailError').textContent = 'Email is required';
-            document.getElementById('emailError').classList.remove('hidden');
-            document.getElementById('email').classList.add('border-red-500');
-            isValid = false;
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            document.getElementById('emailError').textContent = 'Email is invalid';
-            document.getElementById('emailError').classList.remove('hidden');
-            document.getElementById('email').classList.add('border-red-500');
-            isValid = false;
-        }
-
-        if (!phone) {
-            document.getElementById('phoneError').textContent = 'Phone number is required';
-            document.getElementById('phoneError').classList.remove('hidden');
-            document.getElementById('phone').classList.add('border-red-500');
-            isValid = false;
-        }
-
-        if (!address) {
-            document.getElementById('addressError').textContent = 'Address is required';
-            document.getElementById('addressError').classList.remove('hidden');
-            document.getElementById('address').classList.add('border-red-500');
-            isValid = false;
-        }
-
-        return isValid;
-    }
-     }"
->
+     }">
     <div class="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden border border-gray-700">
         <div class="p-6">
             <div class="flex justify-between items-center mb-4">
@@ -60,121 +40,67 @@ validateForm() {
                 <button @click="$el.closest('[x-data]').remove()" class="text-gray-400 hover:text-gray-200">
                     <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"/>
+                              stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </button>
             </div>
 
             <div class="flex items-center justify-center mb-6">
-                <div class="relative">
+                <div class="relative group">
                     <img alt="Profile"
                          class="w-24 h-24 rounded-full object-cover border-4 border-gray-700"
                          th:src="${user.imageUrl}"/>
+                    <div class="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-white text-sm">Google Avatar</span>
+                    </div>
                 </div>
             </div>
 
-            <form @submit="validateForm() && $event.preventDefault()"
-                  @submit.prevent="validateForm() && $el.submit()"
-                  hx-on::after-request="if(event.detail.successful) $el.closest('[x-data]').remove()"
-                  hx-post="/client/account/update"
-                  hx-swap="none">
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1" for="name">
-                        Full Name
-                    </label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
-                           id="name"
-                           name="name"
-                           required
-                           th:value="${user.name}"
-                           type="text"/>
-                    <p class="mt-1 text-sm text-red-500 hidden" id="nameError"></p>
+            <form @submit.prevent="submitForm()"
+                  class="space-y-4"
+                  hx-on::after-response="if(event.detail.xhr.status === 200) document.querySelector('[th\:fragment=\'accountDetails\']').remove()"
+                  hx-post="/client/account"
+                  hx-swap="none"
+                  id="accountForm">
+
+                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+
+                <div th:each="field : ${#objects.nullSafe(#fields.all(user), {})}">
+                    <div th:if="${!#strings.equalsIgnoreCase(field.name, 'created') &&
+                               !#strings.equalsIgnoreCase(field.name, 'updated') &&
+                               !#strings.equalsIgnoreCase(field.name, 'imageUrl')}">
+                        <label class="block text-sm font-medium text-gray-300 mb-1"
+                               th:for="${field.name}"
+                               th:text="${#strings.capitalize(field.name)}">
+                        </label>
+                        <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                               th:disabled="${field.name == 'email'}"
+                               th:id="${field.name}"
+                               th:name="${field.name}"
+                               th:value="${#objects.nullSafe(field.value, '')}"
+                               type="text"/>
+                        <p class="mt-1 text-sm text-red-500 hidden" th:id="${field.name + 'Error'}"></p>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1" for="email">
-                        Email Address
-                    </label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
-                           disabled="disabled"
-                           id="email"
-                           name="email"
-                           required
-                           th:value="${user.email}"
-                           type="email"/>
-                    <p class="mt-1 text-sm text-red-500 hidden" id="emailError"></p>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1" for="phone">
-                        Phone Number
-                    </label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
-                           id="phone"
-                           name="phone"
-                           required
-                           th:value="${user.phone}"
-                           type="tel"/>
-                    <p class="mt-1 text-sm text-red-500 hidden" id="phoneError"></p>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1" for="address">
-                        Address
-                    </label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
-                           id="address"
-                           name="address"
-                           required
-                           th:value="${user.address}"
-                           type="text"/>
-                    <p class="mt-1 text-sm text-red-500 hidden" id="addressError"></p>
-                </div>
+                <div id="errorContainer"></div>
 
                 <div class="mt-6 flex justify-end gap-3">
                     <button @click="$el.closest('[x-data]').remove()"
-                            class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                            class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                             type="button">
                         Cancel
                     </button>
-                    <button class="px-4 py-2 bg-cyan-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                    <button :disabled="isLoading"
+                            class="px-4 py-2 bg-cyan-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-50"
                             type="submit">
-                        Save Changes
+                        <span x-show="!isLoading">Save Changes</span>
+                        <span x-show="isLoading">Saving...</span>
                     </button>
                 </div>
-
             </form>
         </div>
     </div>
 </div>
-
-<script>
-    function closeModal() {
-        const modal = document.querySelector('[th\\:fragment="accountDetails"]');
-        if (modal) {
-            modal.remove();
-        }
-    }
-
-    // Add form validation before submission
-    document.querySelector('form').addEventListener('submit', function (e) {
-        if (!validateForm()) {
-            e.preventDefault();
-        }
-    });
-
-    // Clear error when user types
-    document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', function () {
-            const errorId = this.id + 'Error';
-            const errorElement = document.getElementById(errorId);
-            if (errorElement) {
-                errorElement.classList.add('hidden');
-            }
-            this.classList.remove('border-red-500');
-        });
-    });
-</script>
 </body>
 </html>
