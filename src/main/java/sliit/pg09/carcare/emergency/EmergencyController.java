@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -55,9 +57,27 @@ public class EmergencyController {
     }
 
     @Controller
-    @RequestMapping("/admin")
+    @RestController
+    @RequestMapping("/admin/emergency")
     public static class AdminEmergency {
         @Autowired
         private EmergencyService emergencyService;
+
+        @PostMapping("/handle")
+        public ResponseEntity<String> markAsHandled(@RequestParam String vehicleLicense,
+                                                    @RequestParam LocalDateTime emergencyTime) {
+            boolean success = emergencyService.markRequestAsHandled(vehicleLicense, emergencyTime);
+            if (success) {
+                return ResponseEntity.ok("Emergency request marked as handled.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Emergency request not found.");
+            }
+        }
+
+        @GetMapping("/ongoing")
+        public List<Emergency> getOngoingEmergencies() {
+            return emergencyService.getOngoingEmergencies();
+        }
     }
 }
