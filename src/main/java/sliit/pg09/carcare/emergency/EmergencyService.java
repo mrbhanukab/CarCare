@@ -1,7 +1,9 @@
 package sliit.pg09.carcare.emergency;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sliit.pg09.carcare.vehicle.Vehicle;
+import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,17 +13,24 @@ import java.util.Optional;
 @Service
 public class EmergencyService {
     private final EmergencyRepository emergencyRepository;
+    private final VehicleService vehicleService;
 
-    public EmergencyService(EmergencyRepository emergencyRepository) {
+    @Autowired
+    public EmergencyService(EmergencyRepository emergencyRepository, VehicleService vehicleService) {
         this.emergencyRepository = emergencyRepository;
+        this.vehicleService = vehicleService;
     }
 
-    public void createEmergency(String description, String location, String vehicleLicence) {
-        Vehicle vehicle = new Vehicle();
-        vehicle.setLicense(vehicleLicence);
+    public boolean vehicleHasEmergency(String vehicleLicense) {
+        return emergencyRepository.findEmergencyByVehicle_License(vehicleLicense).isHandled();
+    }
 
-        Emergency emergency = new Emergency(vehicle, LocalDateTime.now());
+    public void createEmergency(String vehicleLicence, Double latitude, Double longitude, LocalDateTime timestamp) {
 
+        Vehicle vehicle = vehicleService.findVehicle(vehicleLicence);
+        Emergency.Location emergencyLocation = new Emergency.Location(latitude, longitude);
+        Emergency emergency = new Emergency(vehicle, timestamp, emergencyLocation);
+        emergencyRepository.save(emergency);
         emergency.setDescription(description);
         emergency.setLocation(location);
         emergency.setHandled(false);  // Default to unhandled
