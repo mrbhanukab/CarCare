@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 
 import java.util.List;
 
+import java.util.Optional;
+
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
@@ -16,14 +18,12 @@ public class ClientService {
     }
 
     public String verifyUserStatus(String file, Model model) {
-        var userEmail = (((OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAttributes()).get("email").toString();
-        return clientRepository.findById(userEmail).map(user -> {
-            model.addAttribute("user", user);
-//            if (user.getNic() == null && !Objects.equals(file, "Client/account")) {
-//                return "redirect:/client/account";
-//            }
-            return file;
-        }).orElse("redirect:/");
+        return getCurrentUser()
+                .map(user -> {
+                    model.addAttribute("user", user);
+                    return file;
+                })
+                .orElse("redirect:/");
     }
 
     public List<Client> searchClientsByGeneralQuery(String query) {
@@ -32,4 +32,37 @@ public class ClientService {
         }
         return clientRepository.searchByNameEmailOrVehicle(query.toLowerCase());
     }
+}
+
+    public void updateClient(Client client) {
+        clientRepository.save(client);
+    }
+
+    public Optional<Client> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof OAuth2User oAuth2User)) {
+            return Optional.empty();
+        }
+
+        String userEmail = oAuth2User.getAttribute("email");
+        if (userEmail == null) {
+            return Optional.empty();
+        }
+
+        return clientRepository.findById(userEmail);
+    }
+
+    public boolean createClient (Client client) {
+        if(client == null || client.getEmail() == null) {
+            return false;
+        }
+
+        if(clientRepository.existsById(client.getEmail())) {
+            return false;
+        }
+
+        clientRepository.save(client);
+        return true;
+    }
+
 }

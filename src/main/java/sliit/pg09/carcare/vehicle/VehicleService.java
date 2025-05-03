@@ -9,4 +9,8 @@ public class VehicleService {
     public VehicleService(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
     }
+
+    public Vehicle findVehicle(String vehicleId) {
+        return vehicleRepository.findById(vehicleId).orElse(null);
+    }
 }
