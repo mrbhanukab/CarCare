@@ -1,5 +1,92 @@
 @import "tailwindcss";
 
-@source "../resources/templates/fragments/**";
+
+* {
+    --sb-track-color: #1f2937;
+    --sb-thumb-color: #08d3f2;
+    --sb-size: 14px;
+}
+
+*::-webkit-scrollbar {
+    width: var(--sb-size)
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 30px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 30px;
+    border: 5px solid #232E33;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    * {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+}
+
+@layer utilities {
+    .bg-grid-pattern {
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    .glow-effect {
+        animation: glow 2s infinite;
+    }
+
+    .neon-text {
+        text-shadow: 0 0 5px rgba(56, 189, 248, 0.7), 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+
+    .neon-border {
+        box-shadow: 0 0 5px rgba(56, 189, 248, 0.5), 0 0 10px rgba(56, 189, 248, 0.3);
+    }
+
+    .grid-background {
+        @apply h-full w-full fixed opacity-30 inset-0 -z-20;
+        background-image: linear-gradient(to right, #000000 1px, transparent 1px),
+        linear-gradient(to bottom, #000000 1px, transparent 1px);
+        background-size: 15px 15px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(56, 189, 248, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(56, 189, 248, 0.3);
+    }
+}
+
+
+@source "../resources/templates/Components/**";
 @source "../resources/templates/Client/**";
 @source "../resources/templates/Layouts/client.html";
