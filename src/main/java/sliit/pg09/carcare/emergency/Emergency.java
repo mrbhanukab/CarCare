@@ -17,18 +17,32 @@ public class Emergency {
     private EmergencyId id;
 
     private String description;
-    private String location;
+    private Location location;
 
     @MapsId("vehicleLicense")
     @ManyToOne
     @JoinColumn(name = "vehicle")
     private Vehicle vehicle;
 
-    public Emergency(Vehicle vehicle, LocalDateTime time) {
+    public Emergency(Vehicle vehicle, LocalDateTime time, Location location) {
         this.id = new EmergencyId();
         this.vehicle = vehicle;
         this.id.setVehicleLicense(vehicle.getLicense());
         this.id.setEmergencyTime(time);
+        this.location = location;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @Embeddable
+    public static class Location {
+        private Double latitude;
+        private Double longitude;
+
+        public Location(Double latitude, Double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
     }
 
     @Embeddable

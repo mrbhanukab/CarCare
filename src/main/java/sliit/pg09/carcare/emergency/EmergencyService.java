@@ -18,12 +18,11 @@ public class EmergencyService {
         this.vehicleService = vehicleService;
     }
 
-    public void createEmergency(String location, String vehicleLicence) {
+    public void createEmergency(String vehicleLicence, Double latitude, Double longitude, LocalDateTime timestamp) {
+
         Vehicle vehicle = vehicleService.findVehicle(vehicleLicence);
-
-        Emergency emergency = new Emergency(vehicle, LocalDateTime.now());
-        emergency.setLocation(location);
-
+        Emergency.Location emergencyLocation = new Emergency.Location(latitude, longitude);
+        Emergency emergency = new Emergency(vehicle, timestamp, emergencyLocation);
         emergencyRepository.save(emergency);
     }
 }

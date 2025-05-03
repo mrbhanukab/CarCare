@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Controller
@@ -37,8 +38,12 @@ public class EmergencyController {
         public ResponseEntity<String> handleEmergencyRequests(
                 @RequestParam Double latitude,
                 @RequestParam Double longitude,
-                @RequestParam String timestamp) {
+                @RequestParam LocalDateTime timestamp,
+                @RequestParam String vehicleLicense
+        ) {
             try {
+                emergencyService.createEmergency(vehicleLicense, latitude, longitude, timestamp);
+
                 HttpHeaders headers = new HttpHeaders();
                 System.out.printf("Emergency Request Received: %s, %s, %s%n", latitude, longitude, timestamp);
                 headers.add("HX-Redirect", "/client");
