@@ -5,6 +5,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
@@ -22,5 +24,12 @@ public class ClientService {
 //            }
             return file;
         }).orElse("redirect:/");
+    }
+
+    public List<Client> searchClientsByGeneralQuery(String query) {
+        if (query == null || query.isBlank()) {
+            return clientRepository.findAll(); // Return all clients if query is empty
+        }
+        return clientRepository.searchByNameEmailOrVehicle(query.toLowerCase());
     }
 }
