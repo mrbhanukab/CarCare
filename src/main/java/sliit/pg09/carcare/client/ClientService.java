@@ -14,6 +14,7 @@ public class ClientService {
     private final ClientRepository clientRepository;
 
     public ClientService(ClientRepository clientRepository) {
+
         this.clientRepository = clientRepository;
     }
 
@@ -41,6 +42,7 @@ public class ClientService {
     }
 
     public void updateClient(Client client) {
+
         clientRepository.save(client);
     }
 
