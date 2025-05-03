@@ -5,13 +5,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RestController
 @RequestMapping("/client")
 public class ClientController {
+
+    @Autowired
+    private ClientService clientService;
     private final ClientService clientService;
 
     public ClientController(ClientService clientService) {
@@ -22,6 +32,12 @@ public class ClientController {
     public String getDashboard(Model model) {
         return clientService.verifyUserStatus("Client/Dashboard", model);
     }
+
+    @GetMapping("/search")
+    public List<Client> searchClients(@RequestParam(required = false) String query) {
+        return clientService.searchClientsByGeneralQuery(query);
+    }
+}
 
 
     @HxRequest

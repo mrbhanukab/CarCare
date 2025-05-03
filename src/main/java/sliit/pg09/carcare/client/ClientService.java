@@ -1,10 +1,11 @@
 package sliit.pg09.carcare.client;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+
+import java.util.List;
 
 import java.util.Optional;
 
@@ -24,6 +25,14 @@ public class ClientService {
                 })
                 .orElse("redirect:/");
     }
+
+    public List<Client> searchClientsByGeneralQuery(String query) {
+        if (query == null || query.isBlank()) {
+            return clientRepository.findAll(); // Return all clients if query is empty
+        }
+        return clientRepository.searchByNameEmailOrVehicle(query.toLowerCase());
+    }
+}
 
     public void updateClient(Client client) {
         clientRepository.save(client);
