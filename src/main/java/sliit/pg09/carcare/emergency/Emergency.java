@@ -15,10 +15,7 @@ import java.time.LocalDateTime;
 public class Emergency {
     @EmbeddedId
     private EmergencyId id;
-
-    private String description;
     private Location location;
-
     private boolean handled;
 
     @MapsId("vehicleLicense")

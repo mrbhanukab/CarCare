@@ -27,12 +27,10 @@ public class EmergencyService {
 
     public void createEmergency(String vehicleLicence, Double latitude, Double longitude, LocalDateTime timestamp) {
 
-        Vehicle vehicle = vehicleService.findVehicle(vehicleLicence);
+        Vehicle vehicle = vehicleService.getVehicleByLicense(vehicleLicence);
         Emergency.Location emergencyLocation = new Emergency.Location(latitude, longitude);
         Emergency emergency = new Emergency(vehicle, timestamp, emergencyLocation);
         emergencyRepository.save(emergency);
-        emergency.setDescription(description);
-        emergency.setLocation(location);
         emergency.setHandled(false);  // Default to unhandled
 
         emergencyRepository.save(emergency);
