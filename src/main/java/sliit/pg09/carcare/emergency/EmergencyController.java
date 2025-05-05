@@ -1,87 +1,97 @@
 package sliit.pg09.carcare.emergency;
 
-import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import sliit.pg09.carcare.client.Client;
+import sliit.pg09.carcare.vehicle.Vehicle;
+import sliit.pg09.carcare.vehicle.model.CarModel;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class EmergencyController {
+    private final List<Emergency> emergencies;
 
-    @Controller
-    @RequestMapping("/client")
-    public static class ClientEmergency {
-        @Autowired
-        private EmergencyService emergencyService;
+    public EmergencyController() {
+        this.emergencies = createSampleEmergencies();
+    }
 
-        @HxRequest
-        @GetMapping("/emergency")
-        public String showEmergencyModal(Model model) {
-            model.addAttribute("vehicle", Map.of(
-                    "year", "2024",
-                    "brand", "BMW",
-                    "model", "X5"
-            ));
-            return "Client/Components/EmergencyConfirmation :: emergencyConfirmation";
-        }
+    private List<Emergency> createSampleEmergencies() {
+        List<Emergency> sampleEmergencies = new ArrayList<>();
 
-        @HxRequest
-        @PostMapping("/emergency")
-        @ResponseBody
-        public ResponseEntity<String> handleEmergencyRequests(
-                @RequestParam Double latitude,
-                @RequestParam Double longitude,
-                @RequestParam LocalDateTime timestamp,
-                @RequestParam String vehicleLicense
-        ) {
-            try {
-                emergencyService.createEmergency(vehicleLicense, latitude, longitude, timestamp);
+        // Create sample clients
+        Client client1 = new Client();
+        client1.setName("John Smith");
+        client1.setPhone("+1 (555) 123-4567");
+        client1.setImageUrl("https://lh3.googleusercontent.com/a/ACg8ocIazPzNQsfrx16bSitYr5Xn7uGxcvtIIbm-jCA5-lhg_KNGDtqS=s96-c");
 
-                HttpHeaders headers = new HttpHeaders();
-                System.out.printf("Emergency Request Received: %s, %s, %s%n", latitude, longitude, timestamp);
-                headers.add("HX-Redirect", "/client");
-                return ResponseEntity.ok()
-                        .headers(headers)
-                        .body("Emergency request received successfully");
+        // Create sample models
+        CarModel model1 = new CarModel();
+        model1.setNumber("1234");
+        model1.setColor(CarModel.color.WHITE);
+        model1.setType(CarModel.type.SEDAN);
+        model1.setYear(2019);
+        model1.setMake("Porsche");
+        model1.setImage("https://images-porsche.imgix.net/-/media/5D0BB7E042BD4C9DBEF84B5E70482520_73AA748306934B0C9CE20E32231DFCE2_CZ25W01IX0011911-carrera-front?w=750&q=85&auto=format");
 
-            } catch (Exception e) {
-                System.err.println("Error processing emergency request: " + e.getMessage());
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Failed to process emergency request");
-            }
-        }
+        // Create sample vehicles
+        Vehicle vehicle1 = new Vehicle();
+        vehicle1.setLicense("ABC-1234");
+        vehicle1.setModel(model1);
+        vehicle1.setClient(client1);
+
+        // Create emergencies
+        Emergency emergency1 = new Emergency();
+        emergency1.setId(new Emergency.EmergencyId());
+        emergency1.getId().setVehicleLicense(vehicle1.getLicense());
+        emergency1.getId().setEmergencyTime(LocalDateTime.now().minusMinutes(10));
+        emergency1.setLocation(new Emergency.Location(6.777703649096581, 79.91003484541915));
+        emergency1.setVehicle(vehicle1);
+        emergency1.setHandled(false);
+
+        sampleEmergencies.add(emergency1);
+        return sampleEmergencies;
     }
 
     @Controller
-    @RestController
-    @RequestMapping("/admin/emergency")
+    @RequestMapping("/admin")
     public static class AdminEmergency {
         @Autowired
-        private EmergencyService emergencyService;
+        private EmergencyController parentController;
 
-        @PostMapping("/handle")
-        public ResponseEntity<String> markAsHandled(@RequestParam String vehicleLicense,
-                                                    @RequestParam LocalDateTime emergencyTime) {
-            boolean success = emergencyService.markRequestAsHandled(vehicleLicense, emergencyTime);
-            if (success) {
-                return ResponseEntity.ok("Emergency request marked as handled.");
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Emergency request not found.");
-            }
+        @GetMapping("/emergencies")
+        public String getEmergencies(Model model) {
+            model.addAttribute("emergencies", parentController.emergencies);
+            model.addAttribute("activeEmergencies",
+                    parentController.emergencies.stream()
+                            .filter(e -> !e.isHandled())
+                            .collect(Collectors.toList()));
+            // Update the return path to match your template location
+            return "Admin/Components/Emergency";
         }
 
-        @GetMapping("/ongoing")
-        public List<Emergency> getOngoingEmergencies() {
-            return emergencyService.getOngoingEmergencies();
+        @PostMapping("/emergency/handle")
+        public String markAsHandled(
+                @RequestParam String license,
+                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime time,
+                Model model) {
+
+            parentController.emergencies.stream()
+                    .filter(e -> e.getId().getVehicleLicense().equals(license) &&
+                            e.getId().getEmergencyTime().equals(time))
+                    .findFirst()
+                    .ifPresent(e -> e.setHandled(true));
+
+            return getEmergencies(model);
         }
     }
 }

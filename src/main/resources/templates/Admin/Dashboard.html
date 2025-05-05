@@ -1,11 +1,165 @@
+<!DOCTYPE html>
 <html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
 >
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Admin</title>
+    <link rel="icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
+    <link rel="shortcut icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
+    <script th:src="@{/scripts/htmx.min.js}"></script>
+    <script th:src="@{/scripts/alpine.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
 </head>
 <body>
-<section>
-    <h1>Hi Admin</h1>
-</section>
+<div class="flex h-screen" x-data="{
+        activeSection: 'emergencies',
+        sidebarOpen: true,
+        navItems: [
+            {
+                id: 'emergencies',
+                name: 'Emergencies',
+                alert: true,
+                path: '/admin/emergencies'
+            },
+            {
+                id: 'appointments',
+                name: 'Appointments',
+                alert: false,
+                path: '/admin/appointments'
+            },
+            {
+                id: 'log',
+                name: 'Log',
+                alert: false,
+                path: '/admin/log'
+            },
+            {
+                id: 'users',
+                name: 'Users',
+                alert: false,
+                path: '/admin/users'
+            }
+        ]
+    }">
+    <!-- Overlay -->
+    <div @click="sidebarOpen = false"
+         class="fixed inset-0 bg-black/20 z-10 md:hidden"
+         x-show="sidebarOpen">
+    </div>
+
+    <!-- Sidebar -->
+    <header class="fixed inset-y-0 left-0 z-20 flex flex-col h-screen p-2 justify-between border-e border-gray-100 bg-white transition-transform duration-300 ease-in-out md:relative md:translate-x-0"
+            x-bind:class="{
+            'translate-x-0': sidebarOpen,
+            '-translate-x-full': !sidebarOpen
+        }">
+        <div>
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-lg font-semibold">Admin Dashboard</h1>
+                <button @click="sidebarOpen = false" class="md:hidden text-black hover:bg-gray-100 p-2 rounded-md">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24">
+                        <path d="M15 6L9 12L15 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navigation Items -->
+            <div class="flex flex-col justify-evenly gap-3 border-t border-gray-100 pt-4">
+                <template :key="item.id" x-for="item in navItems">
+                    <button
+                            :class="{'bg-gray-100 text-black': activeSection === item.id,
+                            'text-gray-500 hover:text-black hover:bg-gray-100': activeSection !== item.id}"
+                            :hx-get="item.path"
+                            @click="activeSection = item.id"
+                            class="flex items-center w-full px-3 py-2 text-sm font-medium rounded-md transition-colors"
+                            hx-swap="innerHTML"
+                            hx-target="#main-content">
+                        <span class="ml-3" x-text="item.name"></span>
+                        <span class="ml-auto h-2 w-2 rounded-full bg-red-500" x-show="item.alert"></span>
+                    </button>
+                </template>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <form method="post" th:action="@{/logout}">
+            <button class="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-500 rounded-md hover:text-black hover:bg-gray-100 transition-colors"
+                    type="submit">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24">
+                    <path d="M9 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9"
+                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+                <span class="ml-3">Logout</span>
+            </button>
+        </form>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex flex-col flex-1 overflow-hidden">
+        <!-- Breadcrumb -->
+        <nav aria-label="Breadcrumb" class="px-6 pt-5 bg-gray-100">
+            <ol class="flex items-center gap-1 text-sm text-gray-700">
+                <li class="block transition-colors hover:text-gray-900">
+                    <a class="block" href="#">
+                        <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        </svg>
+                    </a>
+                </li>
+
+                <template
+                        :key="index"
+                        x-for="(item, index) in ['Admin', activeSection.charAt(0).toUpperCase() + activeSection.slice(1).replace('-', ' ')]">
+                    <li class="flex items-center gap-1 transition-colors hover:text-gray-900">
+                        <svg class="size-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd"
+                                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                  fill-rule="evenodd"/>
+                        </svg>
+                        <p class="block transition-colors hover:text-gray-900" x-text="item"></p>
+                    </li>
+                </template>
+            </ol>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button @click="sidebarOpen = !sidebarOpen" class="md:hidden absolute top-5 left-4">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg>
+        </button>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-auto p-6 bg-gray-100">
+            <div hx-get="/admin/emergencies"
+                 hx-swap="innerHTML"
+                 hx-trigger="load"
+                 id="main-content">
+            </div>
+        </main>
+    </div>
+
+    <!-- Add event listeners for navigation -->
+    <script>
+        document.body.addEventListener('appointmentUpdated', function () {
+            if (Alpine.store('activeSection') === 'appointments') {
+                htmx.trigger('#main-content', 'get', '/admin/appointments');
+            }
+        });
+
+        document.body.addEventListener('emergencyUpdated', function () {
+            if (Alpine.store('activeSection') === 'emergencies') {
+                htmx.trigger('#main-content', 'get', '/admin/emergencies');
+            }
+        });
+    </script>
+</div>
 </body>
 </html>

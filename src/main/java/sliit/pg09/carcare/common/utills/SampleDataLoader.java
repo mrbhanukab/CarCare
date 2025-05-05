@@ -6,9 +6,8 @@ import org.springframework.stereotype.Component;
 import sliit.pg09.carcare.client.Client;
 import sliit.pg09.carcare.client.ClientRepository;
 import sliit.pg09.carcare.emergency.EmergencyRepository;
-import sliit.pg09.carcare.vehicle.Vehicle;
 import sliit.pg09.carcare.vehicle.VehicleRepository;
-import sliit.pg09.carcare.vehicle.model.Model;
+import sliit.pg09.carcare.vehicle.model.CarModel;
 import sliit.pg09.carcare.vehicle.model.ModelRepository;
 
 import java.util.List;
@@ -42,11 +41,11 @@ public class SampleDataLoader implements CommandLineRunner {
     }
 
     public void modelLoader() {
-        List<Model> models = IntStream.rangeClosed(1, 10)
-                .mapToObj(model -> new Model(
+        List<CarModel> models = IntStream.rangeClosed(1, 10)
+                .mapToObj(model -> new CarModel(
                         faker.random().hex(), // Random unique identifier
-                        faker.options().option(Model.color.values()), // Random color
-                        faker.options().option(Model.type.values()), // Random type
+                        faker.options().option(CarModel.color.values()), // Random color
+                        faker.options().option(CarModel.type.values()), // Random type
                         faker.number().numberBetween(1990, 2024), // Random year
                         faker.number().numberBetween(1, 12), // Random noOfCylinders
                         faker.number().numberBetween(50, 500), // Random power
@@ -58,21 +57,21 @@ public class SampleDataLoader implements CommandLineRunner {
         modelRepository.saveAll(models);
     }
 
-    public void vehicleLoader() {
-        List<Vehicle> vehicles = IntStream.rangeClosed(1, 100)
-                .mapToObj(vehicle -> {
-                    Client client = clientRepository.findById(faker.random().hex()).orElse(null);
-                    Model model = modelRepository.findById(faker.random().hex()).orElse(null);
-                    return new Vehicle(
-                            faker.letterify("??-####"), // Random license plate
-                            faker.bothify("??#####"), // Random VIN
-                            model,
-                            client
-                    );
-                })
-                .toList();
-        vehicleRepository.saveAll(vehicles);
-    }
+//    public void vehicleLoader() {
+//        List<Vehicle> vehicles = IntStream.rangeClosed(1, 100)
+//                .mapToObj(vehicle -> {
+//                    Client client = clientRepository.findById(faker.random().hex()).orElse(null);
+//                    CarModel model = modelRepository.findById(faker.random().hex()).orElse(null);
+//                    return new Vehicle(
+//                            faker.letterify("??-####"), // Random license plate
+//                            faker.bothify("??#####"), // Random VIN
+//                            model,
+//                            client
+//                    );
+//                })
+//                .toList();
+//        vehicleRepository.saveAll(vehicles);
+//    }
 
     @Override
     public void run(String... args) throws Exception {
