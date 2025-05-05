@@ -31,8 +31,6 @@ public class EmergencyService {
         Emergency.Location emergencyLocation = new Emergency.Location(latitude, longitude);
         Emergency emergency = new Emergency(vehicle, timestamp, emergencyLocation);
         emergencyRepository.save(emergency);
-        emergency.setDescription(description);
-        emergency.setLocation(location);
         emergency.setHandled(false);  // Default to unhandled
 
         emergencyRepository.save(emergency);
