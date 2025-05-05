@@ -1,12 +1,15 @@
-package sliit.pg09.carcare.model;
+package sliit.pg09.carcare.client;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import sliit.pg09.carcare.vehicle.Vehicle;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +22,6 @@ public class Client {
     @Id
     private String email;
     private String name;
-
     private String phone;
     private String address;
     private String nic;
@@ -27,7 +29,6 @@ public class Client {
 
     @CreationTimestamp
     private LocalDate created;
-
     @UpdateTimestamp
     private LocalDate updated;
 
