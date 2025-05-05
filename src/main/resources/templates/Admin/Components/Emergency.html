@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Emergencies</title>
+</head>
+<body>
+<div th:fragment="emergency">
+    <div class="space-y-6" x-data="{
+        showConfirmDialog: false,
+        selectedEmergency: null
+    }">
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold tracking-tight">Emergencies Dashboard</h2>
+            <div class="px-3 py-1 border border-red-500 text-red-500 flex items-center gap-1 rounded-md">
+                <span class="h-2 w-2 rounded-full bg-red-500"></span>
+                <span th:text="${#lists.size(activeEmergencies)} + ' Active Emergencies'"></span>
+            </div>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+            <!-- Emergency Cards -->
+            <th:block th:each="emergency : ${emergencies}">
+                <div th:class="${'bg-white rounded-lg shadow-sm overflow-hidden ' + (emergency.handled ? 'border' : 'border-red-200 border')}">
+                    <!-- Header -->
+                    <div class="flex flex-row items-center justify-between p-4 border-b">
+                        <div class="flex items-center gap-3">
+                            <img class="w-10 h-10 rounded-full object-cover" th:alt="${emergency.vehicle.client.name}"
+                                 th:src="${emergency.vehicle.client.imageUrl}"/>
+                            <div>
+                                <h3 class="text-lg font-bold">Emergency Request</h3>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="mr-1" fill="none" height="16" viewBox="0 0 24 24"
+                                         width="16" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                                              stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                              stroke-width="2"/>
+                                    </svg>
+                                    <span th:text="${#temporals.format(emergency.id.emergencyTime, 'dd MMM yyyy HH:mm')}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full"
+                              th:if="${!emergency.handled}">New</span>
+                        <span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full"
+                              th:if="${emergency.handled}">Handled</span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-4 space-y-4">
+                        <!-- Customer and Vehicle Info -->
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="font-medium">Customer Information</div>
+                                <div class="text-sm" th:text="${emergency.vehicle.client.name}"></div>
+                                <div class="flex items-center">
+                                    <th:block
+                                            th:replace="~{Admin/Components/Button :: button(text=${emergency.vehicle.client.phone}, variant='outline', size='sm')}"/>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div class="font-medium">Vehicle Information</div>
+                                <div class="flex items-center gap-3">
+                                    <img class="w-16 h-12 object-contain"
+                                         th:alt="${emergency.vehicle.model.make + ' ' + emergency.vehicle.model.number}"
+                                         th:src="${emergency.vehicle.model.image}"/>
+                                    <div>
+                                        <div class="text-sm"
+                                             th:text="${emergency.vehicle.model.make + ' ' + emergency.vehicle.model.number + ' (' + emergency.vehicle.model.year + ')'}"></div>
+                                        <div class="text-sm">License Plate: <span class="font-medium"
+                                                                                  th:text="${emergency.vehicle.license}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="space-y-2">
+                            <div class="font-medium flex items-center gap-1">
+                                <svg fill="none" height="16" viewBox="0 0 24 24" width="16"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
+                                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"/>
+                                    <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z"
+                                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"/>
+                                </svg>
+                                Location
+                            </div>
+                            <iframe allowfullscreen
+                                    class="w-full h-48 rounded-lg bg-gray-200"
+                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                    th:src="@{'https://maps.google.com/maps?q=' + ${emergency.location.latitude} + ',' + ${emergency.location.longitude} + '&hl=es;z=15&ie=UTF8&iwloc=&amp;output=embed'}">
+                            </iframe>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex justify-between items-center pt-2">
+                            <th:block
+                                    th:replace="~{Admin/Components/Button :: button(text='Call Customer', variant='default', size='default')}"/>
+
+                            <th:block th:if="${!emergency.handled}">
+                                <button hx-post="@{/admin/emergency/handle}"
+                                        hx-swap="innerHTML"
+                                        hx-target="#main-content"
+                                        hx-vals="js:{license: '${emergency.id.vehicleLicense}', time: '${emergency.id.emergencyTime}'}"
+                                        th:onclick="@{|handleEmergency('${emergency.id.vehicleLicense}','${emergency.id.emergencyTime}')|}"
+                                        th:replace="~{Admin/Components/Button :: button(text='Mark as Handled', variant='outline', size='default')}">
+                                </button>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+
+            <!-- No Active Emergencies Message -->
+            <div class="col-span-full bg-white rounded-lg shadow-sm border p-10 flex flex-col items-center justify-center"
+                 th:if="${#lists.isEmpty(activeEmergencies)}">
+                <svg class="text-green-500 mb-4" fill="none" height="48" viewBox="0 0 24 24" width="48"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999M22 4L12 14.01L9 11.01"
+                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+                <p class="text-lg font-medium">No active emergencies</p>
+                <p class="text-sm text-gray-500">All emergency requests have been handled</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

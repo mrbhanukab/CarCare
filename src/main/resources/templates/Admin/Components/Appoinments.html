@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="appointments" x-data="{
+    activeTab: 'pending',
+    showConfirmDialog: false,
+    showRejectDialog: false,
+    selectedAppointment: null,
+    selectedDateOption: ''
+}">
+    <div class="space-y-6">
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold tracking-tight">Appointment Requests</h2>
+            <div class="px-3 py-1 border rounded-md flex items-center gap-1">
+                <span th:text="${#lists.size(pendingAppointments)} + ' Pending Requests'"></span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <!-- Tabs -->
+            <div class="grid grid-cols-3 border-b">
+                <button :class="{'border-b-2 border-black': activeTab === 'pending', 'text-gray-500': activeTab !== 'pending'}"
+                        @click="activeTab = 'pending'"
+                        class="py-3 text-center font-medium">
+                    Pending
+                </button>
+                <button :class="{'border-b-2 border-black': activeTab === 'confirmed', 'text-gray-500': activeTab !== 'confirmed'}"
+                        @click="activeTab = 'confirmed'"
+                        class="py-3 text-center font-medium">
+                    Confirmed
+                </button>
+                <button :class="{'border-b-2 border-black': activeTab === 'rejected', 'text-gray-500': activeTab !== 'rejected'}"
+                        @click="activeTab = 'rejected'"
+                        class="py-3 text-center font-medium">
+                    Rejected
+                </button>
+            </div>
+
+            <div class="p-4">
+                <!-- Pending Appointments -->
+                <div class="space-y-4" x-show="activeTab === 'pending'">
+                    <div class="flex flex-col items-center justify-center py-10"
+                         th:if="${#lists.isEmpty(pendingAppointments)}">
+                        <svg class="text-green-500 mb-4" fill="none" height="48" viewBox="0 0 24 24" width="48">
+                            <!-- SVG path from your React component -->
+                        </svg>
+                        <p class="text-lg font-medium">No pending appointment requests</p>
+                        <p class="text-sm text-gray-500">All appointment requests have been processed</p>
+                    </div>
+
+                    <th:block th:each="appointment : ${pendingAppointments}">
+                        <div class="border rounded-lg p-4 space-y-4" data-appointment-id="${appointment.id}">
+                            <!-- Appointment Header -->
+                            <div class="flex flex-row items-center justify-between pb-2 border-b">
+                                <div class="flex items-center gap-3">
+                                    <img class="w-10 h-10 rounded-full object-cover"
+                                         th:alt="${appointment.vehicle?.client?.name}"
+                                         th:src="${appointment.vehicle?.client?.imageUrl ?: '/images/placeholder.svg'}"/>
+                                    <div>
+                                        <h3 class="text-lg font-bold">Appointment Request</h3>
+                                        <div class="text-sm text-gray-500"
+                                             th:text="${appointment.vehicle?.client?.name}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Service Icons would go here -->
+                            </div>
+
+                            <!-- Customer and Vehicle Info -->
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="font-medium">Customer Information</div>
+                                    <div class="text-sm" th:text="${appointment.vehicle?.client?.name}"></div>
+                                    <div class="flex items-center">
+                                        <button th:replace="~{Admin/Components/Button :: button(
+                                            text=${appointment.vehicle?.client?.phone},
+                                            variant='outline',
+                                            size='sm'
+                                        )}">
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <div class="font-medium">Vehicle Information</div>
+                                    <div class="flex items-center gap-3">
+                                        <img class="w-16 h-12 object-contain"
+                                             th:alt="${appointment.vehicle?.model?.make + ' ' + appointment.vehicle?.model?.number}"
+                                             th:src="${appointment.vehicle?.model?.image ?: '/images/placeholder.svg'}"/>
+                                        <div>
+                                            <div class="text-sm"
+                                                 th:text="${appointment.vehicle?.model?.make + ' ' + appointment.vehicle?.model?.number + ' (' + appointment.vehicle?.model?.year + ')'}">
+                                            </div>
+                                            <div class="text-sm">License Plate:
+                                                <span class="font-medium"
+                                                      th:text="${appointment.vehicle?.license}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Preferred Dates -->
+                            <div class="space-y-2">
+                                <div class="font-medium">Preferred Dates</div>
+                                <div class="grid gap-2">
+                                    <th:block th:each="date : ${appointment.preferredDates}">
+                                        <div class="flex items-center justify-between p-2 border rounded-md">
+                                            <div class="flex items-center gap-2">
+                                                <!-- Calendar Icon -->
+                                                <svg class="text-gray-500" fill="none" height="16" viewBox="0 0 24 24"
+                                                     width="16">
+                                                    <!-- Calendar SVG path -->
+                                                </svg>
+                                                <span class="text-sm"
+                                                      th:text="${#temporals.format(date, 'yyyy-MM-dd')}"></span>
+                                                <!-- Clock Icon -->
+                                                <svg class="text-gray-500 ml-2" fill="none" height="16"
+                                                     viewBox="0 0 24 24" width="16">
+                                                    <!-- Clock SVG path -->
+                                                </svg>
+                                                <span class="text-sm"
+                                                      th:text="${#temporals.format(date, 'HH:mm')}"></span>
+                                            </div>
+                                            <button th:replace="~{Admin/Components/Button :: button(
+    text='Select',
+    variant='outline',
+    size='sm',
+    attributes='hx-post=\'/admin/appointments/schedule\'
+               hx-vals=\'javascript:{
+                   license: appointment.id.license,
+                   createdTime: appointment.id.createdTime,
+                   scheduledTime: date
+               }\'
+               hx-target=\'#main-content\''
+)}">
+                                            </button>
+                                        </div>
+                                    </th:block>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex justify-between items-center pt-2">
+                                <button th:replace="~{Admin/Components/Button :: button(
+                                    text='Call Customer',
+                                    variant='outline',
+                                    onClick='window.location.href=`tel:${appointment.vehicle?.client?.phone}`'
+                                )}">
+                                </button>
+
+                                <button th:replace="~{Admin/Components/Button :: button(
+    text='Reject Request',
+    variant='destructive',
+    attributes='hx-post=\'/admin/appointments/reject\'
+               hx-vals=\'javascript:{
+                   license: appointment.id.license,
+                   createdTime: appointment.id.createdTime
+               }\'
+               hx-target=\'#main-content\''
+)}">
+                                </button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+
+                <!-- Confirmed Appointments Tab -->
+                <div class="space-y-4" x-show="activeTab === 'confirmed'">
+                    <!-- Similar structure to pending, but for confirmed appointments -->
+                </div>
+
+                <!-- Rejected Appointments Tab -->
+                <div class="space-y-4" x-show="activeTab === 'rejected'">
+                    <!-- Similar structure to pending, but for rejected appointments -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    <div th:replace="~{Components/ConfirmationDialog :: dialog(
+        isOpen=showConfirmDialog,
+        onClose='showConfirmDialog = false',
+        onConfirm='confirmAppointment',
+        title='Confirm Appointment',
+        message='Are you sure you want to confirm this appointment?',
+        confirmText='Confirm Appointment'
+    )}">
+    </div>
+
+    <!-- Reject Dialog -->
+    <div th:replace="~{Components/ConfirmationDialog :: dialog(
+        isOpen=showRejectDialog,
+        onClose='showRejectDialog = false',
+        onConfirm='rejectAppointment',
+        title='Reject Appointment Request',
+        message='Are you sure you want to reject this appointment request? This action cannot be undone.',
+        confirmText='Reject Request',
+        isDestructive=true
+    )}">
+    </div>
+</div>
+</body>
+</html>
+<!-- Add this at the bottom of Appointments.html -->
+<script>
+    document.body.addEventListener('appointmentUpdated', function () {
+        htmx.trigger('#main-content', 'get', '/admin/appointments');
+    });
+</script>
