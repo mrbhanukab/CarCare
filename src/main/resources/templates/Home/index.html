@@ -4,61 +4,272 @@
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <link rel="stylesheet" th:href="@{/css/home.css}"/>
-    <script th:src="@{/scripts/htmx.min.js}"></script>
     <link rel="icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
-    <link rel="shortcut icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
+    <link rel="shortcut_icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+
     <title>LuxAuto - Premium Vehicle Care</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .luxury-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .blue-gradient {
+            background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #1E40AF 100%);
+        }
+
+        .text-blue {
+            color: #3B82F6;
+        }
+
+        .border-blue {
+            border-color: #3B82F6;
+        }
+
+        .bg-dark {
+            background-color: #0F0F0F;
+        }
+
+        .bg-lighter-dark {
+            background-color: #1A1A1A;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.03);
+        }
+
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .letter-spacing-wide {
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #3B82F6 50%, transparent 100%);
+        }
+
         .image-transition {
             transition: opacity 1s ease-in-out;
         }
+
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-effect:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.13);
+            background: linear-gradient(
+                    to right,
+                    rgba(255, 255, 255, 0.13) 0%,
+                    rgba(255, 255, 255, 0.13) 77%,
+                    rgba(255, 255, 255, 0.5) 92%,
+                    rgba(255, 255, 255, 0.0) 100%
+            );
+            transform: rotate(30deg);
+            transition: all 0.7s ease;
+        }
+
+        .shine-effect:hover:after {
+            left: 120%;
+        }
+
+        .scroll-highlight {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background: #3B82F6;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .scroll-highlight.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .section-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.5, 0, 0, 1) forwards;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #3B82F6;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-item:hover::before {
+            visibility: visible;
+            width: 100%;
+        }
+
+        .nav-item.active::before {
+            visibility: visible;
+            width: 100%;
+        }
+
+        .text-shadow-sm {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .bg-white\/10 {
+                background-color: rgba(255, 255, 255, 0.15);
+            }
+
+            .bg-white\/20 {
+                background-color: rgba(255, 255, 255, 0.25);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .backdrop-blur-sm {
+                backdrop-filter: blur(8px);
+            }
+
+            .backdrop-blur-md {
+                backdrop-filter: blur(12px);
+            }
+
+            .backdrop-blur-lg {
+                backdrop-filter: blur(16px);
+            }
+        }
     </style>
 </head>
-<body class="bg-dark text-gray-200 font-monteserrat scroll-smooth">
+<body class="bg-dark text-gray-200">
 <section class="relative flex min-h-screen w-screen flex-col items-center justify-center overflow-hidden">
     <div class="absolute inset-0 -z-50" hx-get="/next-image" hx-trigger="every 4s" id="dynamic-image-container">
-        <img alt="Luxury vehicle" class="image-transition h-full w-full object-cover" hx-swap="outerHTML"
+        <img alt="Luxury vehicle" class="image-transition h-full w-full" hx-swap="outerHTML"
              hx-target="this" th:src="@{/images/home/1.webp}"/>
     </div>
 
-    <div class="bg-[linear-gradient(180deg,rgba(0,0,0,0.3)_0%,rgba(0,0,0,0.7)_100%)] absolute inset-0 -z-40"></div>
+    <div class="hero-overlay absolute inset-0 -z-40"></div>
 
     <div class="absolute flex h-full w-full flex-col justify-between p-8 lg:p-12">
-        <header class="flex h-fit w-full items-center justify-between">
+        <header class="sticky top-0 flex h-fit w-full items-center justify-between">
             <a aria-label="LuxAuto Home" class="block" href="#">
-                <img alt="LuxAuto Logo" class="h-16 w-auto" th:src="@{/images/LOGO.webp}"/>
+                <div class="relative inline-block">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent z-0 mix-blend-overlay"></div>
+                    <div class="absolute inset-0 z-0"
+                         style="mask-image: radial-gradient(circle at center, transparent 70%, black 100%);
+                      backdrop-filter: blur(3px);"></div>
+
+                    <div class="relative">
+                        <img alt="LuxAuto Logo" class="h-32 w-auto relative z-10 object-cover" src="/images/LOGO.webp"/>
+
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent z-0 mix-blend-overlay"></div>
+
+                        <div class="absolute inset-0 z-0"
+                             style="mask-image: radial-gradient(circle at center, transparent 70%, black 100%);
+                      backdrop-filter: blur(3px);"></div>
+                    </div>
+                </div>
             </a>
 
             <nav aria-label="Global" class="hidden lg:block">
                 <ul class="flex items-center gap-8 text-sm">
-                    <li th:each="link : ${links}">
-                        <a class="group relative text-lg font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
-                           th:href="${link[1]}">
-                            <span th:text="${link[0]}"></span>
-                            <span class="bg-gold absolute bottom-0 left-0 h-px w-0 transition-all duration-300 group-hover:w-full"></span>
+                    <li>
+                        <a class="nav-item group relative text-lg font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
+                           data-section="about" href="#about">
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item group relative text-lg font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
+                           data-section="contact" href="#contact">
+                            <span>Contact</span>
                         </a>
                     </li>
                     <li>
                         <form action="/oauth2/authorization/google" class="google-button-wrapper" method="GET">
-                            <button class="google-button" type="submit">
-                                <svg class="z-10 h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path class="blue"
-                                          d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
-                                          fill="#4285F4"></path>
-                                    <path class="green"
-                                          d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
-                                          fill="#34A853"></path>
-                                    <path class="yellow"
-                                          d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
-                                          fill="#FBBC05"></path>
-                                    <path class="red"
-                                          d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
-                                          fill="#EB4335"></path>
-                                </svg>
-                                <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
-                            </button>
+                        <button class="button relative flex h-fit w-fit items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100"
+                                type="submit">
+                            <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path class="blue"
+                                      d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+                                      fill="#4285F4"></path>
+                                <path class="green"
+                                      d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+                                      fill="#34A853"></path>
+                                <path class="yellow"
+                                      d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+                                      fill="#FBBC05"></path>
+                                <path class="red"
+                                      d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+                                      fill="#EB4335"></path>
+                            </svg>
+                            <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
+                        </button>
                         </form>
                     </li>
                 </ul>
@@ -72,18 +283,18 @@
             </button>
         </header>
 
-        <div class="mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4">
+        <div class="mx-auto flex h-full w-full max-w-4xl flex-col justify-center px-4">
             <div class="animate__animated animate__fadeInUp mb-16">
-                <h1 class="font-playfair mb-6 text-5xl leading-tight font-medium text-white md:text-6xl lg:text-7xl xl:text-8xl">
+                <h1 class="luxury-font mb-6 text-5xl leading-tight font-medium text-white md:text-5xl lg:text-6xl xl:text-7xl">
                     <span class="block">Elevate Your</span>
-                    <span class="bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 bg-clip-text text-transparent">Driving Experience</span>
+                    <span class="bg-gradient-to-r from-blue-300 via-blue-200 to-blue-400 bg-clip-text text-transparent">Driving Experience</span>
                 </h1>
 
                 <p class="mb-10 max-w-2xl text-xl leading-relaxed font-light opacity-90 md:text-2xl">Precision care for
                     your luxury vehicle. Our concierge-level service ensures peak performance and timeless elegance.</p>
 
                 <div class="flex flex-col gap-6 sm:flex-row">
-                    <a class="shine-effect bg-gold hover:bg-opacity-90 relative flex transform items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105"
+                    <a class="shine-effect bg-blue-600 hover:bg-opacity-90 relative flex transform items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 smooth-scroll"
                        href="#contact">
                         <span>Request Consultation</span>
                         <svg class="ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
@@ -94,25 +305,26 @@
                         </svg>
                     </a>
 
-                    <a class="border-gold text-gold hover:bg-gold hover:bg-opacity-10 flex transform items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105"
+                    <a class="border-blue-500 text-blue-400 hover:bg-blue-500 hover:bg-opacity-10 flex transform items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105 smooth-scroll"
                        href="#about">
                         <span>Explore Services</span>
                     </a>
                 </div>
             </div>
 
+
             <div class="animate__animated animate__fadeIn animate__delay-1s">
                 <div class="flex items-center justify-center gap-6 lg:justify-start">
                     <div class="flex items-center gap-3">
-                        <div class="bg-gold h-3 w-3 rounded-full"></div>
+                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
                         <span class="text-sm tracking-wider">PREMIUM CARE</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="bg-gold h-3 w-3 rounded-full"></div>
+                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
                         <span class="text-sm tracking-wider">CERTIFIED TECHNICIANS</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="bg-gold h-3 w-3 rounded-full"></div>
+                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
                         <span class="text-sm tracking-wider">DISCRETE SERVICE</span>
                     </div>
                 </div>
@@ -121,7 +333,7 @@
     </div>
 
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
-        <a class="text-gold" href="#about">
+        <a class="text-blue-400 smooth-scroll" href="#about">
             <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
@@ -133,8 +345,8 @@
 <section class="bg-lighter-dark relative px-6 py-24" id="about">
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-gold tracking-wide text-sm">EXCLUSIVE SERVICE</span>
-            <h2 class="font-playfair mt-4 mb-6 text-4xl text-white md:text-5xl">The LuxAuto Difference</h2>
+            <span class="text-blue-400 letter-spacing-wide text-sm tracking-widest">EXCLUSIVE SERVICE</span>
+            <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">The LuxAuto Difference</h2>
             <div class="divider mx-auto my-6 w-24"></div>
             <p class="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400">Where precision engineering meets
                 unparalleled luxury. Our bespoke vehicle care solutions are tailored for the most discerning automotive
@@ -143,67 +355,60 @@
 
         <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <div class="hover-scale relative">
-                <div class="border-gold border-opacity-30 absolute -inset-4 z-0 rotate-1 transform border"></div>
+                <div class="border-blue-500 border-opacity-30 absolute -inset-4 z-0 rotate-1 transform border"></div>
                 <img alt="Luxury car maintenance" class="relative z-10 h-auto w-full object-cover"
                      th:src="@{/images/home/2.webp}"/>
             </div>
 
             <div>
-                <h3 class="font-playfair mb-6 text-3xl text-white">Your Vehicle Deserves The Best</h3>
+                <h3 class="luxury-font mb-6 text-3xl text-white">Your Vehicle Deserves The Best</h3>
                 <p class="mb-8 leading-relaxed text-gray-400">At LuxAuto, we understand that your vehicle is more than
                     just transportation—it's a statement of excellence. Our team of master technicians brings decades of
                     experience servicing the world's most prestigious automotive marques.</p>
 
                 <div class="space-y-6">
-                    <div class="flex items-start gap-6">
+                    <!-- Card 1 -->
+                    <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                         <div class="flex-shrink-0">
-                            <div class="bg-gold bg-opacity-10 border-gold border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                                <svg class="text-gold h-6 w-6" fill="none" stroke="currentColor"
-                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="1.5"/>
+                            <div class="bg-blue-500 bg-opacity-100 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                                <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                                 </svg>
                             </div>
                         </div>
                         <div>
-                            <h4 class="mb-2 text-xl text-white">Factory-Trained Specialists</h4>
-                            <p class="text-gray-400">Our technicians receive continuous training directly from
-                                manufacturers to maintain the highest standards.</p>
+                            <h4 class="mb-2 text-xl font-semibold text-white">Factory-Trained Specialists</h4>
+                            <p class="text-gray-400">Our technicians receive continuous training directly from manufacturers to maintain the highest standards.</p>
                         </div>
                     </div>
 
-                    <div class="flex items-start gap-6">
+                    <!-- Card 2 -->
+                    <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                         <div class="flex-shrink-0">
-                            <div class="bg-gold bg-opacity-10 border-gold border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                                <svg class="text-gold h-6 w-6" fill="none" stroke="currentColor"
-                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 15l8-8m0 0l-8-8m8 8H4" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="1.5"/>
+                            <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                                <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 15l8-8m0 0l-8-8m8 8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                                 </svg>
                             </div>
                         </div>
                         <div>
-                            <h4 class="mb-2 text-xl text-white">Performance Optimization</h4>
-                            <p class="text-gray-400">Beyond maintenance, we enhance your vehicle's performance to
-                                factory-exceeding standards.</p>
+                            <h4 class="mb-2 text-xl font-semibold text-white">Performance Optimization</h4>
+                            <p class="text-gray-400">Beyond maintenance, we enhance your vehicle's performance to factory-exceeding standards.</p>
                         </div>
                     </div>
 
-                    <div class="flex items-start gap-6">
+                    <!-- Card 3 -->
+                    <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                         <div class="flex-shrink-0">
-                            <div class="bg-gold bg-opacity-10 border-gold border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                                <svg class="text-gold h-6 w-6" fill="none" stroke="currentColor"
-                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                                          stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="1.5"/>
+                            <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                                <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                                 </svg>
                             </div>
                         </div>
                         <div>
-                            <h4 class="mb-2 text-xl text-white">Concierge Service</h4>
-                            <p class="text-gray-400">White-glove pickup and delivery, loaner vehicles, and personalized
-                                attention to every detail.</p>
+                            <h4 class="mb-2 text-xl font-semibold text-white">Concierge Service</h4>
+                            <p class="text-gray-400">White-glove pickup and delivery, loaner vehicles, and personalized attention to every detail.</p>
                         </div>
                     </div>
                 </div>
@@ -214,98 +419,86 @@
 
 <section class="relative overflow-hidden bg-black py-20">
     <div class="absolute inset-0 opacity-10">
-        <div class="from-gold absolute inset-0 w-1/3 bg-gradient-to-r to-transparent"></div>
+        <div class="from-blue-500 absolute inset-0 w-1/3 bg-gradient-to-r to-transparent"></div>
     </div>
 
     <div class="relative mx-auto max-w-7xl px-6">
         <div class="grid grid-cols-1 gap-12 text-center md:grid-cols-3">
             <div class="p-8">
-                <div class="font-playfair text-gold mb-4 text-5xl">250+</div>
+                <div class="luxury-font text-blue-400 mb-4 text-5xl">250+</div>
                 <h3 class="mb-2 text-xl text-white">Satisfied Clients</h3>
                 <p class="text-gray-400">Elite vehicle owners who trust our service</p>
             </div>
 
             <div class="p-8">
-                <div class="font-playfair text-gold mb-4 text-5xl">98%</div>
+                <div class="luxury-font text-blue-400 mb-4 text-5xl">98%</div>
                 <h3 class="mb-2 text-xl text-white">Client Retention</h3>
                 <p class="text-gray-400">Of clients return for ongoing maintenance</p>
             </div>
 
             <div class="p-8">
-                <div class="font-playfair text-gold mb-4 text-5xl">24/7</div>
+                <div class="luxury-font text-blue-400 mb-4 text-5xl">24/7</div>
                 <h3 class="mb-2 text-xl text-white">Support</h3>
                 <p class="text-gray-400">Dedicated concierge available anytime</p>
             </div>
         </div>
     </div>
 </section>
+
 <section class="bg-lighter-dark px-6 py-24">
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-gold tracking-wide text-sm">OUR OFFERINGS</span>
-            <h2 class="font-playfair mt-4 mb-6 text-4xl text-white md:text-5xl">Bespoke Automotive Care</h2>
+            <span class="text-blue-400 letter-spacing-wide text-sm tracking-widest">OUR OFFERINGS</span>
+            <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Bespoke Automotive Care</h2>
             <div class="divider mx-auto my-6 w-24"></div>
             <p class="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400">Comprehensive services designed to
                 maintain and enhance your vehicle's performance, aesthetics, and value.</p>
         </div>
 
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <div class="bg-opacity-50 hover:border-gold hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-gold bg-opacity-10 border-gold border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
-                    <svg class="text-gold h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="1.5"/>
+            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Performance Tuning</h3>
-                <p class="mb-6 text-gray-400">Optimize your vehicle's ECU for enhanced power delivery and throttle
-                    response while maintaining reliability.</p>
-                <a class="text-gold flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <p class="mb-6 text-gray-400">Optimize your vehicle's ECU for enhanced power delivery and throttle response while maintaining reliability.</p>
+                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </a>
             </div>
 
-            <div class="bg-opacity-50 hover:border-gold hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-gold bg-opacity-10 border-gold border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
-                    <svg class="text-gold h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                              stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="1.5"/>
+            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Detailing Excellence</h3>
-                <p class="mb-6 text-gray-400">Show-car quality detailing using only the finest ceramic coatings and
-                    leather conditioners.</p>
-                <a class="text-gold flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <p class="mb-6 text-gray-400">Show-car quality detailing using only the finest ceramic coatings and leather conditioners.</p>
+                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </a>
             </div>
-            <div class="bg-opacity-50 hover:border-gold hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-gold bg-opacity-10 border-gold border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
-                    <svg class="text-gold h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                              stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="1.5"/>
+
+            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Security Enhancements</h3>
-                <p class="mb-6 text-gray-400">Discrete installation of the latest anti-theft and tracking systems to
-                    protect your investment.</p>
-                <a class="text-gold flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <p class="mb-6 text-gray-400">Discrete installation of the latest anti-theft and tracking systems to protect your investment.</p>
+                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </a>
@@ -313,20 +506,20 @@
         </div>
     </div>
 </section>
+
 <section class="bg-opacity-70 relative overflow-hidden bg-black px-6 py-24">
     <div class="absolute inset-0 -z-10 bg-[url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920')] bg-cover bg-center opacity-10"></div>
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-gold tracking-wide text-sm">CLIENT TESTIMONIALS</span>
-            <h2 class="font-playfair mt-4 mb-6 text-4xl text-white md:text-5xl">Voices of Distinction</h2>
+            <span class="text-gold letter-spacing-wide text-sm tracking-widest">CLIENT TESTIMONIALS</span>
+            <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Voices of Distinction</h2>
             <div class="divider mx-auto my-6 w-24"></div>
         </div>
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            <!-- Testimonial 1 -->
             <div class="bg-lighter-dark border-gold hover-scale relative border-l-4 p-10 transition-transform duration-300">
-                <div class="text-gold text-opacity-10 font-playfair absolute top-10 left-10 text-7xl">"</div>
+
                 <p class="relative z-10 mb-8 text-lg leading-relaxed text-gray-300 italic">LuxAuto's attention to detail
-                    is unmatched. They treat my Ferrari like it's their own, and the performance tuning they did take
+                    is unmatched. They treat my Ferrari like it's their own, and the performance tuning they did took
                     the car to another level while maintaining perfect reliability.</p>
                 <div class="flex items-center gap-4">
                     <div class="h-12 w-12 overflow-hidden rounded-full bg-gray-700">
@@ -340,7 +533,6 @@
                 </div>
             </div>
             <div class="bg-lighter-dark border-gold hover-scale relative border-l-4 p-10 transition-transform duration-300">
-                <div class="text-gold text-opacity-10 font-playfair absolute top-10 left-10 text-7xl">"</div>
                 <p class="relative z-10 mb-8 text-lg leading-relaxed text-gray-300 italic">The concierge service is
                     worth every penny. They picked up my Rolls from my office, left a Phantom loaner, and returned it
                     detailed with a full report. I never have to visit a service center again.</p>
@@ -358,23 +550,25 @@
         </div>
     </div>
 </section>
-<section class="from-gold relative overflow-hidden bg-gradient-to-b to-yellow-600 px-6 py-24">
+
+<section class="from-gold relative overflow-hidden bg-gradient-to-b to-black px-6 py-24">
     <div class="mx-auto max-w-4xl text-center">
-        <h2 class="font-playfair mt-4 mb-6 text-4xl text-gray-300 md:text-5xl">Experience The LuxAuto Standard</h2>
+        <h2 class="luxury-font mt-4 mb-6 text-4xl text-gray-300 md:text-5xl">Experience The LuxAuto Standard</h2>
         <div class="divider bg-opacity-30 mx-auto my-6 w-24 bg-gray-300"></div>
         <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white">Schedule a consultation with our
             specialists to discuss your vehicle's unique needs.</p>
-        <a class="hover:bg-opacity-90 inline-block transform rounded-sm bg-black px-10 py-5 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105"
+        <a class="hover:bg-opacity-90 inline-block transform rounded-sm bg-blue-700 px-10 py-5 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105"
            href="#contact">
             Contact Our Concierge </a>
     </div>
 </section>
+
 <section class="bg-lighter-dark px-6 py-24" id="contact">
     <div class="mx-auto max-w-7xl">
         <div class="grid grid-cols-1 gap-16 lg:grid-cols-2">
             <div>
-                <span class="text-gold tracking-wide text-sm">GET IN TOUCH</span>
-                <h2 class="font-playfair mt-4 mb-6 text-4xl text-white md:text-5xl">Contact Our Concierge</h2>
+                <span class="text-gold letter-spacing-wide text-sm tracking-widest">GET IN TOUCH</span>
+                <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Contact Our Concierge</h2>
                 <div class="divider my-6 w-24"></div>
                 <p class="mb-10 leading-relaxed text-white">Our team is available 24/7 to assist with your inquiries.
                     For immediate assistance, please call our direct line. For service inquiries or to schedule an
@@ -437,7 +631,7 @@
                 </div>
             </div>
             <div class="bg-opacity-50 border border-gray-800 bg-black p-10">
-                <h3 class="font-playfair mb-8 text-3xl text-white">Send Us a Message</h3>
+                <h3 class="luxury-font mb-8 text-3xl text-white">Send Us a Message</h3>
                 <form action="/contact/submit" class="space-y-6" id="contactForm" method="POST">
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div>
@@ -484,7 +678,7 @@
                     </div>
                     <div>
                         <div class="mt-6 flex justify-center">
-                            <button class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-yellow-500 to-yellow-400 px-8 py-5 font-medium tracking-wider text-black transition-all duration-500 hover:shadow-lg hover:shadow-yellow-500/30 active:scale-95"
+                            <button class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-500 to-blue-400 px-8 py-5 font-medium tracking-wider text-black transition-all duration-500 hover:shadow-lg hover:shadow-yellow-500/30 active:scale-95"
                                     type="submit">
                                 <span class="absolute inset-0 bg-gradient-to-r from-yellow-400/30 via-yellow-200/50 to-yellow-400/30 opacity-0 transition-all duration-700 group-hover:[transform:translateX(100%)] group-hover:opacity-100"></span>
                                 <span class="relative z-10 flex items-center gap-2">
@@ -496,7 +690,7 @@
                               stroke-width="2"/>
                       </svg>
                     </span>
-                                <span class="absolute inset-0 rounded-full border-2 border-yellow-300 opacity-0 transition-all duration-500 group-hover:animate-[pulse_1.5s_ease-in-out_infinite] group-hover:opacity-100"></span>
+                                <span class="absolute inset-0 rounded-full border-2 border-blue-300 opacity-0 transition-all duration-500 group-hover:animate-[pulse_1.5s_ease-in-out_infinite] group-hover:opacity-100"></span>
                             </button>
                         </div>
                     </div>
@@ -505,12 +699,12 @@
         </div>
     </div>
 </section>
+
 <footer class="border-t border-gray-900 bg-black px-6 py-16">
     <div class="mx-auto max-w-7xl">
         <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
             <div>
-                <img alt="LuxAuto Logo" class="mb-6 h-16 w-auto"
-                     th:src="@{/images/LOGO.webp}"/>
+                <img alt="LuxAuto Logo" class="mb-6 h-20 w-auto" src="/images/LOGO.webp"/>
                 <p class="text-sm leading-relaxed text-gray-400">Premium automotive care for the most discerning
                     enthusiasts. LuxAuto delivers unparalleled service and craftsmanship.</p>
             </div>
@@ -569,11 +763,9 @@
                 <h4 class="mb-4 text-lg font-medium text-white">Newsletter</h4>
                 <p class="mb-4 text-sm text-gray-400">Subscribe for exclusive updates and offers</p>
                 <form class="flex">
-                    <label>
-                        <input class="focus:border-gold w-full border border-gray-800 bg-gray-900 px-4 py-3 text-sm text-white focus:outline-none"
-                               placeholder="Your email"
-                               type="email"/>
-                    </label>
+                    <input class="focus:border-gold w-full border border-gray-800 bg-gray-900 px-4 py-3 text-sm text-white focus:outline-none"
+                           placeholder="Your email"
+                           type="email"/>
                     <button class="bg-gold flex items-center justify-center px-4 text-black" type="submit">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path clip-rule="evenodd"
@@ -595,6 +787,7 @@
         </div>
     </div>
 </footer>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const animateOnScroll = function () {
@@ -610,6 +803,131 @@
         };
         window.addEventListener('scroll', animateOnScroll);
         animateOnScroll();
+
+        const smoothScrollLinks = document.querySelectorAll('.smooth-scroll, .nav-item');
+
+        smoothScrollLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+
+                if (targetSection) {
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+
+                    if (this.classList.contains('nav-item')) {
+                        this.classList.add('active');
+                    }
+
+                    targetSection.classList.add('section-target');
+
+                    const glowEffect = document.createElement('div');
+                    glowEffect.classList.add('scroll-glow-effect');
+                    glowEffect.style.position = 'fixed';
+                    glowEffect.style.top = '0';
+                    glowEffect.style.left = '50%';
+                    glowEffect.style.transform = 'translateX(-50%)';
+                    glowEffect.style.width = '4px';
+                    glowEffect.style.height = '0';
+                    glowEffect.style.background = 'linear-gradient(to bottom, rgba(59, 130, 246, 0.8), rgba(59, 130, 246, 0))';
+                    glowEffect.style.zIndex = '9999';
+                    glowEffect.style.pointerEvents = 'none';
+                    document.body.appendChild(glowEffect);
+
+                    const flashEffect = document.createElement('div');
+                    flashEffect.classList.add('flash-effect');
+                    flashEffect.style.position = 'absolute';
+                    flashEffect.style.top = '0';
+                    flashEffect.style.left = '0';
+                    flashEffect.style.right = '0';
+                    flashEffect.style.bottom = '0';
+                    flashEffect.style.background = 'rgba(59, 130, 246, 0.1)';
+                    flashEffect.style.opacity = '0';
+                    flashEffect.style.zIndex = '1';
+                    flashEffect.style.pointerEvents = 'none';
+                    targetSection.style.position = 'relative';
+                    targetSection.appendChild(flashEffect);
+
+                    let start = null;
+                    const targetTop = targetSection.getBoundingClientRect().top + window.pageYOffset;
+                    const duration = 800;
+
+                    function animateScroll(timestamp) {
+                        if (!start) start = timestamp;
+                        const progress = timestamp - start;
+                        const easeProgress = Math.min(progress / duration, 1);
+                        const easedProgress = easeInOutCubic(easeProgress);
+
+                        const maxHeight = targetTop - window.pageYOffset;
+                        glowEffect.style.height = `${easedProgress * maxHeight}px`;
+
+                        const currentPosition = window.pageYOffset;
+                        const distance = targetTop - currentPosition;
+                        window.scrollTo(0, currentPosition + distance * easedProgress);
+
+                        if (progress < duration) {
+                            window.requestAnimationFrame(animateScroll);
+                        } else {
+                            flashEffect.style.transition = 'opacity 0.5s ease';
+                            flashEffect.style.opacity = '1';
+
+                            setTimeout(() => {
+                                glowEffect.remove();
+                                flashEffect.style.opacity = '0';
+                                setTimeout(() => {
+                                    flashEffect.remove();
+                                }, 500);
+                            }, 300);
+
+                            const childElements = targetSection.querySelectorAll('h2, h3, p, .divider, .grid > div');
+                            childElements.forEach((el, index) => {
+                                el.style.opacity = '0';
+                                setTimeout(() => {
+                                    el.classList.add('fade-in-up');
+                                    el.style.opacity = '1';
+                                    el.style.animationDelay = `${index * 100}ms`;
+                                }, 300);
+                            });
+                        }
+                    }
+
+                    window.requestAnimationFrame(animateScroll);
+                }
+            });
+        });
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function highlightActiveSection() {
+            const sections = document.querySelectorAll('section[id]');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 300) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                const sectionName = item.getAttribute('data-section');
+                if (sectionName === currentSection) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightActiveSection);
+        highlightActiveSection();
     });
 </script>
 </body>
