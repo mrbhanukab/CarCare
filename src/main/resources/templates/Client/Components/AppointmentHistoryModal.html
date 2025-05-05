@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
+     th:fragment="appointmentHistory(vehicle)"
+     x-data="{
+        appointments: [
+            {
+                id: 'a1',
+                date: 'April 5, 2024',
+                time: '11:15 AM',
+                services: ['Oil Change', 'Brake Inspection'],
+                status: 'Completed',
+                cost: '$625.00',
+                notes: 'Oil change and brake inspection completed. Replaced brake pads and rotors.',
+                bill: {
+                    laborCost: 250,
+                    partsCost: 350,
+                    additionalFees: 25,
+                    total: 625
+                }
+            },
+            {
+                id: 'a2',
+                date: 'January 12, 2024',
+                time: '9:30 AM',
+                services: ['Tire Rotation', 'Alignment'],
+                status: 'Completed',
+                cost: '$135.00',
+                notes: 'Rotated tires and performed alignment. Recommended new tires within next 6 months.',
+                bill: {
+                    laborCost: 120,
+                    partsCost: 0,
+                    additionalFees: 15,
+                    total: 135
+                }
+            },
+            {
+                id: 'a3',
+                date: 'October 8, 2023',
+                time: '2:00 PM',
+                services: ['Oil Change', 'Air Filter Replacement'],
+                status: 'Completed',
+                cost: '$95.00',
+                notes: 'Regular maintenance completed. Vehicle in good condition.',
+                bill: {
+                    laborCost: 50,
+                    partsCost: 35,
+                    additionalFees: 10,
+                    total: 95
+                }
+            },
+            {
+                id: 'a4',
+                date: 'July 15, 2023',
+                time: '10:45 AM',
+                services: ['A/C Service'],
+                status: 'Completed',
+                cost: '$210.00',
+                notes: 'Recharged A/C system and replaced cabin air filter.',
+                bill: {
+                    laborCost: 150,
+                    partsCost: 45,
+                    additionalFees: 15,
+                    total: 210
+                }
+            }
+        ]
+     }">
+    <div class="bg-gray-800 rounded-xl shadow-2xl max-w-3xl w-full mx-4 overflow-hidden border border-gray-700">
+        <div class="p-6 border-b border-gray-700">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-green-400">Service History</h2>
+                <button @click="$el.closest('[x-data]').remove()" class="text-gray-400 hover:text-gray-200">
+                    <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="text-sm text-gray-300 mt-1"
+               th:text="${vehicle.year + ' ' + vehicle.brand + ' ' + vehicle.model}"></p>
+        </div>
+
+        <div class="p-6 max-h-[70vh] overflow-y-auto">
+            <div class="space-y-4">
+                <template x-if="appointments.length === 0">
+                    <div class="text-center py-8">
+                        <p class="text-gray-400">No service history available for this vehicle.</p>
+                    </div>
+                </template>
+
+                <template :key="appointment.id" x-for="appointment in appointments">
+                    <div class="border border-gray-700 rounded-lg overflow-hidden bg-gray-800/50 hover:shadow-[0_0_15px_rgba(74,222,128,0.2)] transition-shadow">
+                        <div class="bg-gray-700/50 p-3 flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <svg class="text-green-400" fill="none" height="20" viewBox="0 0 24 24"
+                                     width="20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z"
+                                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"/>
+                                </svg>
+                                <span class="font-medium text-white" x-text="appointment.date"></span>
+                                <span class="text-sm text-gray-300" x-text="appointment.time"></span>
+                            </div>
+                            <div class="bg-green-900/30 text-green-400 text-xs px-2 py-1 rounded-full border border-green-500/30"
+                                 x-text="appointment.status"></div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between mb-2">
+                                <div>
+                                    <div class="text-sm text-gray-400 mb-1">Services</div>
+                                    <div class="text-gray-200" x-text="appointment.services.join(', ')"></div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-sm text-gray-400 mb-1">Cost</div>
+                                    <div class="font-medium text-green-400" x-text="appointment.cost"></div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-4 border-t border-gray-700">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <div class="text-sm text-gray-400 mb-1">Bill Details</div>
+                                        <div class="space-y-1 text-sm">
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-300">Labor:</span>
+                                                <span class="text-gray-200"
+                                                      x-text="'$' + appointment.bill.laborCost.toFixed(2)"></span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-300">Parts:</span>
+                                                <span class="text-gray-200"
+                                                      x-text="'$' + appointment.bill.partsCost.toFixed(2)"></span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-300">Additional Fees:</span>
+                                                <span class="text-gray-200"
+                                                      x-text="'$' + appointment.bill.additionalFees.toFixed(2)"></span>
+                                            </div>
+                                            <div class="flex justify-between pt-1 border-t border-gray-700">
+                                                <span class="font-medium text-gray-300">Total:</span>
+                                                <span class="font-medium text-green-400"
+                                                      x-text="'$' + appointment.bill.total.toFixed(2)"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="text-sm text-gray-400 mb-1">Notes</div>
+                                        <p class="text-sm text-gray-300" x-text="appointment.notes"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 flex justify-end">
+                                <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-xs text-gray-200 rounded-md flex items-center gap-1 transition-colors">
+                                    <svg fill="none" height="12" viewBox="0 0 24 24" width="12"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 8L12 3M12 3L7 8M12 3V15"
+                                              stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                              stroke-width="2"/>
+                                    </svg>
+                                    Download Invoice
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-700 bg-gray-800/80">
+            <div class="flex justify-end">
+                <button @click="$el.closest('[x-data]').remove()"
+                        class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>LuxAuto | Dashboard</title>
+    <link rel="icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
+    <link rel="shortcut icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
+    <script th:src="@{/scripts/htmx.min.js}"></script>
+    <script th:src="@{/scripts/alpine.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/client.css}"/>
+</head>
+<body class="min-h-screen w-screen gap-6 bg-gray-900 text-gray-100">
+<!--{ Background }-->
+<div class="fixed inset-0 bg-grid-pattern opacity-10 -z-20"></div>
+<div class="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20 -z-20"></div>
+<div class="grid-background -z-10"></div>
+
+<!--{ Main Dashboard Grid }-->
+<main class="h-screen flex flex-col justify-between lg:overflow-hidden">
+    <!--{/* Header Area - Transparent */}-->
+    <header class="w-screen h-fit p-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <img alt="LuxAuto Logo" class="w-14" th:src="@{/images/LOGO.webp}"/>
+        </div>
+        <div @click.outside="isOpen = false" class="relative" x-data="{ isOpen: false }">
+            <img
+                    @click="isOpen = !isOpen"
+                    alt="Profile Image"
+                    class="size-10 rounded-full bg-gray-800 cursor-pointer border-2 border-transparent hover:border-cyan-400 transition-all"
+                    referrerPolicy="no-referrer"
+                    th:src="${user.imageUrl}"
+            />
+
+            <!-- Dropdown Menu -->
+            <div class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 border border-gray-700 animate-fadeIn"
+                 x-show="isOpen"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-end="opacity-100 transform scale-100"
+                 x-transition:enter-start="opacity-0 transform scale-95"
+                 x-transition:leave="transition ease-in duration-75"
+                 x-transition:leave-end="opacity-0 transform scale-95"
+                 x-transition:leave-start="opacity-100 transform scale-100">
+
+                <div class="py-2">
+                    <a class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
+                       href="#"
+                       hx-get="/client/account"
+                       hx-target="#modal-container">
+                        <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                                  stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2"/>
+                            <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+                                  stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2"/>
+                        </svg>
+                        Account Details
+                    </a>
+
+                    <form class="w-full" method="post" th:action="@{/logout}">
+                        <button class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
+                                type="submit">
+                            <svg fill="none" height="16" viewBox="0 0 24 24" width="16"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9"
+                                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2"/>
+                            </svg>
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="flex lg:flex-row flex-col h-full  w-full lg:overflow-hidden">
+        <!--    {/* Car Info Area (Left Column) */}-->
+        <div th:replace="Client/Left :: left()"></div>
+        <!--{/* Cards Area (Right Column) */}-->
+        <div th:replace="Client/Right :: right()"></div>
+    </section>
+    <div class="relative z-50" id="modal-container"></div>
+</main>
+</body>
+</html>
