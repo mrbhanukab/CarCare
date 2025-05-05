@@ -208,7 +208,7 @@
 <body class="bg-dark text-gray-200">
 <section class="relative flex min-h-screen w-screen flex-col items-center justify-center overflow-hidden">
     <div class="absolute inset-0 -z-50" hx-get="/next-image" hx-trigger="every 4s" id="dynamic-image-container">
-        <img alt="Luxury vehicle" class="image-transition h-full w-full object-cover" hx-swap="outerHTML"
+        <img alt="Luxury vehicle" class="image-transition h-full w-full" hx-swap="outerHTML"
              hx-target="this" th:src="@{/images/home/1.webp}"/>
     </div>
 
@@ -224,7 +224,7 @@
                       backdrop-filter: blur(3px);"></div>
 
                     <div class="relative">
-                        <img alt="LuxAuto Logo" class="h-32 w-auto relative z-10" src="/images/LOGO.webp"/>
+                        <img alt="LuxAuto Logo" class="h-32 w-auto relative z-10 object-cover" src="/images/LOGO.webp"/>
 
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent z-0 mix-blend-overlay"></div>
 
