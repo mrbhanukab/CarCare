@@ -15,6 +15,8 @@ import sliit.pg09.carcare.vehicle.model.Model;
 public class Vehicle {
     @Id
     private String license;
+    private String vin;
+    private boolean removed;
 
     @ManyToOne
     @JoinColumn(name = "number")
@@ -23,4 +25,11 @@ public class Vehicle {
     @ManyToOne
     @JoinColumn(name = "email")
     private Client client;
+
+    public Vehicle(String license, String vin, Model model, Client client) {
+        this.license = license;
+        this.vin = vin;
+        this.model = model;
+        this.client = client;
+    }
 }
