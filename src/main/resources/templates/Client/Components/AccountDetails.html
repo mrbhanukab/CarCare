@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
+<div @closeModal.window="$el.remove()"
+     @showError.window="document.getElementById('errorContainer').innerHTML = $event.detail.value"
+     class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn overflow-y-auto p-4"
      th:fragment="accountDetails(user)"
      x-data="{
         isLoading: false,
@@ -12,7 +14,7 @@
             }
         },
         validateForm() {
-            const requiredFields = ['name', 'phone', 'address'];
+            const requiredFields = ['name', 'phone', 'nic', 'address'];
             let isValid = true;
 
             // Reset errors
@@ -33,7 +35,10 @@
             return isValid;
         }
      }">
-    <div class="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden border border-gray-700">
+
+    <!-- ... rest of the modal content ... -->
+
+    <div class="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-auto my-auto overflow-hidden border border-gray-700">
         <div class="p-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold text-cyan-400">Account Details</h2>
@@ -58,29 +63,71 @@
 
             <form @submit.prevent="submitForm()"
                   class="space-y-4"
-                  hx-on::after-response="if(event.detail.xhr.status === 200) document.querySelector('[th\:fragment=\'accountDetails\']').remove()"
+                  hx-on::after-request="isLoading = false"
+                  hx-on::error="document.getElementById('errorContainer').innerHTML = 'An error occurred while updating your account'"
                   hx-post="/client/account"
                   hx-swap="none"
+                  hx-trigger="submit"
                   id="accountForm">
 
                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
 
-                <div th:each="field : ${#objects.nullSafe(#fields.all(user), {})}">
-                    <div th:if="${!#strings.equalsIgnoreCase(field.name, 'created') &&
-                               !#strings.equalsIgnoreCase(field.name, 'updated') &&
-                               !#strings.equalsIgnoreCase(field.name, 'imageUrl')}">
-                        <label class="block text-sm font-medium text-gray-300 mb-1"
-                               th:for="${field.name}"
-                               th:text="${#strings.capitalize(field.name)}">
-                        </label>
-                        <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
-                               th:disabled="${field.name == 'email'}"
-                               th:id="${field.name}"
-                               th:name="${field.name}"
-                               th:value="${#objects.nullSafe(field.value, '')}"
-                               type="text"/>
-                        <p class="mt-1 text-sm text-red-500 hidden" th:id="${field.name + 'Error'}"></p>
-                    </div>
+                <!-- Name field -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1" for="name">Name</label>
+                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                           id="name"
+                           name="name"
+                           th:value="${user.name}"
+                           type="text"/>
+                    <p class="mt-1 text-sm text-red-500 hidden" id="nameError"></p>
+                </div>
+
+                <!-- Email field -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1" for="email">Email</label>
+                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                           disabled
+                           id="email"
+                           name="email"
+                           th:value="${user.email}"
+                           type="text"/>
+                    <p class="mt-1 text-sm text-red-500" id="emailError">
+                        Contact adminstrator to change email address.
+                    </p>
+                </div>
+
+                <!-- Phone field -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1" for="phone">Phone</label>
+                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                           id="phone"
+                           name="phone"
+                           th:value="${user.phone}"
+                           type="text"/>
+                    <p class="mt-1 text-sm text-red-500 hidden" id="phoneError"></p>
+                </div>
+
+                <!-- Phone field -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1" for="nic">NIC</label>
+                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                           id="nic"
+                           name="nic"
+                           th:value="${user.nic}"
+                           type="text"/>
+                    <p class="mt-1 text-sm text-red-500 hidden" id="nicError"></p>
+                </div>
+
+                <!-- Address field -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1" for="address">Address</label>
+                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                           id="address"
+                           name="address"
+                           th:value="${user.address}"
+                           type="text"/>
+                    <p class="mt-1 text-sm text-red-500 hidden" id="addressError"></p>
                 </div>
 
                 <div id="errorContainer"></div>
@@ -99,6 +146,30 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<!-- Add this in your main layout -->
+<div @showToast.window="$dispatch('toast-show', { message: $event.detail.message, type: $event.detail.type })"
+     x-data>
+    <!-- Toast component -->
+    <div :class="type === 'success' ? 'bg-green-500' : 'bg-red-500'"
+         @toast-show.window="show = true; message = $event.detail.message; type = $event.detail.type"
+         class="fixed top-4 right-4 z-50 p-4 rounded-md shadow-lg"
+         x-data="{
+            show: false,
+            message: '',
+            type: 'success',
+            init() {
+                this.$watch('show', value => {
+                    if (value) setTimeout(() => this.show = false, 3000)
+                })
+            }
+        }"
+         x-show="show"
+         x-transition.duration.300ms>
+        <div class="flex items-center text-white">
+            <span x-text="message"></span>
         </div>
     </div>
 </div>

@@ -40,27 +40,28 @@ public class ClientController {
     @PostMapping("/account")
     public ResponseEntity<Object> updateAccount(@RequestParam String name,
                                                 @RequestParam String phone,
+                                                @RequestParam String nic,
                                                 @RequestParam String address) {
-        System.out.printf("Updating account details: %s, %s, %s%n", name, phone, address);
         try {
-            System.out.println("Current User: " + clientService.getCurrentUser());
             return clientService.getCurrentUser()
                     .map(client -> {
                         client.setName(name);
                         client.setPhone(phone);
+                        client.setNic(nic);
                         client.setAddress(address);
                         clientService.updateClient(client);
-                        return ResponseEntity.ok().build();
+                        return ResponseEntity.ok()
+                                .header("HX-Trigger", "showToast")
+                                .header("HX-Trigger-After-Settle", "closeModal")
+                                .build();
                     })
                     .orElseGet(() -> ResponseEntity.ok()
-                            .body("""
-                                    <div th:replace="~{Error :: error('Not authorized to perform this action')}"></div>
-                                    """));
+                            .header("HX-Trigger", "showError")
+                            .body("Not authorized to perform this action"));
         } catch (Exception e) {
             return ResponseEntity.ok()
-                    .body("""
-                            <div th:replace="~{Error :: error('An error occurred while updating your account')}"></div>
-                            """);
+                    .header("HX-Trigger", "showError")
+                    .body("An error occurred while updating your account");
         }
     }
 
