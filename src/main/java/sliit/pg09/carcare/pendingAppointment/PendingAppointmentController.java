@@ -11,14 +11,12 @@ import java.util.List;
 
 @Controller
 public class PendingAppointmentController {
-    PendingAppointmentService pendingAppointmentService;
+    @Autowired
+    static PendingAppointmentService pendingAppointmentService;
 
 
     @RequestMapping("/client")
     public static class ClientPendingAppointment {
-        @Autowired
-        private PendingAppointmentService pendingAppointmentService;
-
         @GetMapping("/pending-appointment")
         public ResponseEntity<List<PendingAppointment>> getPendingAppointment(
                 @RequestParam String vehicle) {
