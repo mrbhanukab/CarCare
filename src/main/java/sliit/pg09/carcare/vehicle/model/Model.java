@@ -44,7 +44,6 @@ public class Model {
         RED, BLUE, GREEN, YELLOW, BLACK, WHITE
     }
 
-
     public enum type {
         SEDAN, SUV, TRUCK, COUPE, HATCHBACK
     }
