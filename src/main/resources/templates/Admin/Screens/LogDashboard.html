@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Activity Log</title>
+</head>
+<body>
+<div class="space-y-6" th:fragment="logs">
+    <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold tracking-tight">Activity Log</h2>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="flex flex-col md:flex-row gap-4">
+        <div class="relative flex-1">
+            <svg class="absolute left-2.5 top-2.5 text-gray-500" fill="none" height="16" viewBox="0 0 24 24" width="16"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg>
+            <input class="w-full pl-8 pr-3 py-2 border rounded-md" placeholder="Search logs..."/>
+        </div>
+
+        <div class="flex gap-2">
+            <div class="relative">
+                <select class="w-[180px] px-3 py-2 border rounded-md appearance-none pr-8">
+                    <option value="">Filter by type</option>
+                    <option value="emergency">Emergency</option>
+                    <option value="appointment">Appointment</option>
+                    <option value="user">User</option>
+                    <option value="vehicle">Vehicle</option>
+                    <option value="system">System</option>
+                </select>
+                <svg class="absolute right-2 top-3 text-gray-500 pointer-events-none" fill="none" height="16" viewBox="0 0 24 24" width="16"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-linecap="round"
+                          stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <div class="relative">
+                <select class="w-[180px] px-3 py-2 border rounded-md appearance-none pr-8">
+                    <option value="">Filter by date</option>
+                    <th:block th:each="i : ${#numbers.sequence(1, 3)}">
+                        <option th:text="${'May ' + (5 + i) + ', 2025'}">May 5, 2025</option>
+                    </th:block>
+                </select>
+                <svg class="absolute right-2 top-3 text-gray-500 pointer-events-none" fill="none" height="16" viewBox="0 0 24 24" width="16"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-linecap="round"
+                          stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <button class="p-2 border rounded-md hover:bg-gray-100">
+                <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 6H21M7 12H17M11 18H13M9 3V6M15 3V6" stroke="currentColor"
+                          stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+                <span class="sr-only">Reset filters</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Logs Table -->
+    <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                <tr class="border-b">
+                    <th class="px-4 py-3 text-left font-medium w-[200px]">Action</th>
+                    <th class="px-4 py-3 text-left font-medium">Details</th>
+                    <th class="px-4 py-3 text-left font-medium">User</th>
+                    <th class="px-4 py-3 text-right font-medium">Timestamp</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="i : ${#numbers.sequence(1, 6)}">
+                    <tr class="border-b">
+                        <td class="px-4 py-3">
+                            <div class="flex items-center gap-2">
+                                        <span th:class="${'flex items-center gap-1 px-2 py-1 rounded-full text-xs ' +
+                                              (i == 1 ? 'bg-red-500 text-white' :
+                                               i == 2 ? 'bg-blue-500 text-white' :
+                                               i == 3 ? 'bg-purple-500 text-white' :
+                                               i == 4 ? 'bg-blue-500 text-white' :
+                                               i == 5 ? 'border border-gray-300 text-gray-700' :
+                                               'bg-gray-500 text-white')}">
+                                            <!-- Dynamic Icon based on type -->
+                                            <th:block th:switch="${i}">
+                                                <svg fill="none" height="16" th:case="1" viewBox="0 0 24 24" width="16"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12 9V13M12 17H12.01M5.07183 19H18.9282C20.4678 19 21.4301 17.3333 20.6603 16L13.7321 4C12.9623 2.66667 11.0378 2.66667 10.268 4L3.33978 16C2.56998 17.3333 3.53223 19 5.07183 19Z"
+                                                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"/>
+                                                </svg>
+                                                <svg fill="none" height="16" th:case="*" viewBox="0 0 24 24" width="16"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z"
+                                                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"/>
+                                                </svg>
+                                            </th:block>
+                                            <span th:text="${i == 1 ? 'emergency' :
+                                                           i == 2 ? 'appointment' :
+                                                           i == 3 ? 'user' :
+                                                           i == 4 ? 'appointment' :
+                                                           i == 5 ? 'vehicle' :
+                                                           'system'}">type</span>
+                                        </span>
+                                <span class="font-medium" th:text="${'Action ' + i}">Action Name</span>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 max-w-md truncate" th:text="${'Log details for action ' + i}">
+                            Log details
+                        </td>
+                        <td class="px-4 py-3">Admin</td>
+                        <td class="px-4 py-3 text-right text-gray-500"
+                            th:text="${'May ' + (5 + i) + ', 2025 - ' + (8 + i) + ':00 AM'}">
+                            May 5, 2025 - 9:00 AM
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
