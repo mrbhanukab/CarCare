@@ -11,11 +11,11 @@ public class ModelService {
         this.modelRepository = modelRepository;
     }
 
-    public Model getModelByNumber(String number) {
+    public CarModel getModelByNumber(String number) {
         return modelRepository.findById(number).orElse(null);
     }
 
-    public Model updateModel(Model model) {
+    public CarModel updateModel(CarModel model) {
         return modelRepository.save(model);
     }
 }

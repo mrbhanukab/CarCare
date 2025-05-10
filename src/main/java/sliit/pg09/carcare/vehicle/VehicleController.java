@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sliit.pg09.carcare.vehicle.model.Model;
+import sliit.pg09.carcare.vehicle.model.CarModel;
 import sliit.pg09.carcare.vehicle.model.ModelRepository;
 import sliit.pg09.carcare.vehicle.model.ModelService;
 
@@ -52,20 +52,20 @@ public class VehicleController {
         }
 
         @PostMapping("/vehicle-model")
-        public ResponseEntity<String> addModel(@RequestBody Model model) {
+        public ResponseEntity<String> addModel(@RequestBody CarModel model) {
             modelRepository.save(model);
             return ResponseEntity.ok("Model added");
         }
 
 
-        public ResponseEntity<Model> getModel(@PathVariable String number) {
-            Model model = modelService.getModelByNumber(number);
+        public ResponseEntity<CarModel> getModel(@PathVariable String number) {
+            CarModel model = modelService.getModelByNumber(number);
             return model != null ? ResponseEntity.ok(model) : ResponseEntity.notFound().build();
         }
 
         @PutMapping("vehicle-model")
-        public ResponseEntity<Model> updateModel(@RequestBody Model model) {
-            Model updated = modelService.updateModel(model);
+        public ResponseEntity<CarModel> updateModel(@RequestBody CarModel carModel) {
+            CarModel updated = modelService.updateModel(carModel);
             return ResponseEntity.ok(updated);
         }
 

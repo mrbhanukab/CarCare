@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sliit.pg09.carcare.client.Client;
-import sliit.pg09.carcare.vehicle.model.Model;
+import sliit.pg09.carcare.vehicle.model.CarModel;
 
 @Data
 @NoArgsConstructor
@@ -15,20 +15,18 @@ import sliit.pg09.carcare.vehicle.model.Model;
 public class Vehicle {
     @Id
     private String license;
-    private String vin;
     private boolean removed;
 
     @ManyToOne
     @JoinColumn(name = "number")
-    private Model model;
+    private CarModel model;
 
     @ManyToOne
     @JoinColumn(name = "email")
     private Client client;
 
-    public Vehicle(String license, String vin, Model model, Client client) {
+    public Vehicle(String license, CarModel model, Client client) {
         this.license = license;
-        this.vin = vin;
         this.model = model;
         this.client = client;
     }

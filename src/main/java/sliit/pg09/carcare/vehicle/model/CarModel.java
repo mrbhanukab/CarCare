@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-public class Model {
+public class CarModel {
 
     @Id
     private String number;
@@ -25,10 +25,12 @@ public class Model {
     private double length;
     private double width;
     private double wheelBase;
+    private String make;
+    private String image;
     @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     private List<Vehicle> vehicles;
 
-    public Model(String number, color color, type type, int year, int noOfCylinders, int power, double length, double width, double wheelBase) {
+    public CarModel(String number, color color, type type, int year, int noOfCylinders, int power, double length, double width, double wheelBase) {
         this.number = number;
         this.color = color;
         this.type = type;
