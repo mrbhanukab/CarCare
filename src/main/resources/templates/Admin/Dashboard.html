@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
 >
 <head>
     <meta charset="UTF-8">
     <script th:src="@{/scripts/htmx.min.js}"></script>
-    <script th:src="@{/scripts/alpine.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/admin.css}"/>
     <link rel="shortcut icon" th:href="@{/images/LOGO.webp}" type="image/png">
-    <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">Admin Area</title>
+    <title>Admin Area</title>
 </head>
 <body class="min-h-screen flex">
 <header class="flex h-screen p-2 flex-col justify-between border-e border-gray-100 bg-white">
     <div class="flex flex-col justify-evenly gap-3 pt-4">
-        <a href="/admin/emergencies">
+        <a hx-get="/admin/screen/emergencies"
+           hx-swap="innerHTML"
+           hx-target="#dashboard-content">
             <nav th:replace="~{Admin/Components/nav.html :: navItem('Emergencies Dashboard')}"></nav>
         </a>
-        <a href="/admin/appointments-requests">
+        <a hx-get="/admin/screen/appointments-requests"
+           hx-swap="innerHTML"
+           hx-target="#dashboard-content">
             <nav th:replace="~{Admin/Components/nav.html :: navItem('Appointment Requests')}"></nav>
         </a>
-        <a href="/admin/ongoing-appointments">
+        <a hx-get="/admin/screen/ongoing-appointments"
+           hx-swap="innerHTML"
+           hx-target="#dashboard-content">
             <nav th:replace="~{Admin/Components/nav.html :: navItem('Ongoing Appointments')}"></nav>
         </a>
-        <a href="/admin/completed-appointments">
+        <a hx-get="/admin/screen/completed-appointments"
+           hx-swap="innerHTML"
+           hx-target="#dashboard-content">
             <nav th:replace="~{Admin/Components/nav.html :: navItem('Completed Appointments')}"></nav>
         </a>
-        <a href="/admin/log">
+        <a hx-get="/admin/screen/log"
+           hx-swap="innerHTML"
+           hx-target="#dashboard-content">
             <nav th:replace="~{Admin/Components/nav.html :: navItem('Activity Log')}"></nav>
         </a>
-        <a href="/admin/users">
+        <a hx-get="/admin/screen/clients"
+           hx-swap="innerHTML"
+           hx-target="#dashboard-content">
             <nav th:replace="~{Admin/Components/nav.html :: navItem('Clients')}"></nav>
         </a>
     </div>
@@ -80,8 +90,8 @@
             </li>
         </ol>
     </nav>
-    <section class="flex flex-col w-full h-full px-8 pt-5 pb-10">
-        <div th:replace="~{Admin/Screens/UsersDashboard :: users}"></div>
+    <section class="flex flex-col w-full h-full px-8 pt-5 pb-10" id="dashboard-content"
+             th:insert="~{Admin/Screens/EmergenciesDashboard.html:: emergencies}">
     </section>
 </main>
 </body>

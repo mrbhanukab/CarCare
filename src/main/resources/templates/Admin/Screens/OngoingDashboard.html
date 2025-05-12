@@ -4,7 +4,7 @@
     <title>Ongoing Appointments</title>
 </head>
 <body>
-<div class="space-y-6" th:fragment="ongoing" x-data="{showBillingDialog: false, selectedAppointment: null}">
+<div class="space-y-6" th:fragment="ongoing" x-data="{selectedAppointment: null}">
     <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold tracking-tight">Ongoing Appointments</h2>
         <div class="px-3 py-1 border rounded-md flex items-center gap-1">
@@ -115,51 +115,51 @@
         </th:block>
     </div>
 
-    <!-- Billing Dialog -->
-    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
-         x-show="showBillingDialog">
-        <div @click.away="showBillingDialog = false" class="bg-white rounded-lg shadow-lg max-w-md w-full">
-            <div class="p-6">
-                <h3 class="text-lg font-medium mb-4">Finalize Bill</h3>
+    <!--    &lt;!&ndash; Billing Dialog &ndash;&gt;-->
+    <!--    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"-->
+    <!--         x-show="showBillingDialog">-->
+    <!--        <div @click.away="showBillingDialog = false" class="bg-white rounded-lg shadow-lg max-w-md w-full">-->
+    <!--            <div class="p-6">-->
+    <!--                <h3 class="text-lg font-medium mb-4">Finalize Bill</h3>-->
 
-                <div class="space-y-4">
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium" for="labor-cost">Labor Cost ($)</label>
-                        <input class="w-full px-3 py-2 border rounded-md" id="labor-cost" placeholder="0.00"
-                               type="number"/>
-                    </div>
+    <!--                <div class="space-y-4">-->
+    <!--                    <div class="space-y-2">-->
+    <!--                        <label class="block text-sm font-medium" for="labor-cost">Labor Cost ($)</label>-->
+    <!--                        <input class="w-full px-3 py-2 border rounded-md" id="labor-cost" placeholder="0.00"-->
+    <!--                               type="number"/>-->
+    <!--                    </div>-->
 
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium" for="parts-cost">Parts Cost ($)</label>
-                        <input class="w-full px-3 py-2 border rounded-md" id="parts-cost" placeholder="0.00"
-                               type="number"/>
-                    </div>
+    <!--                    <div class="space-y-2">-->
+    <!--                        <label class="block text-sm font-medium" for="parts-cost">Parts Cost ($)</label>-->
+    <!--                        <input class="w-full px-3 py-2 border rounded-md" id="parts-cost" placeholder="0.00"-->
+    <!--                               type="number"/>-->
+    <!--                    </div>-->
 
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium" for="additional-fees">Additional Fees ($)</label>
-                        <input class="w-full px-3 py-2 border rounded-md" id="additional-fees" placeholder="0.00"
-                               type="number"/>
-                    </div>
+    <!--                    <div class="space-y-2">-->
+    <!--                        <label class="block text-sm font-medium" for="additional-fees">Additional Fees ($)</label>-->
+    <!--                        <input class="w-full px-3 py-2 border rounded-md" id="additional-fees" placeholder="0.00"-->
+    <!--                               type="number"/>-->
+    <!--                    </div>-->
 
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium" for="notes">Notes</label>
-                        <textarea class="w-full px-3 py-2 border rounded-md min-h-[80px]" id="notes"
-                                  placeholder="Enter service details and notes"></textarea>
-                    </div>
+    <!--                    <div class="space-y-2">-->
+    <!--                        <label class="block text-sm font-medium" for="notes">Notes</label>-->
+    <!--                        <textarea class="w-full px-3 py-2 border rounded-md min-h-[80px]" id="notes"-->
+    <!--                                  placeholder="Enter service details and notes"></textarea>-->
+    <!--                    </div>-->
 
-                    <div class="flex justify-between pt-4">
-                        <button @click="showBillingDialog = false"
-                                class="flex items-center justify-center px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-gray-100 focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black">
-                            Cancel
-                        </button>
-                        <button class="flex items-center justify-center px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black">
-                            Complete & Save
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--                    <div class="flex justify-between pt-4">-->
+    <!--                        <button @click="showBillingDialog = false"-->
+    <!--                                class="flex items-center justify-center px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-gray-100 focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black">-->
+    <!--                            Cancel-->
+    <!--                        </button>-->
+    <!--                        <button class="flex items-center justify-center px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black">-->
+    <!--                            Complete & Save-->
+    <!--                        </button>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 </div>
 </body>
 </html>
