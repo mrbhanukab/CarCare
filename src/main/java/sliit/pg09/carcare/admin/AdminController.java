@@ -6,21 +6,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import sliit.pg09.carcare.emergency.Emergency;
+import sliit.pg09.carcare.emergency.EmergencyService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
     AdminService adminService;
+    @Autowired
+    EmergencyService emergencyService;
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
+        List<Emergency> activeEmergencies = emergencyService.getActiveEmergencies();
+        System.out.println("Active emergencies count: " + activeEmergencies.size());
+        model.addAttribute("emergencies", activeEmergencies);
+        model.addAttribute("activeCount", activeEmergencies.size());
         return adminService.verifyUserStatus("Admin/Dashboard", model);
     }
 
     @HxRequest
     @GetMapping("/screen/emergencies")
     public String getEmergencyScreen(Model model) {
+        List<Emergency> activeEmergencies = emergencyService.getActiveEmergencies();
+        System.out.println("Active emergencies count: " + activeEmergencies.size());
+        model.addAttribute("emergencies", activeEmergencies);
+        model.addAttribute("activeCount", activeEmergencies.size());
         return adminService.verifyUserStatus("Admin/Screens/EmergenciesDashboard", model);
     }
 

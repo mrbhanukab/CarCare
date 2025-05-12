@@ -36,6 +36,10 @@ public class EmergencyService {
         emergencyRepository.save(emergency);
     }
 
+    public void createEmergency(Emergency emergency) {
+        emergencyRepository.save(emergency);
+    }
+
     public boolean markRequestAsHandled(String vehicleLicense, LocalDateTime emergencyTime) {
         Emergency.EmergencyId id = new Emergency.EmergencyId();
         id.setVehicleLicense(vehicleLicense);
@@ -51,7 +55,7 @@ public class EmergencyService {
         return false;
     }
 
-    List<Emergency> getOngoingEmergencies() {
+    public List<Emergency> getActiveEmergencies() {
         return emergencyRepository.findAll().stream()
                 .filter(emergency -> !emergency.isHandled())
                 .toList();
