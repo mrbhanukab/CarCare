@@ -120,9 +120,9 @@ public class SampleDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        clientsLoader();
-        modelLoader();
-        vehicleLoader();
-        emergencyLoader();
+//        clientsLoader();
+//        modelLoader();
+//        vehicleLoader();
+//        emergencyLoader();
     }
 }

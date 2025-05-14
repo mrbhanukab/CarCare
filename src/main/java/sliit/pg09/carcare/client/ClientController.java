@@ -2,6 +2,7 @@ package sliit.pg09.carcare.client;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,11 @@ import java.util.List;
 @RequestMapping("/client")
 public class ClientController {
     private final ClientService clientService;
+    private final LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
 
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService, LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
         this.clientService = clientService;
+        this.localContainerEntityManagerFactoryBean = localContainerEntityManagerFactoryBean;
     }
 
     @RequestMapping(value = {"", "/"})
@@ -35,6 +38,14 @@ public class ClientController {
     public String showAccountDetails(Model model) {
         return clientService.verifyUserStatus("Client/Components/AccountDetails", model);
     }
+
+
+    @GetMapping("/vehicle/new")  // Changed from nested controller
+    public String getAddVehicleModal() {
+        return "Client/Components/AddVehicleModal :: addVehicleModal";
+    }
+
+
 
     @HxRequest
     @PostMapping("/account")

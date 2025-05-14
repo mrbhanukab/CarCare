@@ -32,9 +32,10 @@
 
             <!-- Button -->
             <div class="mt-8">
-                <button hx-get="/client/vehicle/new"
-                        hx-target="#modal-container"
-                        class="w-full px-6 py-3 bg-cyan-600 text-white rounded-full hover:bg-cyan-700 transition-all duration-300 flex items-center justify-center gap-2 group">
+                <a class="w-full px-6 py-3 bg-cyan-600 text-white rounded-full hover:bg-cyan-700 transition-all duration-300 flex items-center justify-center gap-2 group"
+                   hx-get="/client/vehicle/new"
+                   hx-target="#modal-container"
+                   hx-swap="innerHTML">
                     <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"
                          class="transform transition-transform duration-300 group-hover:scale-110">
                         <path d="M12 5V19M5 12H19"
@@ -44,10 +45,11 @@
                               stroke-width="2"/>
                     </svg>
                     Add Vehicle
-                </button>
+                </a>
             </div>
         </div>
     </div>
 </div>
+<div id="modal-container"></div>
 </body>
 </html>
