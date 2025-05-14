@@ -86,17 +86,6 @@ public class SampleDataLoader implements CommandLineRunner {
         }
     }
 
-//    public void clientsLoader() {
-//        List<Client> clients = IntStream.rangeClosed(1, 100)
-//                .mapToObj(client -> new Client(
-//                        faker.name().fullName(),
-//                        faker.internet().emailAddress(),
-//                        "http://yt3.ggpht.com/ytc/AIdro_lBaOkvuCIkdLdhhi78ONhJy57heqBCdiAJH8Nd73tz6wk=s88-c-k-c0x00ffffff-no-rj"
-//                ))
-//                .toList();
-//        clientRepository.saveAll(clients);
-//    }
-
 
     public void emergencyLoader() {
         // Get a list of vehicles from the repository
@@ -131,9 +120,9 @@ public class SampleDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        clientsLoader();
-//        modelLoader();
-//        vehicleLoader();
-//        emergencyLoader();
+        clientsLoader();
+        modelLoader();
+        vehicleLoader();
+        emergencyLoader();
     }
 }

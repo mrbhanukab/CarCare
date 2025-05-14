@@ -2,7 +2,6 @@ package sliit.pg09.carcare.vehicle;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +17,9 @@ public class Vehicle {
     private boolean removed;
 
     @ManyToOne
-    @JoinColumn(name = "number")
     private CarModel model;
 
     @ManyToOne
-    @JoinColumn(name = "email")
     private Client client;
 
     public Vehicle(String license, CarModel model, Client client) {
