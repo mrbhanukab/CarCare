@@ -18,13 +18,6 @@ public class VehicleController {
         @Autowired
         private VehicleService vehicleService;
 
-        @HxRequest
-        @PostMapping("/vehicle")
-        public ResponseEntity<String> addVehicle(@RequestBody Vehicle vehicle) {
-            boolean created = vehicleService.createVehicle(vehicle);
-            return created ? ResponseEntity.ok("Vehicle created") : ResponseEntity.badRequest().body("Vehicle already exists or invalid");
-        }
-
         @GetMapping("/vehicle/{license}")
         public ResponseEntity<Vehicle> getVehicle(@PathVariable String license) {
             Vehicle vehicle = vehicleService.getVehicleByLicense(license);
@@ -74,6 +67,29 @@ public class VehicleController {
             modelRepository.deleteById(number);
             return ResponseEntity.ok("Model deleted");
         }
+        @Controller
+        @RequestMapping("/client")
+        public static class ClientVehicleController {
+            @Autowired
+            private VehicleService vehicleService;
+            @Autowired
+            private ModelService modelService; // Add this dependency
 
+            @HxRequest
+            @PostMapping("/vehicle")
+            public ResponseEntity<String> addVehicle(@RequestBody Vehicle vehicle) {
+                // First, check if the model exists
+                if (vehicle.getModel() == null || vehicle.getModel().getNumber() == null ||
+                        modelService.getModelByNumber(vehicle.getModel().getNumber()) == null) {
+                    return ResponseEntity.badRequest().body("Invalid vehicle model");
+                }
+
+                // Attempt to create the vehicle
+                boolean created = vehicleService.createVehicle(vehicle);
+                return created ?
+                        ResponseEntity.ok().body("Vehicle added successfully") :
+                        ResponseEntity.badRequest().body("Vehicle already exists or invalid license");
+            }
+        }
     }
 }
