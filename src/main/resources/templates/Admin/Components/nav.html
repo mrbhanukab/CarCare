@@ -1,0 +1,21 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<nav class="flex justify-center group relative cursor-pointer rounded-lg p-1"
+     th:fragment="navItem (text)">
+    <div class="opacity-60 hover:opacity-80 size-5">
+        <div
+                th:replace="~{Admin/Components/Icons/__${
+            text == 'Emergencies Dashboard' ? 'emergencies' :
+            text == 'Appointment Requests' ? 'apRequests' :
+            text == 'Ongoing Appointments' ? 'ongoing' :
+            text == 'Completed Appointments' ? 'completed' :
+            text == 'Activity Log' ? 'log' :
+            text == 'Clients' ? 'clients' :
+            'logout'
+         }__.html}">
+        </div>
+    </div>
+    <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-700 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+        <span th:text="${text}">Nav Item</span>
+    </span>
+</nav>
+</html>

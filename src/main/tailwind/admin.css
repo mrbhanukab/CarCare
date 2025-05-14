@@ -1,3 +1,30 @@
 @import "tailwindcss";
 
+* {
+    --sb-track-color: #f2f3f5;
+    --sb-thumb-color: #000000;
+    --sb-size: 10px;
+}
+
+*::-webkit-scrollbar {
+    width: var(--sb-size)
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 15px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 15px;
+    border: 2px solid #f2f3f5;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    * {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+}
+
 @source "../resources/templates/Admin/**";

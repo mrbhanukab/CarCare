@@ -3,6 +3,8 @@ package sliit.pg09.carcare.vehicle;
 import org.springframework.stereotype.Service;
 import sliit.pg09.carcare.client.ClientRepository;
 
+import java.util.List;
+
 @Service
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
@@ -18,12 +20,12 @@ public class VehicleService {
         vehicleRepository.save(vehicle);
     }
 
-    public boolean createVehicle (Vehicle vehicle) {
-        if(vehicle == null || vehicle.getLicense() == null) {
+    public boolean createVehicle(Vehicle vehicle) {
+        if (vehicle == null || vehicle.getLicense() == null) {
             return false;
         }
 
-        if(vehicleRepository.existsById(vehicle.getLicense())) {
+        if (vehicleRepository.existsById(vehicle.getLicense())) {
             return false;
         }
 
@@ -33,6 +35,10 @@ public class VehicleService {
 
     public Vehicle getVehicleByLicense(String license) {
         return vehicleRepository.findById(license).orElse(null);
+    }
+
+    public List<Vehicle> findAll() {
+        return vehicleRepository.findAll();
     }
 
 }

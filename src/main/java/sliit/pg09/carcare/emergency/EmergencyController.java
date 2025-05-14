@@ -66,13 +66,13 @@ public class EmergencyController {
     @RequestMapping("/admin")
     public static class AdminEmergency {
         @Autowired
-        private EmergencyController parentController;
+        private EmergencyController emergencyController;
 
         @GetMapping("/emergencies")
         public String getEmergencies(Model model) {
-            model.addAttribute("emergencies", parentController.emergencies);
+            model.addAttribute("emergencies", emergencyController.emergencies);
             model.addAttribute("activeEmergencies",
-                    parentController.emergencies.stream()
+                    emergencyController.emergencies.stream()
                             .filter(e -> !e.isHandled())
                             .collect(Collectors.toList()));
             // Update the return path to match your template location
@@ -85,7 +85,7 @@ public class EmergencyController {
                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime time,
                 Model model) {
 
-            parentController.emergencies.stream()
+            emergencyController.emergencies.stream()
                     .filter(e -> e.getId().getVehicleLicense().equals(license) &&
                             e.getId().getEmergencyTime().equals(time))
                     .findFirst()

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Admin Login - LuxAuto</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
 </head>
 <body>
 <div class="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
@@ -15,7 +15,7 @@
     <!-- Header -->
     <header class="p-4 flex items-center">
         <div class="flex items-center gap-4">
-            <img alt="LuxAuto Logo" class="w-14" th:src="@{/images/LOGO.webp}"/>
+            <img alt="LuxAuto Logo" class="w-14 drop-shadow-lg" th:src="@{/images/LOGO.webp}"/>
             <h1 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-700">
                 LuxAuto Admin
             </h1>
@@ -103,7 +103,10 @@
 
     <!-- Footer -->
     <footer class="py-4 px-6 text-center text-gray-500 text-sm">
-        <p>© 2024 LuxAuto Service. All rights reserved.</p>
+        <p>©
+            <script>document.write(new Date().getFullYear())</script>
+            LuxAuto Service. All rights reserved.
+        </p>
     </footer>
 </div>
 </body>
