@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 @Controller
 public class EmergencyController {
     private final List<Emergency> emergencies;
+    @Autowired
+    EmergencyService emergencyService;
 
     public EmergencyController() {
         this.emergencies = createSampleEmergencies();
@@ -67,6 +69,8 @@ public class EmergencyController {
     public static class AdminEmergency {
         @Autowired
         private EmergencyController emergencyController;
+        @Autowired
+        private EmergencyService emergencyService;
 
         @GetMapping("/emergencies")
         public String getEmergencies(Model model) {
@@ -82,16 +86,19 @@ public class EmergencyController {
         @PostMapping("/emergency/handle")
         public String markAsHandled(
                 @RequestParam String license,
-                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime time,
+                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime time,
                 Model model) {
 
-            emergencyController.emergencies.stream()
-                    .filter(e -> e.getId().getVehicleLicense().equals(license) &&
-                            e.getId().getEmergencyTime().equals(time))
-                    .findFirst()
-                    .ifPresent(e -> e.setHandled(true));
+            emergencyService.markRequestAsHandled(license, time);
 
-            return getEmergencies(model);
+            // Calculate active emergencies count
+            long activeCount = emergencyController.emergencies.stream()
+                    .filter(e -> !e.isHandled())
+                    .count();
+
+            model.addAttribute("activeCount", activeCount);
+
+            return "Admin/Components/EmergencyCounter :: counterElement";
         }
     }
 }
