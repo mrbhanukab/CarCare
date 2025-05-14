@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="addVehicleModal()">
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50"
+         id="addVehicleModal">
+        <div class="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden border border-gray-700">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-700">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-cyan-400">Add New Vehicle</h2>
+                    <button class="text-gray-400 hover:text-gray-200" onclick="closeModal()">
+                        <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form class="space-y-4"
+                  hx-post="/api/vehicles/add"
+                  hx-swap="innerHTML"
+                  hx-target="#main-content">
+                <div class="p-6 space-y-6">
+                    <!-- Error Message -->
+                    <div class="hidden mb-6 p-3 bg-red-900/20 border border-red-500/30 rounded-lg text-red-400 text-sm"
+                         id="errorMessage"></div>
+
+                    <!-- License Plate Number -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1" for="license-number">
+                            License Plate Number*
+                        </label>
+                        <input class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                               id="license-number"
+                               name="licenseNumber"
+                               placeholder="Enter license plate number"
+                               required
+                               type="text"/>
+                    </div>
+
+                    <!-- Vehicle Make -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1" for="vehicle-make">
+                            Vehicle Make*
+                        </label>
+                        <input class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                               id="vehicle-make"
+                               name="make"
+                               placeholder="Enter vehicle make"
+                               required
+                               type="text"/>
+                    </div>
+
+                    <!-- Vehicle Model -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1" for="vehicle-model">
+                            Vehicle Model*
+                        </label>
+                        <input class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                               id="vehicle-model"
+                               name="model"
+                               placeholder="Enter vehicle model"
+                               required
+                               type="text"/>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="p-6 border-t border-gray-700 flex justify-end gap-3">
+                    <button class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                            onclick="closeModal()"
+                            type="button">
+                        Cancel
+                    </button>
+                    <button class="px-4 py-2 bg-cyan-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800 shadow-[0_0_10px_rgba(56,189,248,0.3)] flex items-center gap-2"
+                            type="submit">
+                        <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"/>
+                        </svg>
+                        Add Vehicle
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('addVehicleModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('addVehicleModal').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('addVehicleModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</div>
+</body>
+</html>
