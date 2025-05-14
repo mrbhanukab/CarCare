@@ -14,12 +14,15 @@ import sliit.pg09.carcare.vehicle.model.CarModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class EmergencyController {
     private final List<Emergency> emergencies;
+    @Autowired
+    EmergencyService emergencyService;
 
     public EmergencyController() {
         this.emergencies = createSampleEmergencies();
@@ -67,31 +70,34 @@ public class EmergencyController {
     public static class AdminEmergency {
         @Autowired
         private EmergencyController emergencyController;
+        @Autowired
+        private EmergencyService emergencyService;
 
         @GetMapping("/emergencies")
         public String getEmergencies(Model model) {
-            model.addAttribute("emergencies", emergencyController.emergencies);
-            model.addAttribute("activeEmergencies",
-                    emergencyController.emergencies.stream()
-                            .filter(e -> !e.isHandled())
-                            .collect(Collectors.toList()));
-            // Update the return path to match your template location
+            List<Emergency> activeEmergencies = emergencyService.getActiveEmergencies().stream()
+                    .sorted(Comparator.comparing(e -> e.getId().getEmergencyTime()))
+                    .collect(Collectors.toList());
+
+            model.addAttribute("activeEmergencies", activeEmergencies);
             return "Admin/Components/Emergency";
         }
 
         @PostMapping("/emergency/handle")
         public String markAsHandled(
                 @RequestParam String license,
-                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime time,
+                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime time,
                 Model model) {
 
-            emergencyController.emergencies.stream()
-                    .filter(e -> e.getId().getVehicleLicense().equals(license) &&
-                            e.getId().getEmergencyTime().equals(time))
-                    .findFirst()
-                    .ifPresent(e -> e.setHandled(true));
+            boolean success = emergencyService.markRequestAsHandled(license, time);
 
-            return getEmergencies(model);
+            if (!success) {
+                model.addAttribute("message", "Emergency request not found or already handled");
+                return "Components/Error :: error";
+            }
+
+            model.addAttribute("activeCount", emergencyService.getActiveEmergencies().size());
+            return "Admin/Components/EmergencyCounter :: counterElement";
         }
     }
 }
