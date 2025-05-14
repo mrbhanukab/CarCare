@@ -27,4 +27,5 @@ public class Vehicle {
         this.model = model;
         this.client = client;
     }
+
 }
