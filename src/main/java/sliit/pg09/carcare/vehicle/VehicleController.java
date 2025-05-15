@@ -77,15 +77,13 @@ public class VehicleController {
 
             @HxRequest
             @PostMapping("/vehicle")
-            public ResponseEntity<String> addVehicle(@RequestBody Vehicle vehicle) {
+            public ResponseEntity<String> addVehicle(@RequestParam String license, @RequestParam String modelNumber) {
                 // First, check if the model exists
-                if (vehicle.getModel() == null || vehicle.getModel().getNumber() == null ||
-                        modelService.getModelByNumber(vehicle.getModel().getNumber()) == null) {
+                if (license.isBlank() || modelNumber.isBlank())
                     return ResponseEntity.badRequest().body("Invalid vehicle model");
-                }
 
                 // Attempt to create the vehicle
-                boolean created = vehicleService.createVehicle(vehicle);
+                boolean created = vehicleService.createVehicle(new Vehicle(license, modelNumber));
                 return created ?
                         ResponseEntity.ok().body("Vehicle added successfully") :
                         ResponseEntity.badRequest().body("Vehicle already exists or invalid license");

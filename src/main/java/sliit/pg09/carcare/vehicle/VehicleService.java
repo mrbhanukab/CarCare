@@ -20,8 +20,17 @@ public class VehicleService
     }
 
 
-    public void updateVehicle(Vehicle vehicle) {
-        vehicleRepository.save(vehicle);
+
+
+    public void updateVehicle(String license, String modelNumber) {
+        Vehicle vehicle = vehicleRepository.findById(license).orElse(null);
+        if (vehicle != null) {
+            CarModel model = modelRepository.findById(modelNumber).orElse(null);
+            if (model != null) {
+                vehicle.setModel(model);
+                vehicleRepository.save(vehicle);
+            }
+        }
     }
 
     public boolean createVehicle(Vehicle vehicle) {
