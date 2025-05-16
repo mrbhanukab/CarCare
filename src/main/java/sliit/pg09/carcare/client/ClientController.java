@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sliit.pg09.carcare.pendingAppointment.NewAppointmentService;
 import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.util.List;
@@ -17,17 +18,29 @@ import java.util.List;
 public class ClientController {
     private final ClientService clientService;
     private final VehicleService vehicleService;
+    private final NewAppointmentService newAppointmentService;
 
-    public ClientController(ClientService clientService, VehicleService vehicleService) {
+    public ClientController(ClientService clientService, VehicleService vehicleService,
+                            NewAppointmentService newAppointmentService) {
         this.clientService = clientService;
         this.vehicleService = vehicleService;
+        this.newAppointmentService = newAppointmentService;
     }
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
         var vehicles = vehicleService.getVehiclesByCurrentClient();
-        if (!vehicles.isEmpty()) model.addAttribute("vehicle", vehicles.getFirst());
-        else model.addAttribute("vehicle", null);
+        if (!vehicles.isEmpty()) {
+            var vehicle = vehicles.getFirst();
+            model.addAttribute("vehicle", vehicle);
+
+            // Get pending appointments for this vehicle
+            var pendingAppointments = newAppointmentService.getNewAppointmentsByVehicle(vehicle.getLicense());
+            model.addAttribute("pendingAppointments", pendingAppointments);
+        } else {
+            model.addAttribute("pendingAppointments", null);
+            model.addAttribute("vehicle", null);
+        }
 
         return clientService.verifyUserStatus("Client/Dashboard", model);
     }

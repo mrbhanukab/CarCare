@@ -16,8 +16,8 @@ public class NewAppointmentService {
         this.vehicleService = vehicleService;
     }
 
-    public List<NewAppointment> getPendingAppointments(String vehicle) {
-        return newAppointmentRepository.findByVehicle(vehicleService.getVehicleByLicense(vehicle));
+    public List<NewAppointment> getNewAppointmentsByVehicle(String license) {
+        return newAppointmentRepository.findByVehicle(vehicleService.getVehicleByLicense(license));
     }
 
     public void saveAppointment(NewAppointment newAppointment) {

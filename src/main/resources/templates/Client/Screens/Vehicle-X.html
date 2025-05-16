@@ -46,7 +46,7 @@
         <div th:replace="~{Client/Components/NextServiceCard :: nextServiceCard()}"></div>
         <div th:replace="~{Client/Components/EmergencyCard :: emergencyCard()}"></div>
         <div th:replace="~{Client/Components/NewAppointmentCard :: newAppointmentCard()}"></div>
-        <div th:replace="~{Client/Components/UpcomingServiceCard :: upcomingServiceCard()}"></div>
+        <div th:replace="~{Client/Components/UpcomingServiceCard :: upcomingServiceCard(${pendingAppointments})}"></div>
         <div th:replace="~{Client/Components/RecentCard :: recentCard()}"></div>
     </div>
 </div>
