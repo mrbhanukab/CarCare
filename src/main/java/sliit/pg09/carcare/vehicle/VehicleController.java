@@ -29,6 +29,13 @@ public class VehicleController {
         }
 
         @HxRequest
+        @GetMapping("/vehicles/modal")
+        public String getVehicleModal(Model model) {
+            model.addAttribute("vehicles", vehicleService.getVehiclesByCurrentClient());
+            return "Client/Components/VehicleSelectorModal :: vehicleSelectorModal()";
+        }
+
+        @HxRequest
         @PostMapping("/vehicle")
         public String addVehicle(@RequestParam String license, @RequestParam String modelNumber,
                                  Model model, HttpServletResponse response) {
