@@ -142,7 +142,8 @@ public class NewAppointmentController {
 
                 // Close the modal upon success
                 response.setHeader("HX-Trigger", "closeModal");
-                return "";
+                response.setHeader("HX-Redirect", "/client/");
+                return null;
             } catch (Exception e) {
                 model.addAttribute("message", "Failed to create appointment: " + e.getMessage());
                 return "Components/Error :: error";
