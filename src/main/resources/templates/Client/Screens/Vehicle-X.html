@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
-
-</body>
+<div class="flex lg:flex-row flex-col lg:overflow-hidden" th:fragment="vehicle()">
+    <!--    {/* Car Info Area (Left Column) */}-->
+    <div th:replace="Client/Left :: left()"></div>
+    <!--{/* Cards Area (Right Column) */}-->
+    <div th:replace="Client/Right :: right()"></div>
+</div>
 </html>

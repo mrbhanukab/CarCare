@@ -2,13 +2,13 @@ package sliit.pg09.carcare.client;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.util.List;
 
@@ -16,15 +16,17 @@ import java.util.List;
 @RequestMapping("/client")
 public class ClientController {
     private final ClientService clientService;
-    private final LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
+    private final VehicleService vehicleService;
 
-    public ClientController(ClientService clientService, LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
+    public ClientController(ClientService clientService, VehicleService vehicleService) {
         this.clientService = clientService;
-        this.localContainerEntityManagerFactoryBean = localContainerEntityManagerFactoryBean;
+        this.vehicleService = vehicleService;
     }
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
+        model.addAttribute("vehicles", vehicleService.getVehiclesByCurrentClient());
+        System.out.println(vehicleService.getVehiclesByCurrentClient().size());
         return clientService.verifyUserStatus("Client/Dashboard", model);
     }
 
@@ -44,7 +46,6 @@ public class ClientController {
     public String getAddVehicleModal() {
         return "Client/Components/AddVehicleModal :: addVehicleModal";
     }
-
 
 
     @HxRequest

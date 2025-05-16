@@ -1,9 +1,11 @@
 package sliit.pg09.carcare.vehicle;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sliit.pg09.carcare.vehicle.model.CarModel;
 import sliit.pg09.carcare.vehicle.model.ModelRepository;
@@ -17,11 +19,30 @@ public class VehicleController {
     public static class ClientVehicleController {
         @Autowired
         private VehicleService vehicleService;
+        @Autowired
+        private ModelService modelService;
 
         @GetMapping("/vehicle/{license}")
         public ResponseEntity<Vehicle> getVehicle(@PathVariable String license) {
             Vehicle vehicle = vehicleService.getVehicleByLicense(license);
             return vehicle != null ? ResponseEntity.ok(vehicle) : ResponseEntity.notFound().build();
+        }
+
+        @HxRequest
+        @PostMapping("/vehicle")
+        public String addVehicle(@RequestParam String license, @RequestParam String modelNumber,
+                                 Model model, HttpServletResponse response) {
+            try {
+                Vehicle vehicle = vehicleService.createVehicle(license, modelNumber);
+                response.setHeader("HX-Redirect", "/client/");
+                return null;
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                model.addAttribute("message", e.getMessage());
+                return "Components/Error :: error";
+            } catch (Exception e) {
+                model.addAttribute("message", "An unexpected error occurred");
+                return "Components/Error :: error";
+            }
         }
     }
 
@@ -66,28 +87,6 @@ public class VehicleController {
         public ResponseEntity<String> deleteModel(@PathVariable String number) {
             modelRepository.deleteById(number);
             return ResponseEntity.ok("Model deleted");
-        }
-
-        @Controller
-        @RequestMapping("/client")
-        public static class ClientVehicleController {
-            @Autowired
-            private VehicleService vehicleService;
-            @Autowired
-            private ModelService modelService;
-
-            @HxRequest
-            @PostMapping("/vehicle")
-            public ResponseEntity<String> addVehicle(@RequestParam String license, @RequestParam String modelNumber) {
-                try {
-                    Vehicle vehicle = vehicleService.createVehicle(license, modelNumber);
-                    return ResponseEntity.ok().body("Vehicle added successfully");
-                } catch (IllegalArgumentException | IllegalStateException e) {
-                    return ResponseEntity.badRequest().body(e.getMessage());
-                } catch (Exception e) {
-                    return ResponseEntity.internalServerError().body("An unexpected error occurred");
-                }
-            }
         }
     }
 }

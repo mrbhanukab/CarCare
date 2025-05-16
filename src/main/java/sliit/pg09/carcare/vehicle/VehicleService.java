@@ -1,10 +1,8 @@
 package sliit.pg09.carcare.vehicle;
 
 import org.springframework.stereotype.Service;
-import sliit.pg09.carcare.client.ClientRepository;
 import sliit.pg09.carcare.client.ClientService;
 import sliit.pg09.carcare.vehicle.model.CarModel;
-import sliit.pg09.carcare.vehicle.model.ModelRepository;
 import sliit.pg09.carcare.vehicle.model.ModelService;
 
 import java.util.List;
@@ -15,7 +13,7 @@ public class VehicleService {
     private final ModelService modelService;
     private final ClientService clientService;
 
-    public VehicleService(VehicleRepository vehicleRepository, ClientRepository clientRepository, ModelRepository modelRepository, ModelService modelService, ClientService clientService) {
+    public VehicleService(VehicleRepository vehicleRepository, ModelService modelService, ClientService clientService) {
         this.vehicleRepository = vehicleRepository;
         this.modelService = modelService;
         this.clientService = clientService;
@@ -58,6 +56,17 @@ public class VehicleService {
 
     public Vehicle getVehicleByLicense(String license) {
         return vehicleRepository.findById(license).orElse(null);
+    }
+
+    public List<Vehicle> getVehiclesByCurrentClient() {
+        var clientOptional = clientService.getCurrentUser();
+        if (clientOptional.isEmpty())
+            throw new IllegalStateException("No authenticated client found");
+
+        return vehicleRepository.getVehiclesByClient(clientOptional.get())
+                .stream()
+                .filter(vehicle -> !vehicle.isRemoved())
+                .toList();
     }
 
     public List<Vehicle> findAll() {

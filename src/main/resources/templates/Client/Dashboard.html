@@ -83,8 +83,8 @@
             <!-- Dropdown Menu -->
             <div class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 border border-gray-700 animate-fadeIn hidden"
                  id="dropdown-menu">
-
                 <div class="py-2">
+                    <!-- Account Details Button -->
                     <a class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
                        href="#"
                        hx-get="/client/account"
@@ -98,21 +98,22 @@
                                   stroke-width="2"/>
                         </svg>
                         Account Details
-                        <a class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
-                           hx-get="/client/vehicle/new"
-                           hx-target="#modal-container">
-                            <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 6V18M6 12H18"
-                                      stroke="currentColor"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"/>
-                            </svg>
-                            Add New Vehicle
-                        </a>
+                    </a>
 
+                    <!-- Add New Vehicle Button -->
+                    <a class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
+                       hx-get="/client/vehicle/new"
+                       hx-target="#modal-container">
+                        <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 6V18M6 12H18"
+                                  stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2"/>
+                        </svg>
+                        Add New Vehicle
+                    </a>
 
-                        <form class="w-full" method="post" th:action="@{/logout}">
+                    <!-- Logout Form -->
+                    <form class="w-full" method="post" th:action="@{/logout}">
                         <button class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
                                 type="submit">
                             <svg fill="none" height="16" viewBox="0 0 24 24" width="16"
@@ -129,13 +130,15 @@
         </div>
     </header>
 
-    <section class="flex lg:flex-row flex-col h-full  w-full lg:overflow-hidden">
-        <div th:replace="Client/Screens/No-Vehicles :: no-vehicles()"></div>
-<!--                &lt;!&ndash;    {/* Car Info Area (Left Column) */}&ndash;&gt;-->
-<!--                <div th:replace="Client/Left :: left()"></div>-->
-<!--                &lt;!&ndash;{/* Cards Area (Right Column) */}&ndash;&gt;-->
-<!--                <div th:replace="Client/Right :: right()"></div>-->
+    <section class="h-full w-full">
+        <th:block th:if="${#lists.isEmpty(vehicles)}">
+            <div th:replace="~{Client/Screens/No-Vehicles :: no-vehicles()}"></div>
+        </th:block>
+        <th:block th:unless="${#lists.isEmpty(vehicles)}">
+            <div th:replace="~{Client/Screens/Vehicle-X :: vehicle()}"></div>
+        </th:block>
     </section>
+
     <div class="relative z-50" id="modal-container"></div>
 </main>
 </body>
