@@ -67,26 +67,26 @@ public class VehicleController {
             modelRepository.deleteById(number);
             return ResponseEntity.ok("Model deleted");
         }
+
         @Controller
         @RequestMapping("/client")
         public static class ClientVehicleController {
             @Autowired
             private VehicleService vehicleService;
             @Autowired
-            private ModelService modelService; // Add this dependency
+            private ModelService modelService;
 
             @HxRequest
             @PostMapping("/vehicle")
             public ResponseEntity<String> addVehicle(@RequestParam String license, @RequestParam String modelNumber) {
-                // First, check if the model exists
-                if (license.isBlank() || modelNumber.isBlank())
-                    return ResponseEntity.badRequest().body("Invalid vehicle model");
-
-                // Attempt to create the vehicle
-                boolean created = vehicleService.createVehicle(new Vehicle(license, modelNumber));
-                return created ?
-                        ResponseEntity.ok().body("Vehicle added successfully") :
-                        ResponseEntity.badRequest().body("Vehicle already exists or invalid license");
+                try {
+                    Vehicle vehicle = vehicleService.createVehicle(license, modelNumber);
+                    return ResponseEntity.ok().body("Vehicle added successfully");
+                } catch (IllegalArgumentException | IllegalStateException e) {
+                    return ResponseEntity.badRequest().body(e.getMessage());
+                } catch (Exception e) {
+                    return ResponseEntity.internalServerError().body("An unexpected error occurred");
+                }
             }
         }
     }

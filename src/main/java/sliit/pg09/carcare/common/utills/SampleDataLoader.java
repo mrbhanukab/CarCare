@@ -73,18 +73,18 @@ public class SampleDataLoader implements CommandLineRunner {
         });
     }
 
-    public void vehicleLoader() {
-        List<Client> clients = clientService.findAllClients();
-
-        if (!clients.isEmpty()) {
-            IntStream.rangeClosed(1, 20).forEach(i -> {
-                Vehicle vehicle = new Vehicle();
-                vehicle.setLicense(faker.regexify("[A-Z]{2,3}-[0-9]{4}"));
-                vehicle.setClient(clients.get(faker.random().nextInt(clients.size())));
-                vehicleService.createVehicle(vehicle);
-            });
-        }
-    }
+//    public void vehicleLoader() {
+//        List<Client> clients = clientService.findAllClients();
+//
+//        if (!clients.isEmpty()) {
+//            IntStream.rangeClosed(1, 20).forEach(i -> {
+//                Vehicle vehicle = new Vehicle();
+//                vehicle.setLicense(faker.regexify("[A-Z]{2,3}-[0-9]{4}"));
+//                vehicle.setClient(clients.get(faker.random().nextInt(clients.size())));
+//                vehicleService.createVehicle(vehicle);
+//            });
+//        }
+//    }
 
 
     public void emergencyLoader() {
