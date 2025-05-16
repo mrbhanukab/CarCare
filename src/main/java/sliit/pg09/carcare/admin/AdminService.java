@@ -30,6 +30,7 @@ public class AdminService implements UserDetailsService {
         return User.builder()
                 .username(admin.getEmail())
                 .password(admin.getPassword())
+                .authorities("ROLE_ADMIN")
                 .build();
     }
 
