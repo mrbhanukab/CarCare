@@ -18,15 +18,18 @@
 
         <div class="p-6 max-h-[70vh] overflow-y-auto">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" th:if="${not #lists.isEmpty(vehicles)}">
-                <a hx-push-url="true"
-                     class="bg-gray-700/50 rounded-xl p-4 cursor-pointer transition-all hover:bg-gray-700 border-2 border-cyan-500"
-                     th:each="vehicle : ${vehicles}">
+                <a
+                        th:hx-get="@{/client/vehicle(license=${vehicle.license})}"
+                        hx-target="section.h-full.w-full"
+                        hx-swap="outerHTML"
+                        class="bg-gray-700/50 rounded-xl p-4 cursor-pointer transition-all hover:bg-gray-700 border-2 border-cyan-500"
+                        th:each="vehicle : ${vehicles}">
 
                     <div class="h-32 flex items-center justify-center mb-3 bg-gray-800/50 rounded-lg overflow-hidden">
                         <img
                                 th:src="${vehicle.model.image}"
-                             alt="Porsche 911 Carrera"
-                             class="max-h-28 max-w-full object-contain"/>
+                                alt="Porsche 911 Carrera"
+                                class="max-h-28 max-w-full object-contain"/>
                     </div>
 
                     <div class="text-center">

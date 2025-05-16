@@ -56,6 +56,10 @@
                 });
             });
         });
+
+        htmx.on('closeVehicleModal', function () {
+            document.getElementById('modal-container').innerHTML = '';
+        });
     </script>
 </head>
 <body class="min-h-screen w-screen gap-6 bg-gray-900 text-gray-100">

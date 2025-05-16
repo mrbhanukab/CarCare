@@ -22,10 +22,23 @@ public class VehicleController {
         @Autowired
         private ModelService modelService;
 
-        @GetMapping("/vehicle/")
-        public ResponseEntity<Vehicle> getVehicle(@RequestParam String license) {
-            Vehicle vehicle = vehicleService.getVehicleByLicense(license);
-            return vehicle != null ? ResponseEntity.ok(vehicle) : ResponseEntity.notFound().build();
+        @HxRequest
+        @GetMapping("/vehicle")
+        public String getVehicle(@RequestParam String license, Model model, HttpServletResponse response) {
+            try {
+                Vehicle vehicle = vehicleService.getVehicleByLicense(license);
+                if (vehicle != null) {
+                    model.addAttribute("vehicle", vehicle);
+                    response.setHeader("HX-Trigger", "closeVehicleModal");
+                    return "Client/Screens/Vehicle-X :: vehicle";
+                } else {
+                    model.addAttribute("message", "Vehicle not found");
+                    return "Components/Error :: error";
+                }
+            } catch (Exception e) {
+                model.addAttribute("message", "An error occurred while loading the vehicle");
+                return "Components/Error :: error";
+            }
         }
 
         @HxRequest
