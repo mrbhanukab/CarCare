@@ -11,7 +11,8 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between">
             <h2 class="text-2xl font-bold tracking-tight">Emergencies Dashboard</h2>
-            <div class="px-3 py-1 border border-red-500 text-red-500 flex items-center gap-1 rounded-md">
+            <div class="px-3 py-1 border border-red-500 text-red-500 flex items-center gap-1 rounded-md"
+                 id="emergency-counter">
                 <span class="h-2 w-2 rounded-full bg-red-500"></span>
                 <span th:text="${activeCount + ' Active Emergencies'}">Active Emergencies</span>
             </div>
@@ -44,13 +45,13 @@
                         <div class="font-medium">Vehicle Information</div>
                         <div class="flex items-center justify-center gap-3">
                             <!-- Check for null vehicle and model -->
-                            <img class="w-16 h-12 object-contain"
+                            <img class="w-20 h-auto object-contain"
                                  th:alt="${emergency.vehicle.model.make}"
                                  th:if="${emergency.vehicle != null and emergency.vehicle.model != null and emergency.vehicle.model.image != null}"
                                  th:src="${emergency.vehicle.model.image}"/>
                             <!-- Fallback image -->
                             <img alt="Vehicle"
-                                 class="w-16 h-12 object-contain"
+                                 class="w-20 h-auto object-contain"
                                  src="/images/default-car.png"
                                  th:unless="${emergency.vehicle != null and emergency.vehicle.model != null and emergency.vehicle.model.image != null}"/>
                             <div>
@@ -71,10 +72,16 @@
                     <!-- Location -->
                     <div class="space-y-2">
                         <div class="font-medium flex items-center gap-1">
-                            <svg fill="none" height="16" viewBox="0 0 24 24" width="16">
-                                <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
-                                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2"/>
+                            <svg class="size-4" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M18 8L18.9487 8.31623C19.9387 8.64624 20.4337 8.81124 20.7169 9.20407C21 9.5969 21 10.1187 21 11.1623V16.829C21 18.1199 21 18.7653 20.6603 19.18C20.5449 19.3208 20.4048 19.4394 20.247 19.5301C19.7821 19.797 19.1455 19.6909 17.8721 19.4787C16.6157 19.2693 15.9875 19.1646 15.3648 19.2167C15.1463 19.235 14.9292 19.2676 14.715 19.3144C14.1046 19.4477 13.5299 19.735 12.3806 20.3097C10.8809 21.0596 10.131 21.4345 9.33284 21.5501C9.09242 21.5849 8.8498 21.6021 8.60688 21.6016C7.80035 21.6001 7.01186 21.3373 5.43488 20.8116L5.05132 20.6838C4.06129 20.3538 3.56627 20.1888 3.28314 19.7959C3 19.4031 3 18.8813 3 17.8377V12.908C3 11.2491 3 10.4197 3.48841 9.97358C3.57388 9.89552 3.66809 9.82762 3.76917 9.77122C4.34681 9.44894 5.13369 9.71123 6.70746 10.2358"
+                                          stroke="#1C274C" stroke-width="1.5"></path>
+                                    <path d="M6 7.70031C6 4.55211 8.68629 2 12 2C15.3137 2 18 4.55211 18 7.70031C18 10.8238 16.085 14.4687 13.0972 15.7721C12.4007 16.076 11.5993 16.076 10.9028 15.7721C7.91499 14.4687 6 10.8238 6 7.70031Z"
+                                          stroke="#1C274C" stroke-width="1.5"></path>
+                                    <circle cx="12" cy="8" r="2" stroke="#1C274C" stroke-width="1.5"></circle>
+                                </g>
                             </svg>
                             Location
                         </div>
@@ -88,23 +95,35 @@
 
                     <!-- Action Buttons -->
                     <div class="flex justify-between items-center pt-2">
-                        <button class="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full hover:bg-transparent hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black gap-2">
+                        <a
+                                class="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full hover:bg-transparent hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black gap-2"
+                                th:href="@{'tel:+' +${emergency.vehicle.client.phone}}">
                             <svg fill="none" height="16" viewBox="0 0 24 24" width="16">
                                 <path d="M22 16.92V19.92C22 20.4704 21.7893 20.9978 21.4142 21.3728C21.0391 21.7479 20.5117 21.9586 19.96 21.96C18.4 22.07 16.88 21.94 15.43 21.57C14.0775 21.2218 12.7988 20.6615 11.64 19.91C10.5062 19.1718 9.47187 18.2923 8.56 17.29C7.57733 16.3777 6.69753 15.3433 5.96 14.21C5.20596 13.0466 4.64571 11.7618 4.3 10.4C3.93 8.95 3.8 7.43 3.91 5.87C3.91127 5.32217 4.12099 4.79795 4.49324 4.42265C4.86549 4.04735 5.38799 3.83259 5.93 3.83H8.93C9.87 3.82 10.7 4.38 10.95 5.29C11.09 5.83 11.27 6.36 11.49 6.87C11.7343 7.46198 11.7482 8.12305 11.53 8.72C11.3282 9.26873 11.5375 9.87127 12.05 10.2L13.2 11.02C14.3419 12.0551 15.6489 12.9109 17.07 13.55C17.5348 13.7599 18.0844 13.6947 18.49 13.38C19.0867 13.1576 19.7575 13.1624 20.35 13.39C20.86 13.61 21.39 13.79 21.93 13.93C22.85 14.18 23.41 15.02 23.39 15.96L22 16.92Z"
                                       stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                       stroke-width="1.5"/>
                             </svg>
                             Call Customer
-                        </button>
+                        </a>
 
-                        <button class="flex items-center justify-center w-full ml-2 px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-black hover:text-white focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black gap-2">
-                            <svg fill="none" height="16" viewBox="0 0 24 24" width="16">
-                                <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999M22 4L12 14.01L9 11.01"
-                                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2"/>
-                            </svg>
-                            Mark as Handled
-                        </button>
+                        <form class="w-full"
+                              hx-on::after-request="if(event.detail.successful) {} else { htmx.trigger('body', 'showToast', {message: 'Failed to mark emergency as handled', type: 'error'});}"
+                              hx-post="/admin/emergency/handle"
+                              hx-swap="outerHTML"
+                              hx-target="closest .bg-white">
+                            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                            <input name="license" th:value="${emergency.vehicle.license}" type="hidden">
+                            <input name="time" th:value="${emergency.id.emergencyTime}" type="hidden">
+                            <button class="flex items-center justify-center w-full ml-2 px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-black hover:text-white focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black gap-2"
+                                    type="submit">
+                                <svg class="size-4" fill="none" viewBox="0 0 24 24">
+                                    <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999M22 4L12 14.01L9 11.01"
+                                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"/>
+                                </svg>
+                                Mark as Handled
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

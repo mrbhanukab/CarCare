@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="px-3 py-1 border border-red-500 text-red-500 flex items-center gap-1 rounded-md"
+     hx-swap-oob="true"
+     id="emergency-counter" th:fragment="counterElement">
+    <span class="h-2 w-2 rounded-full bg-red-500"></span>
+    <span th:text="${activeCount + ' Active Emergencies'}">Active Emergencies</span>
+</div>
+</body>
+</html>
