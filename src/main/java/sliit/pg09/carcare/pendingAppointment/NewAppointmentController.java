@@ -1,8 +1,8 @@
 package sliit.pg09.carcare.pendingAppointment;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,43 +108,46 @@ public class NewAppointmentController {
         @PostMapping("/new-appointment")
         public String createNewAppointment(
                 @RequestParam("license") String license,
-                @RequestParam("services") String[] services, // This will capture multiple checkbox values
+                @RequestParam("services") String[] services,
                 @RequestParam("preferredDateTime1") String dateTime1,
                 @RequestParam("preferredDateTime2") String dateTime2,
                 @RequestParam("preferredDateTime3") String dateTime3,
                 @RequestParam(value = "notes", required = false) String notes,
-                Model model) {
+                Model model,
+                HttpServletResponse response) {
 
-            Vehicle vehicle = vehicleService.getVehicleByLicense(license);
+            try {
+                Vehicle vehicle = vehicleService.getVehicleByLicense(license);
+                if (vehicle == null) {
+                    model.addAttribute("message", "Vehicle not found");
+                    return "Components/Error :: error";
+                }
 
-            NewAppointment appointment = new NewAppointment();
-            appointment.setAppointmentDetails(vehicle, LocalDateTime.now());
+                NewAppointment appointment = new NewAppointment();
+                appointment.setAppointmentDetails(vehicle, LocalDateTime.now());
 
-            Set<ServiceType> serviceTypes = Arrays.stream(services)
-                    .map(ServiceType::valueOf)
-                    .collect(Collectors.toSet());
-            appointment.setServices(serviceTypes);
+                Set<ServiceType> serviceTypes = Arrays.stream(services)
+                        .map(ServiceType::valueOf)
+                        .collect(Collectors.toSet());
+                appointment.setServices(serviceTypes);
 
-            List<LocalDateTime> preferredDates = Arrays.asList(
-                    LocalDateTime.parse(dateTime1),
-                    LocalDateTime.parse(dateTime2),
-                    LocalDateTime.parse(dateTime3)
-            );
-            appointment.setPreferredDateTimes(preferredDates);
-            appointment.setNotes(notes);
-            newAppointmentService.saveAppointment(appointment);
+                List<LocalDateTime> preferredDates = Arrays.asList(
+                        LocalDateTime.parse(dateTime1),
+                        LocalDateTime.parse(dateTime2),
+                        LocalDateTime.parse(dateTime3)
+                );
+                appointment.setPreferredDateTimes(preferredDates);
+                appointment.setNotes(notes);
+                newAppointmentService.saveAppointment(appointment);
 
-            return "";
+                // Close the modal upon success
+                response.setHeader("HX-Trigger", "closeModal");
+                return "";
+            } catch (Exception e) {
+                model.addAttribute("message", "Failed to create appointment: " + e.getMessage());
+                return "Components/Error :: error";
+            }
         }
-
-        @GetMapping("/pending-appointment")
-        public ResponseEntity<List<NewAppointment>> getPendingAppointment(
-                @RequestParam String vehicle) {
-            return ResponseEntity.ok(parentController.sampleAppointments.stream()
-                    .filter(a -> a.getId().getLicense().equals(vehicle))
-                    .collect(Collectors.toList()));
-        }
-    }
 //
 //    @Controller
 //    @RequestMapping("/admin")
@@ -184,4 +187,5 @@ public class NewAppointmentController {
 //                    .build();
 //        }
 //    }
+    }
 }

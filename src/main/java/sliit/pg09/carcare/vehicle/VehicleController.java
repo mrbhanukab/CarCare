@@ -29,7 +29,7 @@ public class VehicleController {
                 Vehicle vehicle = vehicleService.getVehicleByLicense(license);
                 if (vehicle != null) {
                     model.addAttribute("vehicle", vehicle);
-                    response.setHeader("HX-Trigger", "closeVehicleModal");
+                    response.setHeader("HX-Trigger", "closeModal");
                     return "Client/Screens/Vehicle-X :: vehicle";
                 } else {
                     model.addAttribute("message", "Vehicle not found");
