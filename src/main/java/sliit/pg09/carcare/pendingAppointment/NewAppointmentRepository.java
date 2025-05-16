@@ -7,6 +7,6 @@ import sliit.pg09.carcare.vehicle.Vehicle;
 import java.util.List;
 
 @Repository
-public interface PendingAppointmentRepository extends JpaRepository<PendingAppointment, PendingAppointment.PendingAppointmentId> {
-    List<PendingAppointment> findByVehicle(Vehicle vehicle);
+public interface NewAppointmentRepository extends JpaRepository<NewAppointment, NewAppointment.PendingAppointmentId> {
+    List<NewAppointment> findByVehicle(Vehicle vehicle);
 }
