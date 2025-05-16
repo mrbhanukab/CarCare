@@ -1,5 +1,6 @@
 package sliit.pg09.carcare.client;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -70,7 +72,7 @@ public class ClientController {
     public ResponseEntity<Object> createClient(@RequestParam String email,
                                                @RequestParam String name,
                                                @RequestParam String phone,
-                                               @RequestParam String address) {
+                                               @RequestParam String address, Principal principal) {
         Client newClient = new Client();
         newClient.setEmail(email);
         newClient.setName(name);
@@ -87,5 +89,20 @@ public class ClientController {
             return ResponseEntity.ok()
                     .body("<div class='alert alert-danger'>A client with this email already exists</div>");
         }
+
+    }
+    @GetMapping("/dashboard")
+    public String getDashboard(Principal principal, Model model) {
+        Client client = clientService.getClientByEmail(principal.getName());
+        model.addAttribute("client", client);
+        model.addAttribute("isNewAccount", client.getNic() == null);
+        return "Client DashBoard";
+    }
+
+    @PostMapping("/update")
+    public String updateAccount(@ModelAttribute Client client, Model model) {
+        clientService.updateClient(client); // implement this to handle updates
+        model.addAttribute("client", client);
+        return "Client/Components/AccountDetails"; // re-renders the modal with updated data
     }
 }
