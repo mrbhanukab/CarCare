@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-[0_0_15px_rgba(239,68,68,0.2)] transition-shadow border border-gray-700"
-     th:fragment="emergencyCard()">
+     th:fragment="emergencyCard(vehicle)">
     <div class="flex justify-between items-center">
         <div class="w-2/3">
             <h3 class="text-xl font-bold mb-2 text-red-400">Emergency?</h3>
@@ -13,8 +13,8 @@
         <div class="w-1/3 flex justify-end">
             <button
                     class="w-16 h-16 rounded-full cursor-pointer bg-red-500/10 border-2 border-red-500/30 flex items-center justify-center hover:bg-red-500/20 transition-colors hover:shadow-[0_0_15px_rgba(239,68,68,0.4)]"
-                    hx-get="/client/emergency"
-                    hx-target="#modal-container">
+                    hx-target="#modal-container"
+                    th:hx-get="@{/client/emergency(license=${vehicle.license})}">
                 <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 9V13M12 17H12.01M5.07183 19H18.9282C20.4678 19 21.4301 17.3333 20.6603 16L13.7321 4C12.9623 2.66667 11.0378 2.66667 10.268 4L3.33978 16C2.56998 17.3333 3.53223 19 5.07183 19Z"
                           stroke="#EF4444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>

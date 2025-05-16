@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import sliit.pg09.carcare.client.Client;
 import sliit.pg09.carcare.vehicle.Vehicle;
+import sliit.pg09.carcare.vehicle.VehicleService;
 import sliit.pg09.carcare.vehicle.model.CarModel;
 
 import java.time.LocalDateTime;
@@ -63,6 +64,24 @@ public class EmergencyController {
 
         sampleEmergencies.add(emergency1);
         return sampleEmergencies;
+    }
+
+    @Controller
+    @RequestMapping("/client")
+    public static class AClientEmergency {
+        @Autowired
+        private EmergencyController emergencyController;
+        @Autowired
+        private EmergencyService emergencyService;
+        @Autowired
+        private VehicleService vehicleService;
+
+        @GetMapping("/emergency")
+        public String getEmergencies(@RequestParam String license, Model model) {
+            Vehicle vehicle = vehicleService.getVehicleByLicense(license);
+            model.addAttribute("vehicle", vehicle);
+            return "Client/Components/EmergencyConfirmation";
+        }
     }
 
     @Controller
