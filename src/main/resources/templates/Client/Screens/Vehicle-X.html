@@ -1,9 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<div class="flex lg:flex-row flex-col lg:overflow-hidden" th:fragment="vehicle()">
-    <!--    {/* Car Info Area (Left Column) */}-->
-    <div th:replace="Client/Left :: left()"></div>
-    <!--{/* Cards Area (Right Column) */}-->
-    <div th:replace="Client/Right :: right()"></div>
+<div class="flex lg:flex-row flex-col lg:overflow-hidden h-full w-full" th:fragment="vehicle()">
+    <!-- Left Column -->
+    <div class="flex flex-col justify-center p-6 lg:p-10 w-full lg:w-1/2 flex-shrink-0">
+        <div class="flex flex-col gap-2 mb-6">
+            <h2 class="text-4xl lg:text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                911 Carrera (2023)
+            </h2>
+            <div class="flex gap-6 items-centerr">
+                <div class="flex items-center gap-2">
+                    <img
+                            alt="Brand"
+                            class="size-8 rounded-full flex items-center justify-center backdrop-blur-sm border-slate-600 border p-1"
+                            src="https://cdn.ui.porsche.com/porsche-design-system/meta-icons/favicon-32x32.d42ac28.png"
+                    />
+                    <span class="text-gray-300 text-xl md:text-2xl">Porsche</span>
+                </div>
+                <button class="p-1 bg-cyan-600 text-white rounded-sm hover:bg-cyan-700 transition-colors flex items-center justify-center gap-2"
+                        hx-get="/client/vehicles/selector"
+                        hx-swap="innerHTML"
+                        hx-target="#vehicle-dropdown-container"
+                        id="vehicle-selector-btn">
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M12.5 5C14.3856 5 15.3284 5 15.9142 5.58579C16.5 6.17157 16.5 7.11438 16.5 9V15C16.5 16.8856 16.5 17.8284 15.9142 18.4142C15.3284 19 14.3856 19 12.5 19H11.5C9.61438 19 8.67157 19 8.08579 18.4142C7.5 17.8284 7.5 16.8856 7.5 15L7.5 9C7.5 7.11438 7.5 6.17157 8.08579 5.58579C8.67157 5 9.61438 5 11.5 5L12.5 5Z"
+                                  stroke="#ffffff" stroke-width="1.5"></path>
+                            <path d="M22 19H21.5C20.1193 19 19 17.8807 19 16.5L19 7.5C19 6.11929 20.1193 5 21.5 5L22 5"
+                                  stroke="#ffffff" stroke-linecap="round" stroke-width="1.5"></path>
+                            <path d="M2 19H2.5C3.88071 19 5 17.8807 5 16.5L5 7.5C5 6.11929 3.88071 5 2.5 5L2 5"
+                                  stroke="#ffffff" stroke-linecap="round" stroke-width="1.5"></path>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <img
+                alt="Car"
+                class="object-contain lg:px-40 max-w-full max-h-full transform transition-all duration-500 drop-shadow-[0_0_15px_rgba(56,189,248,0.3)] scale-[0.8] hover:scale-[0.85]"
+                src="https://images-porsche.imgix.net/-/media/5D0BB7E042BD4C9DBEF84B5E70482520_73AA748306934B0C9CE20E32231DFCE2_CZ25W01IX0011911-carrera-front?w=750&q=85&auto=format"
+        />
+    </div>
+
+    <!-- Right Column -->
+    <div class="flex flex-col gap-6 p-6 lg:p-10 lg:pb-40 w-full lg:w-1/2 lg:overflow-y-auto">
+        <div th:replace="Client/Components/NextServiceCard :: nextServiceCard()"></div>
+        <div th:replace="Client/Components/EmergencyCard :: emergencyCard()"></div>
+        <div th:replace="Client/Components/ScheduleServiceCard :: scheduleServiceCard()"></div>
+        <div th:replace="Client/Components/UpcomingServiceCard :: upcomingServiceCard()"></div>
+        <div th:replace="Client/Components/RecentCard :: recentCard()"></div>
+    </div>
 </div>
 </html>
