@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.util.List;
 
@@ -15,13 +16,19 @@ import java.util.List;
 @RequestMapping("/client")
 public class ClientController {
     private final ClientService clientService;
+    private final VehicleService vehicleService;
 
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService, VehicleService vehicleService) {
         this.clientService = clientService;
+        this.vehicleService = vehicleService;
     }
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
+        var vehicles = vehicleService.getVehiclesByCurrentClient();
+        if (!vehicles.isEmpty()) model.addAttribute("vehicle", vehicles.get(0));
+        else model.addAttribute("vehicle", null);
+
         return clientService.verifyUserStatus("Client/Dashboard", model);
     }
 
@@ -35,6 +42,13 @@ public class ClientController {
     public String showAccountDetails(Model model) {
         return clientService.verifyUserStatus("Client/Components/AccountDetails", model);
     }
+
+
+    @GetMapping("/vehicle/new")  // Changed from nested controller
+    public String getAddVehicleModal() {
+        return "Client/Components/AddVehicleModal :: addVehicleModal";
+    }
+
 
     @HxRequest
     @PostMapping("/account")

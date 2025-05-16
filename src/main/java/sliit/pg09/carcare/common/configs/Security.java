@@ -11,8 +11,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -22,6 +27,8 @@ import sliit.pg09.carcare.client.Client;
 import sliit.pg09.carcare.client.ClientRepository;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -49,7 +56,7 @@ public class Security {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/admin/login/**").permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().hasRole("ADMIN")
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
@@ -100,10 +107,11 @@ public class Security {
                     .securityMatcher("/client/**", "/oauth2/**", "/login/**", "/logout/**")
                     .authorizeHttpRequests(request -> request
                             .requestMatchers("/oauth2/**", "/login/**", "/logout/**").permitAll()
-                            .anyRequest().authenticated())
+                            .anyRequest().hasRole("CLIENT"))
                     .oauth2Login(oauth2 -> oauth2
                             .loginPage("/")
                             .successHandler(customClientAuthenticationSuccessHandler)
+                            .permitAll()
                     )
                     .logout(logout -> logout
                             .logoutUrl("/logout")
@@ -123,10 +131,10 @@ public class Security {
         ClientRepository clients;
 
         @Override
-
-        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-
-            var user = ((OAuth2User) authentication.getPrincipal()).getAttributes();
+        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                            Authentication authentication) throws IOException {
+            OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+            var user = oAuth2User.getAttributes();
 
             clients.findById(user.get("email").toString()).ifPresentOrElse(u -> {
             }, () -> clients.save(new Client(
@@ -134,6 +142,21 @@ public class Security {
                     user.get("email").toString(),
                     user.get("picture").toString()
             )));
+
+            // Add ROLE_CLIENT authority to the authentication
+            Set<GrantedAuthority> authorities = new HashSet<>(oAuth2User.getAuthorities());
+            authorities.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
+
+            // Create new authentication token with added authority
+            OAuth2AuthenticationToken newAuth = new OAuth2AuthenticationToken(
+                    new DefaultOAuth2User(authorities, user, "email"),
+                    authorities,
+                    authentication.getName()
+            );
+
+            // Update the security context
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+
             response.sendRedirect("/client");
         }
     }

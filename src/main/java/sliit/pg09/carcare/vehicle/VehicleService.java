@@ -1,44 +1,75 @@
 package sliit.pg09.carcare.vehicle;
 
 import org.springframework.stereotype.Service;
-import sliit.pg09.carcare.client.ClientRepository;
+import sliit.pg09.carcare.client.ClientService;
+import sliit.pg09.carcare.vehicle.model.CarModel;
+import sliit.pg09.carcare.vehicle.model.ModelService;
 
 import java.util.List;
 
 @Service
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
-    private final ClientRepository clientRepository;
+    private final ModelService modelService;
+    private final ClientService clientService;
 
-    public VehicleService(VehicleRepository vehicleRepository, ClientRepository clientRepository) {
-
+    public VehicleService(VehicleRepository vehicleRepository, ModelService modelService, ClientService clientService) {
         this.vehicleRepository = vehicleRepository;
-        this.clientRepository = clientRepository;
+        this.modelService = modelService;
+        this.clientService = clientService;
     }
 
-    public void updateVehicle(Vehicle vehicle) {
-        vehicleRepository.save(vehicle);
+
+    public void updateVehicle(String license, String modelNumber) {
+        Vehicle vehicle = vehicleRepository.findById(license).orElse(null);
+        if (vehicle != null) {
+            CarModel model = modelService.getModelByNumber(modelNumber);
+            if (model != null) {
+                vehicle.setModel(model);
+                vehicleRepository.save(vehicle);
+            }
+        }
     }
 
-    public boolean createVehicle(Vehicle vehicle) {
-        if (vehicle == null || vehicle.getLicense() == null) {
-            return false;
-        }
+    public Vehicle createVehicle(String license, String modelNumber) {
+        if (license == null || license.isBlank())
+            throw new IllegalArgumentException("Vehicle license cannot be null or empty");
 
-        if (vehicleRepository.existsById(vehicle.getLicense())) {
-            return false;
-        }
+        if (modelNumber == null || modelNumber.isBlank())
+            throw new IllegalArgumentException("Model number cannot be null or empty");
 
-        vehicleRepository.save(vehicle);
-        return true;
+        if (vehicleRepository.existsById(license))
+            throw new IllegalStateException("Vehicle with license " + license + " already exists");
+
+        CarModel carModel = modelService.getModelByNumber(modelNumber);
+        if (carModel == null)
+            throw new IllegalArgumentException("Car model with number " + modelNumber + " not found");
+
+        var clientOptional = clientService.getCurrentUser();
+        if (clientOptional.isEmpty())
+            throw new IllegalStateException("No authenticated client found");
+
+        Vehicle vehicle = new Vehicle(license, carModel, clientOptional.get());
+        vehicle.setRemoved(false);
+        return vehicleRepository.save(vehicle);
     }
 
     public Vehicle getVehicleByLicense(String license) {
         return vehicleRepository.findById(license).orElse(null);
     }
 
+    public List<Vehicle> getVehiclesByCurrentClient() {
+        var clientOptional = clientService.getCurrentUser();
+        if (clientOptional.isEmpty())
+            throw new IllegalStateException("No authenticated client found");
+
+        return vehicleRepository.getVehiclesByClient(clientOptional.get())
+                .stream()
+                .filter(vehicle -> !vehicle.isRemoved())
+                .toList();
+    }
+
     public List<Vehicle> findAll() {
         return vehicleRepository.findAll();
     }
-
 }

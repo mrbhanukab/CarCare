@@ -1,9 +1,11 @@
 package sliit.pg09.carcare.vehicle;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sliit.pg09.carcare.vehicle.model.CarModel;
 import sliit.pg09.carcare.vehicle.model.ModelRepository;
@@ -17,18 +19,50 @@ public class VehicleController {
     public static class ClientVehicleController {
         @Autowired
         private VehicleService vehicleService;
+        @Autowired
+        private ModelService modelService;
+
+        @HxRequest
+        @GetMapping("/vehicle")
+        public String getVehicle(@RequestParam String license, Model model, HttpServletResponse response) {
+            try {
+                Vehicle vehicle = vehicleService.getVehicleByLicense(license);
+                if (vehicle != null) {
+                    model.addAttribute("vehicle", vehicle);
+                    response.setHeader("HX-Trigger", "closeVehicleModal");
+                    return "Client/Screens/Vehicle-X :: vehicle";
+                } else {
+                    model.addAttribute("message", "Vehicle not found");
+                    return "Components/Error :: error";
+                }
+            } catch (Exception e) {
+                model.addAttribute("message", "An error occurred while loading the vehicle");
+                return "Components/Error :: error";
+            }
+        }
+
+        @HxRequest
+        @GetMapping("/vehicles/modal")
+        public String getVehicleModal(Model model) {
+            model.addAttribute("vehicles", vehicleService.getVehiclesByCurrentClient());
+            return "Client/Components/VehicleSelectorModal :: vehicleSelectorModal()";
+        }
 
         @HxRequest
         @PostMapping("/vehicle")
-        public ResponseEntity<String> addVehicle(@RequestBody Vehicle vehicle) {
-            boolean created = vehicleService.createVehicle(vehicle);
-            return created ? ResponseEntity.ok("Vehicle created") : ResponseEntity.badRequest().body("Vehicle already exists or invalid");
-        }
-
-        @GetMapping("/vehicle/{license}")
-        public ResponseEntity<Vehicle> getVehicle(@PathVariable String license) {
-            Vehicle vehicle = vehicleService.getVehicleByLicense(license);
-            return vehicle != null ? ResponseEntity.ok(vehicle) : ResponseEntity.notFound().build();
+        public String addVehicle(@RequestParam String license, @RequestParam String modelNumber,
+                                 Model model, HttpServletResponse response) {
+            try {
+                Vehicle vehicle = vehicleService.createVehicle(license, modelNumber);
+                response.setHeader("HX-Redirect", "/client/");
+                return null;
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                model.addAttribute("message", e.getMessage());
+                return "Components/Error :: error";
+            } catch (Exception e) {
+                model.addAttribute("message", "An unexpected error occurred");
+                return "Components/Error :: error";
+            }
         }
     }
 
@@ -74,6 +108,5 @@ public class VehicleController {
             modelRepository.deleteById(number);
             return ResponseEntity.ok("Model deleted");
         }
-
     }
 }

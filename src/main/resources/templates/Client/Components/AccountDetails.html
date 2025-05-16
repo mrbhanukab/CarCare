@@ -36,13 +36,12 @@
         }
      }">
 
-    <!-- ... rest of the modal content ... -->
-
     <div class="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-auto my-auto overflow-hidden border border-gray-700">
         <div class="p-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold text-cyan-400">Account Details</h2>
-                <button @click="$el.closest('[x-data]').remove()" class="text-gray-400 hover:text-gray-200">
+                <button class="text-gray-400 hover:text-gray-200"
+                        hx-on:click="document.getElementById('modal-container').innerHTML = ''">
                     <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-linecap="round"
                               stroke-linejoin="round" stroke-width="2"/>
@@ -133,8 +132,8 @@
                 <div id="errorContainer"></div>
 
                 <div class="mt-6 flex justify-end gap-3">
-                    <button @click="$el.closest('[x-data]').remove()"
-                            class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    <button class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            hx-on:click="document.getElementById('modal-container').innerHTML = ''"
                             type="button">
                         Cancel
                     </button>

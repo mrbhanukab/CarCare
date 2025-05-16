@@ -3,13 +3,64 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
     <title>LuxAuto | Dashboard</title>
     <link rel="icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
     <link rel="shortcut icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
     <script th:src="@{/scripts/htmx.min.js}"></script>
-    <script th:src="@{/scripts/alpine.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/client.css}"/>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownContainer = document.getElementById('dropdown-container');
+            const profileButton = document.getElementById('profile-button');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+            let isOpen = false;
+
+            // Toggle dropdown
+            profileButton.addEventListener('click', function (e) {
+                e.stopPropagation();
+                isOpen = !isOpen;
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!dropdownContainer.contains(e.target) && isOpen) {
+                    isOpen = false;
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all expand buttons
+            const expandButtons = document.querySelectorAll('[data-expand-btn]');
+
+            expandButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Get the parent card
+                    const card = this.closest('.bg-gray-700\\/50');
+                    // Get the expandable content
+                    const content = card.querySelector('[data-expand-content]');
+                    // Toggle the content visibility
+                    content.classList.toggle('hidden');
+                    // Toggle the rotation of the button
+                    button.classList.toggle('rotate-180');
+
+                    // Add transition class for smooth animation
+                    if (!content.classList.contains('hidden')) {
+                        content.style.animation = 'slideDown 0.3s ease-out forwards';
+                    } else {
+                        content.style.animation = 'slideUp 0.3s ease-out forwards';
+                    }
+                });
+            });
+        });
+
+        htmx.on('closeVehicleModal', function () {
+            document.getElementById('modal-container').innerHTML = '';
+        });
+    </script>
 </head>
 <body class="min-h-screen w-screen gap-6 bg-gray-900 text-gray-100">
 <!--{ Background }-->
@@ -24,26 +75,20 @@
         <div class="flex items-center gap-4">
             <img alt="LuxAuto Logo" class="w-14" th:src="@{/images/LOGO.webp}"/>
         </div>
-        <div @click.outside="isOpen = false" class="relative" x-data="{ isOpen: false }">
+        <div class="relative" id="dropdown-container">
             <img
-                    @click="isOpen = !isOpen"
                     alt="Profile Image"
                     class="size-10 rounded-full bg-gray-800 cursor-pointer border-2 border-transparent hover:border-cyan-400 transition-all"
+                    id="profile-button"
                     referrerPolicy="no-referrer"
                     th:src="${user.imageUrl}"
             />
 
             <!-- Dropdown Menu -->
-            <div class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 border border-gray-700 animate-fadeIn"
-                 x-show="isOpen"
-                 x-transition:enter="transition ease-out duration-200"
-                 x-transition:enter-end="opacity-100 transform scale-100"
-                 x-transition:enter-start="opacity-0 transform scale-95"
-                 x-transition:leave="transition ease-in duration-75"
-                 x-transition:leave-end="opacity-0 transform scale-95"
-                 x-transition:leave-start="opacity-100 transform scale-100">
-
+            <div class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 border border-gray-700 animate-fadeIn hidden"
+                 id="dropdown-menu">
                 <div class="py-2">
+                    <!-- Account Details Button -->
                     <a class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
                        href="#"
                        hx-get="/client/account"
@@ -59,6 +104,19 @@
                         Account Details
                     </a>
 
+                    <!-- Add New Vehicle Button -->
+                    <a class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
+                       hx-get="/client/vehicle/new"
+                       hx-target="#modal-container">
+                        <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 6V18M6 12H18"
+                                  stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2"/>
+                        </svg>
+                        Add New Vehicle
+                    </a>
+
+                    <!-- Logout Form -->
                     <form class="w-full" method="post" th:action="@{/logout}">
                         <button class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 flex items-center gap-2"
                                 type="submit">
@@ -76,12 +134,15 @@
         </div>
     </header>
 
-    <section class="flex lg:flex-row flex-col h-full  w-full lg:overflow-hidden">
-        <!--    {/* Car Info Area (Left Column) */}-->
-        <div th:replace="Client/Left :: left()"></div>
-        <!--{/* Cards Area (Right Column) */}-->
-        <div th:replace="Client/Right :: right()"></div>
+    <section class="h-full w-full">
+        <th:block th:if="${vehicle == null}">
+            <div th:replace="~{Client/Screens/No-Vehicles :: no-vehicles()}"></div>
+        </th:block>
+        <th:block th:unless="${vehicle == null}">
+            <div th:replace="~{Client/Screens/Vehicle-X :: vehicle(vehicle=${vehicle})}"></div>
+        </th:block>
     </section>
+
     <div class="relative z-50" id="modal-container"></div>
 </main>
 </body>
