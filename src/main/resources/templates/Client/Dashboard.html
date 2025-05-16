@@ -131,11 +131,11 @@
     </header>
 
     <section class="h-full w-full">
-        <th:block th:if="${#lists.isEmpty(vehicles)}">
+        <th:block th:if="${vehicle == null}">
             <div th:replace="~{Client/Screens/No-Vehicles :: no-vehicles()}"></div>
         </th:block>
-        <th:block th:unless="${#lists.isEmpty(vehicles)}">
-            <div th:replace="~{Client/Screens/Vehicle-X :: vehicle()}"></div>
+        <th:block th:unless="${vehicle == null}">
+            <div th:replace="~{Client/Screens/Vehicle-X :: vehicle(vehicle=${vehicle})}"></div>
         </th:block>
     </section>
 

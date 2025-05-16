@@ -18,7 +18,7 @@
 
         <div class="p-6 max-h-[70vh] overflow-y-auto">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" th:if="${not #lists.isEmpty(vehicles)}">
-                <div hx-push-url="true"
+                <a hx-push-url="true"
                      class="bg-gray-700/50 rounded-xl p-4 cursor-pointer transition-all hover:bg-gray-700 border-2 border-cyan-500"
                      th:each="vehicle : ${vehicles}">
 
@@ -40,7 +40,7 @@
                         <div class="text-sm text-gray-400" th:text="${vehicle.model.year}">xxxx</div>
                     </div>
 
-                </div>
+                </a>
 
                 <div class="text-center py-8" th:if="${#lists.isEmpty(vehicles)}">
                     <p class="text-gray-400">No vehicles available</p>

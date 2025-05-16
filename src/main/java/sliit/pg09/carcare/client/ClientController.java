@@ -25,8 +25,10 @@ public class ClientController {
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
-        model.addAttribute("vehicles", vehicleService.getVehiclesByCurrentClient());
-        System.out.println(vehicleService.getVehiclesByCurrentClient().size());
+        var vehicles = vehicleService.getVehiclesByCurrentClient();
+        if (!vehicles.isEmpty()) model.addAttribute("vehicle", vehicles.get(0));
+        else model.addAttribute("vehicle", null);
+
         return clientService.verifyUserStatus("Client/Dashboard", model);
     }
 
