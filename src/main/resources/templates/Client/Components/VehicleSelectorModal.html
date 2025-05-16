@@ -6,7 +6,9 @@
         <div class="p-6 border-b border-gray-700">
             <div class="flex justify-between items-center">
                 <h2 class="text-xl font-bold text-cyan-400">Select Vehicle</h2>
-                <button class="text-gray-400 hover:text-gray-200" id="close-vehicle-modal">
+                <button class="text-gray-400 hover:text-gray-200"
+                        id="close-vehicle-modal"
+                        hx-on:click="document.getElementById('modal-container').innerHTML = ''">
                     <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-linecap="round"
                               stroke-linejoin="round"
@@ -21,7 +23,7 @@
                 <a
                         th:hx-get="@{/client/vehicle(license=${vehicle.license})}"
                         hx-target="section.h-full.w-full"
-                        hx-swap="outerHTML"
+                        hx-swap="innerHTML"
                         class="bg-gray-700/50 rounded-xl p-4 cursor-pointer transition-all hover:bg-gray-700 border-2 border-cyan-500"
                         th:each="vehicle : ${vehicles}">
 
