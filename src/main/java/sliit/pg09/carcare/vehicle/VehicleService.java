@@ -2,20 +2,20 @@ package sliit.pg09.carcare.vehicle;
 
 import org.springframework.stereotype.Service;
 import sliit.pg09.carcare.client.ClientService;
-import sliit.pg09.carcare.vehicle.model.CarModel;
-import sliit.pg09.carcare.vehicle.model.ModelService;
+import sliit.pg09.carcare.vehicle.CarModel.CarModel;
+import sliit.pg09.carcare.vehicle.CarModel.CarModelService;
 
 import java.util.List;
 
 @Service
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
-    private final ModelService modelService;
+    private final CarModelService carModelService;
     private final ClientService clientService;
 
-    public VehicleService(VehicleRepository vehicleRepository, ModelService modelService, ClientService clientService) {
+    public VehicleService(VehicleRepository vehicleRepository, CarModelService carModelService, ClientService clientService) {
         this.vehicleRepository = vehicleRepository;
-        this.modelService = modelService;
+        this.carModelService = carModelService;
         this.clientService = clientService;
     }
 
@@ -23,7 +23,7 @@ public class VehicleService {
     public void updateVehicle(String license, String modelNumber) {
         Vehicle vehicle = vehicleRepository.findById(license).orElse(null);
         if (vehicle != null) {
-            CarModel model = modelService.getModelByNumber(modelNumber);
+            CarModel model = carModelService.getModelByNumber(modelNumber);
             if (model != null) {
                 vehicle.setModel(model);
                 vehicleRepository.save(vehicle);
@@ -41,7 +41,7 @@ public class VehicleService {
         if (vehicleRepository.existsById(license))
             throw new IllegalStateException("Vehicle with license " + license + " already exists");
 
-        CarModel carModel = modelService.getModelByNumber(modelNumber);
+        CarModel carModel = carModelService.getModelByNumber(modelNumber);
         if (carModel == null)
             throw new IllegalArgumentException("Car model with number " + modelNumber + " not found");
 

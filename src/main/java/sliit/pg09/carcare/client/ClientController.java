@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import sliit.pg09.carcare.pendingAppointment.NewAppointmentService;
+import sliit.pg09.carcare.newAppointment.NewAppointmentService;
 import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.util.List;

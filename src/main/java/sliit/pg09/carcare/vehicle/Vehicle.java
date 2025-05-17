@@ -6,7 +6,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sliit.pg09.carcare.client.Client;
-import sliit.pg09.carcare.vehicle.model.CarModel;
+import sliit.pg09.carcare.vehicle.CarModel.CarModel;
 
 @Data
 @NoArgsConstructor

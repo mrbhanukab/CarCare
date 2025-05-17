@@ -36,8 +36,9 @@ public class EmergencyService {
         emergencyRepository.save(emergency);
     }
 
-    public void createEmergency(Emergency emergency) {
-        emergencyRepository.save(emergency);
+    public void createEmergency(Vehicle vehicle, LocalDateTime timestamp, Double latitude, Double longitude) {
+
+        emergencyRepository.save(new Emergency(vehicle, timestamp, new Emergency.Location(latitude, longitude)));
     }
 
     public boolean markRequestAsHandled(String vehicleLicense, LocalDateTime emergencyTime) {

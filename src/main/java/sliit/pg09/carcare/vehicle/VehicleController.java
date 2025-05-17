@@ -7,9 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sliit.pg09.carcare.vehicle.model.CarModel;
-import sliit.pg09.carcare.vehicle.model.ModelRepository;
-import sliit.pg09.carcare.vehicle.model.ModelService;
+import sliit.pg09.carcare.vehicle.CarModel.CarModel;
+import sliit.pg09.carcare.vehicle.CarModel.CarModelRepository;
+import sliit.pg09.carcare.vehicle.CarModel.CarModelService;
 
 @Controller
 public class VehicleController {
@@ -20,7 +20,7 @@ public class VehicleController {
         @Autowired
         private VehicleService vehicleService;
         @Autowired
-        private ModelService modelService;
+        private CarModelService carModelService;
 
         @HxRequest
         @GetMapping("/vehicle")
@@ -71,9 +71,9 @@ public class VehicleController {
     public static class AdminVehicleController {
         private final VehicleRepository vehicleRepository;
         @Autowired
-        private ModelRepository modelRepository;
+        private CarModelRepository carModelRepository;
         @Autowired
-        private ModelService modelService;
+        private CarModelService carModelService;
 
         public AdminVehicleController(VehicleRepository vehicleRepository) {
             this.vehicleRepository = vehicleRepository;
@@ -87,25 +87,25 @@ public class VehicleController {
 
         @PostMapping("/vehicle-model")
         public ResponseEntity<String> addModel(@RequestBody CarModel model) {
-            modelRepository.save(model);
+            carModelRepository.save(model);
             return ResponseEntity.ok("Model added");
         }
 
 
         public ResponseEntity<CarModel> getModel(@PathVariable String number) {
-            CarModel model = modelService.getModelByNumber(number);
+            CarModel model = carModelService.getModelByNumber(number);
             return model != null ? ResponseEntity.ok(model) : ResponseEntity.notFound().build();
         }
 
         @PutMapping("vehicle-model")
         public ResponseEntity<CarModel> updateModel(@RequestBody CarModel carModel) {
-            CarModel updated = modelService.updateModel(carModel);
+            CarModel updated = carModelService.updateModel(carModel);
             return ResponseEntity.ok(updated);
         }
 
         @DeleteMapping("/vehicle-model/{number}")
         public ResponseEntity<String> deleteModel(@PathVariable String number) {
-            modelRepository.deleteById(number);
+            carModelRepository.deleteById(number);
             return ResponseEntity.ok("Model deleted");
         }
     }

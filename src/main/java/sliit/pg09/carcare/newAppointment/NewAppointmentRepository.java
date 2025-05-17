@@ -1,4 +1,4 @@
-package sliit.pg09.carcare.pendingAppointment;
+package sliit.pg09.carcare.newAppointment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

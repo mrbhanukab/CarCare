@@ -1,4 +1,4 @@
-package sliit.pg09.carcare.pendingAppointment;
+package sliit.pg09.carcare.newAppointment;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import sliit.pg09.carcare.client.Client;
+import sliit.pg09.carcare.common.ServiceType;
+import sliit.pg09.carcare.vehicle.CarModel.CarModel;
 import sliit.pg09.carcare.vehicle.Vehicle;
 import sliit.pg09.carcare.vehicle.VehicleService;
-import sliit.pg09.carcare.vehicle.model.CarModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,13 +53,11 @@ public class NewAppointmentController {
         // Create sample models
         CarModel model1 = new CarModel();
         model1.setNumber("M1");
-        model1.setMake("Porsche");
         model1.setYear(2023);
         model1.setImage("https://images-porsche.imgix.net/-/media/5D0BB7E042BD4C9DBEF84B5E70482520_73AA748306934B0C9CE20E32231DFCE2_CZ25W01IX0011911-carrera-front?w=750&q=85&auto=format");
 
         CarModel model2 = new CarModel();
         model2.setNumber("M2");
-        model2.setMake("BMW");
         model2.setYear(2022);
         model2.setImage("https://images-porsche.imgix.net/-/media/5D0BB7E042BD4C9DBEF84B5E70482520_73AA748306934B0C9CE20E32231DFCE2_CZ25W01IX0011911-carrera-front?w=750&q=85&auto=format");
 

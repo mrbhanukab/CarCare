@@ -1,4 +1,4 @@
-package sliit.pg09.carcare.pendingAppointment;
+package sliit.pg09.carcare.newAppointment;
 
 import org.springframework.stereotype.Service;
 import sliit.pg09.carcare.vehicle.VehicleRepository;

@@ -1,35 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
-     th:fragment="emergencyConfirmation(isOpen, vehicle)"
-     x-data="{
-                          isLoading: false,
-                          async getLocationAndSubmit() {
-                              this.isLoading = true;
-                              if (!navigator.geolocation) {
-                                  alert('Geolocation is not supported by your browser');
-                                  this.isLoading = false;
-                                  return;
-                              }
-
-                              try {
-                                  const position = await new Promise((resolve, reject) => {
-                                      navigator.geolocation.getCurrentPosition(resolve, reject);
-                                  });
-
-                                  const form = document.getElementById('emergencyForm');
-                                  form.querySelector('#latitude').value = position.coords.latitude;
-                                  form.querySelector('#longitude').value = position.coords.longitude;
-                                  form.querySelector('#timestamp').value = new Date().toISOString();
-
-                                  htmx.trigger('#emergencyForm', 'submit');
-                              } catch (error) {
-                                  console.error('Error:', error);
-                                  alert('Unable to access location. Please enable location services.');
-                              } finally {
-                                  this.isLoading = false;
-                              }
-                          }
-                     }">
+     th:fragment="emergencyConfirmation(isOpen, vehicle)">
     <div class="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden border border-gray-700">
         <div class="bg-red-900/30 p-4 flex items-center gap-3 border-b border-red-500/30">
             <div class="bg-red-500/20 p-2 rounded-full">
@@ -95,15 +66,16 @@
 
             <div class="flex justify-end gap-3">
                 <button class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-                        hx-on:click="document.getElementById('modal-container').innerHTML = ''"
+                        hx-on="click: document.getElementById('modal-container').innerHTML = ''"
                         type="button">
                     Cancel
                 </button>
                 <button class="px-4 py-2 bg-red-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        id="confirmButton"
                         onclick="getLocationAndSubmit(this)"
                         type="button">
-                    <span class="loading-text-hidden">Processing...</span>
-                    <span class="loading-text-visible">Confirm Emergency</span>
+                    <span id="confirmText">Confirm Emergency</span>
+                    <span id="processingText" style="display: none;">Processing...</span>
                 </button>
             </div>
         </div>
@@ -112,13 +84,16 @@
     <script>
         function getLocationAndSubmit(button) {
             // Update button state
+            const confirmText = document.getElementById('confirmText');
+            const processingText = document.getElementById('processingText');
+
             button.disabled = true;
-            button.querySelector('.loading-text-visible').style.display = 'none';
-            button.querySelector('.loading-text-hidden').style.display = 'inline';
+            confirmText.style.display = 'none';
+            processingText.style.display = 'inline';
 
             if (!navigator.geolocation) {
                 alert('Geolocation is not supported by your browser');
-                resetButton();
+                resetButton(button);
                 return;
             }
 
@@ -127,7 +102,19 @@
                     const form = document.getElementById('emergencyForm');
                     form.querySelector('#latitude').value = position.coords.latitude;
                     form.querySelector('#longitude').value = position.coords.longitude;
-                    form.querySelector('#timestamp').value = new Date().toISOString();
+
+                    // Format the date properly to match the expected pattern yyyy-MM-dd'T'HH:mm:ss
+                    const now = new Date();
+                    const year = now.getFullYear();
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const hours = String(now.getHours()).padStart(2, '0');
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+                    // Format the date as required by @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+                    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+                    form.querySelector('#timestamp').value = formattedDate;
 
                     htmx.trigger('#emergencyForm', 'submit');
                 },
@@ -137,12 +124,15 @@
                     resetButton(button);
                 }
             );
+        }
 
-            function resetButton(btn) {
-                btn.disabled = false;
-                btn.querySelector('.loading-text-visible').style.display = 'inline';
-                btn.querySelector('.loading-text-hidden').style.display = 'none';
-            }
+        function resetButton(button) {
+            const confirmText = document.getElementById('confirmText');
+            const processingText = document.getElementById('processingText');
+
+            button.disabled = false;
+            confirmText.style.display = 'inline';
+            processingText.style.display = 'none';
         }
     </script>
 </div>

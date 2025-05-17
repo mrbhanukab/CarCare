@@ -1,4 +1,4 @@
-package sliit.pg09.carcare.pendingAppointment;
+package sliit.pg09.carcare.common;
 
 public enum ServiceType {
     OIL_CHANGE("Oil Change"),
