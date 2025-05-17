@@ -224,15 +224,19 @@
     <div class="absolute inset-0 -z-50" id="dynamic-video-container">
         <video
                 class="h-full w-full object-fill"
-                th:src="@{/images/home/VD.mp4}"
                 autoplay
                 muted
                 loop
-                playsinline>
+                playsinline
+                preload="auto"
+                id="background-video">
+            <source th:src="@{/images/VD.mp4}" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
     </div>
 
     <div class="hero-overlay absolute inset-0 -z-40"></div>
+
 
     <div class="absolute flex h-full w-full flex-col justify-between p-8 lg:p-12">
         <header class="sticky top-0 flex h-fit w-full items-center justify-between">
@@ -336,17 +340,8 @@
                 </a>
             </div>
         </div>
-        </div>
     </div>
 
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
-        <a class="text-red-600 smooth-scroll" href="#about">
-            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </svg>
-        </a>
-    </div>
 </section>
 
 <section class="bg-lighter-dark relative px-6 py-24" id="about">
@@ -433,7 +428,7 @@
 
             <div class="p-8">
                 <div class="luxury-font text-red-600 mb-4 text-5xl">24/7</div>
-                <h3 class="mb-2 text-xl text-white">Client Retention</h3>
+                <h3 class="mb-2 text-xl text-white">Concierge Support</h3>
                 <p class="text-gray-400">Dedicated concierge available anytime</p>
             </div>
         </div>
@@ -551,7 +546,7 @@
         <h2 class="luxury-font mt-4 mb-6 text-4xl text-gray-300 md:text-5xl">Experience the Porsche Standard</h2>
         <div class="divider bg-opacity-30 mx-auto my-6 w-24 bg-gray-300"></div>
         <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white">Schedule a personalized consultation with our certified 
-            specialists to discuss the unique care and performance needs of your <Porsche class=""></Porsche>
+            specialists to discuss the unique care and performance needs of your Porsche
         </p>
     </div>
 </section>
@@ -561,7 +556,7 @@
         <div class="grid grid-cols-1 gap-16 lg:grid-cols-2">
             <div>
                 <span class="text-gold letter-spacing-wide text-sm tracking-widest">GET IN TOUCH</span>
-                <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Contact Our Porsche Concierge<h2>
+                <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Contact Our Porsche Concierge</h2>
                 <div class="divider my-6 w-24"></div>
                 <p class="mb-10 leading-relaxed text-white">Our dedicated team is available 24/7 to provide personalized assistance for all your Porsche service needs.
                     For immediate support, please call our direct line.
@@ -814,9 +809,8 @@
         </pnav-footer-p-wordmark>
     </div>
 </div>
-    </div>
+       </div
+       ></div>
 </footer>
-
-
 </body>
 </html>
