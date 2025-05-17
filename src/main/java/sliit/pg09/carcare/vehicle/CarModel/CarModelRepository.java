@@ -1,8 +1,8 @@
-package sliit.pg09.carcare.vehicle.model;
+package sliit.pg09.carcare.vehicle.CarModel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ModelRepository extends JpaRepository<CarModel, String> {
+public interface CarModelRepository extends JpaRepository<CarModel, String> {
 }

@@ -10,18 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
+@RequestMapping("/client")
 public class OngoingAppointmentController {
     @Autowired
-    static OngoingAppointmentService ongoingAppointmentService;
+    OngoingAppointmentService ongoingAppointmentService;
 
-    @RequestMapping("/client")
-    public static class ClientOngoingAppointment {
-        @GetMapping("/ongoing-appointment")
-        public ResponseEntity<List<OngoingAppointment>> getOngoingAppointment(
-                @RequestParam String vehicle) {
-            List<OngoingAppointment> ongoingAppointments = ongoingAppointmentService.getOngoingAppointments(vehicle);
-            return ResponseEntity.ok(ongoingAppointments);
-        }
-
+    @GetMapping("/ongoing-appointment")
+    public ResponseEntity<List<OngoingAppointment>> getOngoingAppointment(
+            @RequestParam String vehicle) {
+        List<OngoingAppointment> ongoingAppointments = ongoingAppointmentService.getOngoingAppointments(vehicle);
+        return ResponseEntity.ok(ongoingAppointments);
     }
 }

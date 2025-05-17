@@ -1,35 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
-     th:fragment="emergencyConfirmation(isOpen, vehicle)"
-     x-data="{
-        isLoading: false,
-        async getLocationAndSubmit() {
-            this.isLoading = true;
-            if (!navigator.geolocation) {
-                alert('Geolocation is not supported by your browser');
-                this.isLoading = false;
-                return;
-            }
-
-            try {
-                const position = await new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject);
-                });
-
-                const form = document.getElementById('emergencyForm');
-                form.querySelector('#latitude').value = position.coords.latitude;
-                form.querySelector('#longitude').value = position.coords.longitude;
-                form.querySelector('#timestamp').value = new Date().toISOString();
-
-                htmx.trigger('#emergencyForm', 'submit');
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Unable to access location. Please enable location services.');
-            } finally {
-                this.isLoading = false;
-            }
-        }
-     }">
+     th:fragment="emergencyConfirmation(isOpen, vehicle)">
     <div class="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden border border-gray-700">
         <div class="bg-red-900/30 p-4 flex items-center gap-3 border-b border-red-500/30">
             <div class="bg-red-500/20 p-2 rounded-full">
@@ -44,8 +15,8 @@
         <div class="p-6">
             <p class="mb-4 text-gray-300">
                 You are about to request emergency service for your
-                <span th:text="${vehicle.year + ' ' + vehicle.brand + ' ' + vehicle.carModel}"></span>.
-                We will:
+                <span th:text="${vehicle.model.make + ' ' + vehicle.model.type + ' (' + vehicle.model.year + ')'}"></span>
+                with license <span th:text="${vehicle.license}"></span>.
             </p>
 
             <ul class="space-y-2 mb-6">
@@ -68,7 +39,7 @@
                 <li class="flex items-start gap-2 text-gray-300">
                     <svg class="mt-0.5 text-red-400" fill="none" height="20" viewBox="0 0 24 24" width="20"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.97ி06 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
                               stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                     <span>Dispatch a service vehicle to your location</span>
@@ -89,25 +60,80 @@
                 <input id="latitude" name="latitude" type="hidden">
                 <input id="longitude" name="longitude" type="hidden">
                 <input id="timestamp" name="timestamp" type="hidden">
+                <input id="license" name="license" th:value="${vehicle.license}" type="hidden">
                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             </form>
 
-            <div class="flex justify-end gap-3 p-6">
-                <button @click="$el.closest('[x-data]').remove()"
-                        class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+            <div class="flex justify-end gap-3">
+                <button class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        hx-on="click: document.getElementById('modal-container').innerHTML = ''"
                         type="button">
                     Cancel
                 </button>
-                <button :disabled="isLoading"
-                        @click="getLocationAndSubmit()"
-                        class="px-4 py-2 bg-red-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                <button class="px-4 py-2 bg-red-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        id="confirmButton"
+                        onclick="getLocationAndSubmit(this)"
                         type="button">
-                    <span x-show="!isLoading">Confirm Emergency</span>
-                    <span x-show="isLoading">Processing...</span>
+                    <span id="confirmText">Confirm Emergency</span>
+                    <span id="processingText" style="display: none;">Processing...</span>
                 </button>
             </div>
         </div>
     </div>
+
+    <script>
+        function getLocationAndSubmit(button) {
+            // Update button state
+            const confirmText = document.getElementById('confirmText');
+            const processingText = document.getElementById('processingText');
+
+            button.disabled = true;
+            confirmText.style.display = 'none';
+            processingText.style.display = 'inline';
+
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser');
+                resetButton(button);
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const form = document.getElementById('emergencyForm');
+                    form.querySelector('#latitude').value = position.coords.latitude;
+                    form.querySelector('#longitude').value = position.coords.longitude;
+
+                    // Format the date properly to match the expected pattern yyyy-MM-dd'T'HH:mm:ss
+                    const now = new Date();
+                    const year = now.getFullYear();
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const hours = String(now.getHours()).padStart(2, '0');
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+                    // Format the date as required by @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+                    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+                    form.querySelector('#timestamp').value = formattedDate;
+
+                    htmx.trigger('#emergencyForm', 'submit');
+                },
+                function (error) {
+                    console.error('Error:', error);
+                    alert('Unable to access location. Please enable location services.');
+                    resetButton(button);
+                }
+            );
+        }
+
+        function resetButton(button) {
+            const confirmText = document.getElementById('confirmText');
+            const processingText = document.getElementById('processingText');
+
+            button.disabled = false;
+            confirmText.style.display = 'inline';
+            processingText.style.display = 'none';
+        }
+    </script>
 </div>
 </html>
-
