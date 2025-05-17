@@ -254,57 +254,56 @@
                     </div>
                 </div>
             </a>
+            <nav aria-label="Global" class="hidden lg:flex w-full items-center justify-between px-8 py-4">
+                <!-- Left side - Porsche shield logo -->
+                <div class="w-1/6">
+                    <img src="/api/placeholder/80/80" alt="Porsche Shield" class="h-12 w-auto" />
+                </div>
 
-            <nav aria-label="Global" class="hidden lg:block">
-                <div class="flex items-center justify-between py-4">
-                    <!-- Left side - empty space for balance -->
-                    <div class="w-1/4"></div>
+                <!-- Center - Porsche text logo (actually centered in available space) -->
+                <div class="flex-1 flex justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4500 300" class="h-6 mx-auto"><title>Porsche</title><path d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"></path></svg>
+                </div>
 
-                    <!-- Center - Porsche text logo -->
-                    <div class="flex-1 flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4500 300" class="h-8"><title>Porsche</title><path d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"></path></svg>
-                    </div>
-
-                    <!-- Right side - menu items aligned to right -->
-                    <div class="w-1/4 flex items-center justify-end">
-                        <ul class="flex items-center gap-6 text-sm">
-                            <li>
-                                <a class="nav-item group relative text-base font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
-                                   data-section="about" href="#about">
-                                    <span>About</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-item group relative text-base font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
-                                   data-section="contact" href="#contact">
-                                    <span>Contact</span>
-                                </a>
-                            </li>
-                            <li>
-                                <form action="/oauth2/authorization/google" class="google-button-wrapper" method="GET">
-                                    <button class="button relative flex h-fit w-fit items-center gap-2 overflow-hidden rounded-full border border-gray-300 bg-white p-1 px-3 font-medium transition-colors duration-300 outline-none hover:bg-gray-100"
-                                            type="submit">
-                                        <svg class="svg h-5" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path class="blue"
-                                                  d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
-                                                  fill="#4285F4"></path>
-                                            <path class="green"
-                                                  d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
-                                                  fill="#34A853"></path>
-                                            <path class="yellow"
-                                                  d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
-                                                  fill="#FBBC05"></path>
-                                            <path class="red"
-                                                  d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
-                                                  fill="#EB4335"></path>
-                                        </svg>
-                                        <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+                <!-- Right side - menu items aligned to right -->
+                <div class="w-1/6 flex items-center justify-end">
+                    <ul class="flex items-center gap-5 text-sm">
+                        <li>
+                            <a class="nav-item group relative text-base font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
+                               data-section="about" href="#about">
+                                <span>About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-item group relative text-base font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
+                               data-section="contact" href="#contact">
+                                <span>Contact</span>
+                            </a>
+                        </li>
+                        <li>
+                            <form action="/oauth2/authorization/google" class="google-button-wrapper" method="GET">
+                                <button class="button relative flex h-fit w-fit items-center gap-2 overflow-hidden rounded-full border border-gray-300 bg-white p-1 px-3 font-medium transition-colors duration-300 outline-none hover:bg-gray-100"
+                                        type="submit">
+                                    <svg class="svg h-4" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path class="blue"
+                                              d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+                                              fill="#4285F4"></path>
+                                        <path class="green"
+                                              d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+                                              fill="#34A853"></path>
+                                        <path class="yellow"
+                                              d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+                                              fill="#FBBC05"></path>
+                                        <path class="red"
+                                              d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+                                              fill="#EB4335"></path>
+                                    </svg>
+                                    <span class="text z-10 text-xs font-medium text-gray-800">Sign in</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             </nav>
 
