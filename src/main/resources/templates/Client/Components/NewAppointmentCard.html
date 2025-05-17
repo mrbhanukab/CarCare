@@ -2,7 +2,7 @@
 <html lang="en">
 <body>
 <div class="backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-[0_0_15px_rgba(56,189,248,0.2)] transition-shadow border border-gray-700"
-     th:fragment="scheduleServiceCard()">
+     th:fragment="newAppointmentCard()">
     <div class="flex justify-between items-center">
         <div class="w-2/3">
             <h3 class="text-xl font-bold mb-2 text-cyan-400">Schedule Service</h3>
@@ -12,8 +12,8 @@
         </div>
         <div class="w-1/3 flex justify-end">
             <button class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center hover:bg-cyan-500/20 transition-colors hover:shadow-[0_0_15px_rgba(56,189,248,0.4)]"
-                    hx-get="/client/schedule"
-                    hx-target="#modal-container">
+                    hx-target="#modal-container"
+                    th:hx-get="@{/client/new-appointment(license=${vehicle.license})}">
                 <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z"
                           stroke="#38BDF8"

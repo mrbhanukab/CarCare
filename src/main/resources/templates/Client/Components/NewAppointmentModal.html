@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
+     th:fragment="newAppoinment(vehicle, serviceTypes)">
+
+    <div class="bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full mx-4 overflow-hidden border border-gray-700">
+        <div class="p-6 border-b border-gray-700">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-cyan-400">Schedule Service</h2>
+                <button class="text-gray-400 hover:text-gray-200"
+                        hx-on:click="document.getElementById('modal-container').innerHTML = ''">
+                    <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="p-6 max-h-[70vh] overflow-y-auto">
+            <!-- Change this line -->
+            <form class="space-y-6" hx-post="/client/new-appointment" hx-target="#modal-container"
+                  id="appointment-form">
+                <input name="license" th:value="${vehicle.license}" type="hidden"/>
+                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                <!-- Vehicle info -->
+                <div class="mb-4 p-4 bg-gray-700/50 rounded-lg flex items-center gap-3 border border-gray-600">
+                    <img class="w-16 h-12 object-contain" th:alt="${vehicle.model.make + ' ' + vehicle.model.number}"
+                         th:src="${vehicle.model.image}"/>
+                    <div>
+                        <div class="font-medium text-white"
+                             th:text="${vehicle.model.make + ' ' + vehicle.model.number + ' (' + vehicle.model.year + ')'}"></div>
+                        <div class="text-sm text-gray-300" th:text="${'License: ' + vehicle.license}"></div>
+                    </div>
+                </div>
+
+                <!-- Service selection -->
+                <div>
+                    <h3 class="text-lg font-medium text-cyan-400 mb-4">Select Services</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                        <th:block th:each="serviceType : ${serviceTypes}">
+                            <label class="p-4 rounded-lg border border-gray-600 hover:border-cyan-500 cursor-pointer transition-colors service-label">
+                                <div class="flex justify-end mb-1">
+                                    <input class="service-checkbox" name="services"
+                                           th:value="${serviceType.name()}"
+                                           type="checkbox"/>
+                                </div>
+                                <div class="flex flex-col items-center justify-center gap-2">
+                                    <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center service-icon">
+                                        <!-- Using a generic icon - you may want to customize these per service type -->
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round"
+                                                  stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="font-medium" th:text="${serviceType.displayName}">Service Name</span>
+                                </div>
+                            </label>
+                        </th:block>
+                    </div>
+                </div>
+
+                <!-- Date selection (3 options) -->
+                <div>
+                    <h3 class="text-lg font-medium text-cyan-400 mb-4">Preferred Date & Time (All required)</h3>
+                    <div class="space-y-4">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-gray-300" for="preferredDateTime1">First
+                                Choice</label>
+                            <input class="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                                   id="preferredDateTime1" min=""
+                                   name="preferredDateTime1"
+                                   required type="datetime-local">
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-gray-300" for="preferredDateTime2">Second
+                                Choice</label>
+                            <input class="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                                   id="preferredDateTime2" min=""
+                                   name="preferredDateTime2"
+                                   required type="datetime-local">
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-gray-300" for="preferredDateTime3">Third
+                                Choice</label>
+                            <input class="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                                   id="preferredDateTime3" min=""
+                                   name="preferredDateTime3"
+                                   required type="datetime-local">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1" for="notes">Notes (Optional)</label>
+                    <textarea
+                            class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                            id="notes"
+                            name="notes"
+                            placeholder="Please provide any additional details about your service request..."
+                            rows="3"></textarea>
+                </div>
+
+                <!-- Submit button -->
+                <div class="flex justify-end">
+                    <button class="px-4 py-2 bg-cyan-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800 shadow-[0_0_10px_rgba(56,189,248,0.3)]"
+                            type="submit">
+                        Schedule Service
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        // Set min date to today for date pickers
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('preferredDateTime1').min = today + 'T08:00';
+        document.getElementById('preferredDateTime2').min = today + 'T08:00';
+        document.getElementById('preferredDateTime3').min = today + 'T08:00';
+
+        // Handle service selection styling
+        const serviceCheckboxes = document.querySelectorAll('.service-checkbox');
+        serviceCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const label = this.closest('.service-label');
+                const icon = label.querySelector('.service-icon');
+
+                if (this.checked) {
+                    label.classList.add('border-cyan-500', 'bg-cyan-900/20', 'text-cyan-300');
+                    label.classList.remove('border-gray-600');
+                    icon.classList.add('bg-cyan-900/30');
+                    icon.classList.remove('bg-gray-700');
+                } else {
+                    label.classList.remove('border-cyan-500', 'bg-cyan-900/20', 'text-cyan-300');
+                    label.classList.add('border-gray-600');
+                    icon.classList.remove('bg-cyan-900/30');
+                    icon.classList.add('bg-gray-700');
+                }
+            });
+        });
+
+        // Form validation
+        document.getElementById('appointment-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Check if at least one service is selected
+            const selectedServices = document.querySelectorAll('.service-checkbox:checked');
+            if (selectedServices.length === 0) {
+                alert('Please select at least one service');
+                return;
+            }
+
+            // Submit the form with HTMX
+            htmx.trigger(this, 'submit');
+        });
+    });
+</script>
+</html>
