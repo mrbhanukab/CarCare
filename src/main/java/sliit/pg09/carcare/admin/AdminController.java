@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import sliit.pg09.carcare.client.ClientService;
 import sliit.pg09.carcare.emergency.Emergency;
 import sliit.pg09.carcare.emergency.EmergencyService;
+import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.util.List;
 
@@ -18,6 +20,10 @@ public class AdminController {
     AdminService adminService;
     @Autowired
     EmergencyService emergencyService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private VehicleService vehicleService;
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
@@ -57,15 +63,18 @@ public class AdminController {
     }
 
     @HxRequest
-    @GetMapping("/screen/log")
-    public String getLogs(Model model) {
-        return adminService.verifyUserStatus("Admin/Screens/LogsDashboard", model);
-    }
-
-    @HxRequest
     @GetMapping("/screen/clients")
     public String getClients(Model model) {
+        model.addAttribute("clients", clientService.findAllClients());
+
+
         return adminService.verifyUserStatus("Admin/Screens/Clients", model);
+    }
+
+    @GetMapping("/screen/vehicles")
+    public String getVehicles(Model model) {
+        model.addAttribute("vehicles", vehicleService.findAll());
+        return adminService.verifyUserStatus("Admin/Screens/Vehicles", model);
     }
 
     @GetMapping("/login")
