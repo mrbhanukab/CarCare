@@ -24,20 +24,21 @@
             font-family: 'Playfair Display', serif;
         }
 
-        .blue-gradient {
-            background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #1E40AF 100%);
+        /* Porsche brand colors */
+        .porsche-gradient {
+            background: linear-gradient(135deg, #000000 0%, #A43131 50%, #000000 100%);
         }
 
-        .text-blue {
-            color: #3B82F6;
+        .text-porsche {
+            color: #A43131;
         }
 
-        .border-blue {
-            border-color: #3B82F6;
+        .border-porsche {
+            border-color: #A43131;
         }
 
         .bg-dark {
-            background-color: #0F0F0F;
+            background-color: #000000;
         }
 
         .bg-lighter-dark {
@@ -66,7 +67,7 @@
 
         .divider {
             height: 2px;
-            background: linear-gradient(90deg, transparent 0%, #3B82F6 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, #A43131 50%, transparent 100%);
         }
 
         .image-transition {
@@ -113,7 +114,7 @@
             left: 0;
             height: 2px;
             width: 100%;
-            background: #3B82F6;
+            background: #A43131;
             transform: scaleX(0);
             transform-origin: right;
             transition: transform 0.3s ease;
@@ -161,7 +162,7 @@
             height: 2px;
             bottom: -4px;
             left: 0;
-            background-color: #3B82F6;
+            background-color: #A43131;
             visibility: hidden;
             transition: all 0.3s ease-in-out;
         }
@@ -178,6 +179,19 @@
 
         .text-shadow-sm {
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Secondary accent color from Porsche branding */
+        .accent-gold {
+            color: #C29049;
+        }
+
+        .bg-accent-gold {
+            background-color: #C29049;
+        }
+
+        .border-accent-gold {
+            border-color: #C29049;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -251,25 +265,25 @@
                     </li>
                     <li>
                         <form action="/oauth2/authorization/google" class="google-button-wrapper" method="GET">
-                        <button class="button relative flex h-fit w-fit items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100"
-                                type="submit">
-                            <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path class="blue"
-                                      d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
-                                      fill="#4285F4"></path>
-                                <path class="green"
-                                      d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
-                                      fill="#34A853"></path>
-                                <path class="yellow"
-                                      d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
-                                      fill="#FBBC05"></path>
-                                <path class="red"
-                                      d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
-                                      fill="#EB4335"></path>
-                            </svg>
-                            <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
-                        </button>
+                            <button class="button relative flex h-fit w-fit items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100"
+                                    type="submit">
+                                <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path class="blue"
+                                          d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+                                          fill="#4285F4"></path>
+                                    <path class="green"
+                                          d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+                                          fill="#34A853"></path>
+                                    <path class="yellow"
+                                          d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+                                          fill="#FBBC05"></path>
+                                    <path class="red"
+                                          d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+                                          fill="#EB4335"></path>
+                                </svg>
+                                <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
+                            </button>
                         </form>
                     </li>
                 </ul>
@@ -287,14 +301,14 @@
             <div class="animate__animated animate__fadeInUp mb-16">
                 <h1 class="luxury-font mb-6 text-5xl leading-tight font-medium text-white md:text-5xl lg:text-6xl xl:text-7xl">
                     <span class="block">Elevate Your</span>
-                    <span class="bg-gradient-to-r from-blue-300 via-blue-200 to-blue-400 bg-clip-text text-transparent">Driving Experience</span>
+                    <span class="bg-gradient-to-r from-red-600 via-red-500 to-red-700 bg-clip-text text-transparent">Driving Experience</span>
                 </h1>
 
                 <p class="mb-10 max-w-2xl text-xl leading-relaxed font-light opacity-90 md:text-2xl">Precision care for
                     your luxury vehicle. Our concierge-level service ensures peak performance and timeless elegance.</p>
 
                 <div class="flex flex-col gap-6 sm:flex-row">
-                    <a class="shine-effect bg-blue-600 hover:bg-opacity-90 relative flex transform items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 smooth-scroll"
+                    <a class="shine-effect bg-red-600 hover:bg-opacity-90 relative flex transform items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 smooth-scroll"
                        href="#contact">
                         <span>Request Consultation</span>
                         <svg class="ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
@@ -305,26 +319,25 @@
                         </svg>
                     </a>
 
-                    <a class="border-blue-500 text-blue-400 hover:bg-blue-500 hover:bg-opacity-10 flex transform items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105 smooth-scroll"
+                    <a class="border-red-600 text-red-600 hover:bg-red-600 hover:bg-opacity-10 flex transform items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105 smooth-scroll"
                        href="#about">
                         <span>Explore Services</span>
                     </a>
                 </div>
             </div>
 
-
             <div class="animate__animated animate__fadeIn animate__delay-1s">
                 <div class="flex items-center justify-center gap-6 lg:justify-start">
                     <div class="flex items-center gap-3">
-                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
+                        <div class="bg-red-600 h-3 w-3 rounded-full"></div>
                         <span class="text-sm tracking-wider">PREMIUM CARE</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
+                        <div class="bg-red-600 h-3 w-3 rounded-full"></div>
                         <span class="text-sm tracking-wider">CERTIFIED TECHNICIANS</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
+                        <div class="bg-red-600 h-3 w-3 rounded-full"></div>
                         <span class="text-sm tracking-wider">DISCRETE SERVICE</span>
                     </div>
                 </div>
@@ -333,7 +346,7 @@
     </div>
 
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
-        <a class="text-blue-400 smooth-scroll" href="#about">
+        <a class="text-red-600 smooth-scroll" href="#about">
             <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
@@ -345,7 +358,7 @@
 <section class="bg-lighter-dark relative px-6 py-24" id="about">
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-blue-400 letter-spacing-wide text-sm tracking-widest">EXCLUSIVE SERVICE</span>
+            <span class="text-red-600 letter-spacing-wide text-sm tracking-widest">EXCLUSIVE SERVICE</span>
             <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">The LuxAuto Difference</h2>
             <div class="divider mx-auto my-6 w-24"></div>
             <p class="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400">Where precision engineering meets
@@ -355,7 +368,7 @@
 
         <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <div class="hover-scale relative">
-                <div class="border-blue-500 border-opacity-30 absolute -inset-4 z-0 rotate-1 transform border"></div>
+                <div class="border-red-600 border-opacity-30 absolute -inset-4 z-0 rotate-1 transform border"></div>
                 <img alt="Luxury car maintenance" class="relative z-10 h-auto w-full object-cover"
                      th:src="@{/images/home/2.webp}"/>
             </div>
@@ -370,7 +383,7 @@
                     <!-- Card 1 -->
                     <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                         <div class="flex-shrink-0">
-                            <div class="bg-blue-500 bg-opacity-100 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                            <div class="bg-red-600 bg-opacity-100 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
                                 <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                                 </svg>
@@ -385,7 +398,7 @@
                     <!-- Card 2 -->
                     <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                         <div class="flex-shrink-0">
-                            <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                            <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
                                 <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12 15l8-8m0 0l-8-8m8 8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                                 </svg>
@@ -400,7 +413,7 @@
                     <!-- Card 3 -->
                     <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                         <div class="flex-shrink-0">
-                            <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                            <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
                                 <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                                 </svg>
@@ -419,27 +432,27 @@
 
 <section class="relative overflow-hidden bg-black py-20">
     <div class="absolute inset-0 opacity-10">
-        <div class="from-blue-500 absolute inset-0 w-1/3 bg-gradient-to-r to-transparent"></div>
+        <div class="from-red-600 absolute inset-0 w-1/3 bg-gradient-to-r to-transparent"></div>
     </div>
 
     <div class="relative mx-auto max-w-7xl px-6">
         <div class="grid grid-cols-1 gap-12 text-center md:grid-cols-3">
             <div class="p-8">
-                <div class="luxury-font text-blue-400 mb-4 text-5xl">250+</div>
+                <div class="luxury-font text-red-600 mb-4 text-5xl">250+</div>
                 <h3 class="mb-2 text-xl text-white">Satisfied Clients</h3>
                 <p class="text-gray-400">Elite vehicle owners who trust our service</p>
             </div>
 
             <div class="p-8">
-                <div class="luxury-font text-blue-400 mb-4 text-5xl">98%</div>
+                <div class="luxury-font text-red-600 mb-4 text-5xl">98%</div>
                 <h3 class="mb-2 text-xl text-white">Client Retention</h3>
                 <p class="text-gray-400">Of clients return for ongoing maintenance</p>
             </div>
 
             <div class="p-8">
-                <div class="luxury-font text-blue-400 mb-4 text-5xl">24/7</div>
-                <h3 class="mb-2 text-xl text-white">Support</h3>
-                <p class="text-gray-400">Dedicated concierge available anytime</p>
+                <div class="luxury-font text-red-600 mb-4 text-5xl">24/7</div>
+                <h3 class="mb-2 text-xl text-white">Client Retention</h3>
+                <p class="text-porsche">Dedicated concierge available anytime</p>
             </div>
         </div>
     </div>
@@ -448,7 +461,7 @@
 <section class="bg-lighter-dark px-6 py-24">
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-blue-400 letter-spacing-wide text-sm tracking-widest">OUR OFFERINGS</span>
+            <span class="text-red-600 letter-spacing-wide text-sm tracking-widest">OUR OFFERINGS</span>
             <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Bespoke Automotive Care</h2>
             <div class="divider mx-auto my-6 w-24"></div>
             <p class="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400">Comprehensive services designed to
@@ -456,15 +469,15 @@
         </div>
 
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+            <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
                     <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Performance Tuning</h3>
                 <p class="mb-6 text-gray-400">Optimize your vehicle's ECU for enhanced power delivery and throttle response while maintaining reliability.</p>
-                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -472,15 +485,15 @@
                 </a>
             </div>
 
-            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+            <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
                     <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Detailing Excellence</h3>
                 <p class="mb-6 text-gray-400">Show-car quality detailing using only the finest ceramic coatings and leather conditioners.</p>
-                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -488,15 +501,15 @@
                 </a>
             </div>
 
-            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+            <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
                     <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Security Enhancements</h3>
                 <p class="mb-6 text-gray-400">Discrete installation of the latest anti-theft and tracking systems to protect your investment.</p>
-                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -557,7 +570,7 @@
         <div class="divider bg-opacity-30 mx-auto my-6 w-24 bg-gray-300"></div>
         <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white">Schedule a consultation with our
             specialists to discuss your vehicle's unique needs.</p>
-        <a class="hover:bg-opacity-90 inline-block transform rounded-sm bg-blue-700 px-10 py-5 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105"
+        <a class="hover:bg-opacity-90 inline-block transform rounded-sm bg-red-600 px-10 py-5 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105"
            href="#contact">
             Contact Our Concierge </a>
     </div>
@@ -610,7 +623,7 @@
                     </div>
                     <div class="flex items-start gap-6">
                         <div class="flex-shrink-0">
-                            <div class="bg-gold bg-opacity-10 border-gold border-opacity-30 flex h-12 w-12 items-center justify-center rounded-full border">
+                            <div class="bg-gold bg-opacity-10 border-gold border-opacity-30 flex h-12 w-12 items-center justify W-12 items-center justify-center rounded-full border">
                                 <svg class="text-gold h-5 w-5" fill="none" stroke="currentColor"
                                      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
@@ -678,9 +691,9 @@
                     </div>
                     <div>
                         <div class="mt-6 flex justify-center">
-                            <button class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-500 to-blue-400 px-8 py-5 font-medium tracking-wider text-black transition-all duration-500 hover:shadow-lg hover:shadow-yellow-500/30 active:scale-95"
+                            <button class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-red-600 to-red-500 px-8 py-5 font-medium tracking-wider text-white transition-all duration-500 hover:shadow-lg hover:shadow-red-600/30 active:scale-95"
                                     type="submit">
-                                <span class="absolute inset-0 bg-gradient-to-r from-yellow-400/30 via-yellow-200/50 to-yellow-400/30 opacity-0 transition-all duration-700 group-hover:[transform:translateX(100%)] group-hover:opacity-100"></span>
+                                <span class="absolute inset-0 bg-gradient-to-r from-gold/30 via-gold/50 to-gold/30 opacity-0 transition-all duration-700 group-hover:[transform:translateX(100%)] group-hover:opacity-100"></span>
                                 <span class="relative z-10 flex items-center gap-2">
                       Send Message
                       <svg class="h-5 w-5 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110"
@@ -690,7 +703,7 @@
                               stroke-width="2"/>
                       </svg>
                     </span>
-                                <span class="absolute inset-0 rounded-full border-2 border-blue-300 opacity-0 transition-all duration-500 group-hover:animate-[pulse_1.5s_ease-in-out_infinite] group-hover:opacity-100"></span>
+                                <span class="absolute inset-0 rounded-full border-2 border-red-600 opacity-0 transition-all duration-500 group-hover:animate-[pulse_1.5s_ease-in-out_infinite] group-hover:opacity-100"></span>
                             </button>
                         </div>
                     </div>
@@ -832,7 +845,7 @@
                     glowEffect.style.transform = 'translateX(-50%)';
                     glowEffect.style.width = '4px';
                     glowEffect.style.height = '0';
-                    glowEffect.style.background = 'linear-gradient(to bottom, rgba(59, 130, 246, 0.8), rgba(59, 130, 246, 0))';
+                    glowEffect.style.background = 'linear-gradient(to bottom, rgba(164, 49, 49, 0.8), rgba(164, 49, 49, 0))';
                     glowEffect.style.zIndex = '9999';
                     glowEffect.style.pointerEvents = 'none';
                     document.body.appendChild(glowEffect);
@@ -844,7 +857,7 @@
                     flashEffect.style.left = '0';
                     flashEffect.style.right = '0';
                     flashEffect.style.bottom = '0';
-                    flashEffect.style.background = 'rgba(59, 130, 246, 0.1)';
+                    flashEffect.style.background = 'rgba(164, 49, 49, 0.1)';
                     flashEffect.style.opacity = '0';
                     flashEffect.style.zIndex = '1';
                     flashEffect.style.pointerEvents = 'none';
