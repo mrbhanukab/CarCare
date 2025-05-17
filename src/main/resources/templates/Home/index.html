@@ -221,9 +221,15 @@
 </head>
 <body class="bg-dark text-gray-200">
 <section class="relative flex min-h-screen w-screen flex-col items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 -z-50" hx-get="/next-image" hx-trigger="every 4s" id="dynamic-image-container">
-        <img alt="Luxury vehicle" class="image-transition h-full w-full" hx-swap="outerHTML"
-             hx-target="this" th:src="@{/images/home/1.webp}"/>
+    <div class="absolute inset-0 -z-50" id="dynamic-video-container">
+        <video
+                class="h-full w-full object-fill"
+                th:src="@{/images/home/VD.mp4}"
+                autoplay
+                muted
+                loop
+                playsinline>
+        </video>
     </div>
 
     <div class="hero-overlay absolute inset-0 -z-40"></div>
@@ -250,6 +256,7 @@
             </a>
 
             <nav aria-label="Global" class="hidden lg:block">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4500 300"><title>Porsche</title><path d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"></path></svg>
                 <ul class="flex items-center gap-8 text-sm">
                     <li>
                         <a class="nav-item group relative text-lg font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
@@ -297,51 +304,29 @@
             </button>
         </header>
 
-        <div class="mx-auto flex h-full w-full max-w-4xl flex-col justify-center px-4">
-            <div class="animate__animated animate__fadeInUp mb-16">
-                <h1 class="luxury-font mb-6 text-5xl leading-tight font-medium text-white md:text-5xl lg:text-6xl xl:text-7xl">
-                    <span class="block">Elevate Your</span>
-                    <span class="bg-gradient-to-r from-red-600 via-red-500 to-red-700 bg-clip-text text-transparent">Driving Experience</span>
-                </h1>
+        <div class="animate-fade-up mb-16 max-w-4xl mx-auto text-center">
+            <h1 class="luxury-font mb-6 text-xl font-medium text-white md:text-4xl lg:text-5xl xl:text-6xl whitespace-nowrap overflow-hidden text-ellipsis">
+                <span class="bg-gradient-to-r from-red-600 via-red-500 to-red-700 bg-clip-text text-transparent">Elevate Your Porsche Experience</span>
+            </h1>
 
-                <p class="mb-10 max-w-2xl text-xl leading-relaxed font-light opacity-90 md:text-2xl">Precision care for
-                    your luxury vehicle. Our concierge-level service ensures peak performance and timeless elegance.</p>
+            <div class="flex flex-col gap-7 sm:flex-row justify-center">
+                <a class="group bg-red-600 hover:bg-opacity-90 relative flex items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 scroll-smooth"
+                   href="#contact">
+                    <span>Request Consultation</span>
+                    <svg class="ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd"
+                              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                              fill-rule="evenodd"/>
+                    </svg>
+                </a>
 
-                <div class="flex flex-col gap-6 sm:flex-row">
-                    <a class="shine-effect bg-red-600 hover:bg-opacity-90 relative flex transform items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 smooth-scroll"
-                       href="#contact">
-                        <span>Request Consultation</span>
-                        <svg class="ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path clip-rule="evenodd"
-                                  d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                                  fill-rule="evenodd"/>
-                        </svg>
-                    </a>
-
-                    <a class="border-red-600 text-red-600 hover:bg-red-600 hover:bg-opacity-10 flex transform items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105 smooth-scroll"
-                       href="#about">
-                        <span>Explore Services</span>
-                    </a>
-                </div>
+                <a class="border-red-600 text-red-600 hover:bg-red-600 hover:bg-opacity-10 flex items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105 scroll-smooth"
+                   href="#about">
+                    <span>Explore Services</span>
+                </a>
             </div>
-
-            <div class="animate__animated animate__fadeIn animate__delay-1s">
-                <div class="flex items-center justify-center gap-6 lg:justify-start">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-red-600 h-3 w-3 rounded-full"></div>
-                        <span class="text-sm tracking-wider">PREMIUM CARE</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="bg-red-600 h-3 w-3 rounded-full"></div>
-                        <span class="text-sm tracking-wider">CERTIFIED TECHNICIANS</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="bg-red-600 h-3 w-3 rounded-full"></div>
-                        <span class="text-sm tracking-wider">DISCRETE SERVICE</span>
-                    </div>
-                </div>
-            </div>
+        </div>
         </div>
     </div>
 
@@ -452,7 +437,7 @@
             <div class="p-8">
                 <div class="luxury-font text-red-600 mb-4 text-5xl">24/7</div>
                 <h3 class="mb-2 text-xl text-white">Client Retention</h3>
-                <p class="text-porsche">Dedicated concierge available anytime</p>
+                <p class="text-gray-400">Dedicated concierge available anytime</p>
             </div>
         </div>
     </div>
@@ -801,147 +786,6 @@
     </div>
 </footer>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const animateOnScroll = function () {
-            const elements = document.querySelectorAll('.hover-scale, .shine-effect');
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
 
-                if (elementPosition < screenPosition) {
-                    element.classList.add('animate__animated', 'animate__fadeInUp');
-                }
-            });
-        };
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll();
-
-        const smoothScrollLinks = document.querySelectorAll('.smooth-scroll, .nav-item');
-
-        smoothScrollLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-
-                if (targetSection) {
-                    document.querySelectorAll('.nav-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-
-                    if (this.classList.contains('nav-item')) {
-                        this.classList.add('active');
-                    }
-
-                    targetSection.classList.add('section-target');
-
-                    const glowEffect = document.createElement('div');
-                    glowEffect.classList.add('scroll-glow-effect');
-                    glowEffect.style.position = 'fixed';
-                    glowEffect.style.top = '0';
-                    glowEffect.style.left = '50%';
-                    glowEffect.style.transform = 'translateX(-50%)';
-                    glowEffect.style.width = '4px';
-                    glowEffect.style.height = '0';
-                    glowEffect.style.background = 'linear-gradient(to bottom, rgba(164, 49, 49, 0.8), rgba(164, 49, 49, 0))';
-                    glowEffect.style.zIndex = '9999';
-                    glowEffect.style.pointerEvents = 'none';
-                    document.body.appendChild(glowEffect);
-
-                    const flashEffect = document.createElement('div');
-                    flashEffect.classList.add('flash-effect');
-                    flashEffect.style.position = 'absolute';
-                    flashEffect.style.top = '0';
-                    flashEffect.style.left = '0';
-                    flashEffect.style.right = '0';
-                    flashEffect.style.bottom = '0';
-                    flashEffect.style.background = 'rgba(164, 49, 49, 0.1)';
-                    flashEffect.style.opacity = '0';
-                    flashEffect.style.zIndex = '1';
-                    flashEffect.style.pointerEvents = 'none';
-                    targetSection.style.position = 'relative';
-                    targetSection.appendChild(flashEffect);
-
-                    let start = null;
-                    const targetTop = targetSection.getBoundingClientRect().top + window.pageYOffset;
-                    const duration = 800;
-
-                    function animateScroll(timestamp) {
-                        if (!start) start = timestamp;
-                        const progress = timestamp - start;
-                        const easeProgress = Math.min(progress / duration, 1);
-                        const easedProgress = easeInOutCubic(easeProgress);
-
-                        const maxHeight = targetTop - window.pageYOffset;
-                        glowEffect.style.height = `${easedProgress * maxHeight}px`;
-
-                        const currentPosition = window.pageYOffset;
-                        const distance = targetTop - currentPosition;
-                        window.scrollTo(0, currentPosition + distance * easedProgress);
-
-                        if (progress < duration) {
-                            window.requestAnimationFrame(animateScroll);
-                        } else {
-                            flashEffect.style.transition = 'opacity 0.5s ease';
-                            flashEffect.style.opacity = '1';
-
-                            setTimeout(() => {
-                                glowEffect.remove();
-                                flashEffect.style.opacity = '0';
-                                setTimeout(() => {
-                                    flashEffect.remove();
-                                }, 500);
-                            }, 300);
-
-                            const childElements = targetSection.querySelectorAll('h2, h3, p, .divider, .grid > div');
-                            childElements.forEach((el, index) => {
-                                el.style.opacity = '0';
-                                setTimeout(() => {
-                                    el.classList.add('fade-in-up');
-                                    el.style.opacity = '1';
-                                    el.style.animationDelay = `${index * 100}ms`;
-                                }, 300);
-                            });
-                        }
-                    }
-
-                    window.requestAnimationFrame(animateScroll);
-                }
-            });
-        });
-
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        function highlightActiveSection() {
-            const sections = document.querySelectorAll('section[id]');
-            const navItems = document.querySelectorAll('.nav-item');
-
-            let currentSection = '';
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (window.pageYOffset >= sectionTop - 300) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                const sectionName = item.getAttribute('data-section');
-                if (sectionName === currentSection) {
-                    item.classList.add('active');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', highlightActiveSection);
-        highlightActiveSection();
-    });
-</script>
 </body>
 </html>
