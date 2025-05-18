@@ -18,12 +18,28 @@
                 <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
                       stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             </svg>
-            <input class="w-full pl-8 pr-3 py-2 border rounded-md"
-                   placeholder="Search by customer, license plate, or service..."/>
+            <form hx-indicator=".htmx-indicator" hx-post="/admin/search-completed-appointments"
+                  hx-target="#search-results"
+                  hx-trigger="input changed delay:500ms, load"
+                  id="search-form">
+                <input name="_csrf" th:value="${_csrf.token}" type="hidden"/>
+                <input class="w-full pl-8 pr-3 py-2 border rounded-md"
+                       name="search"
+                       placeholder="Search by customer, license, service, date..."
+                       type="search">
+            </form>
+
+            <script>
+                document.getElementById('search-form').addEventListener('submit', function (event) {
+                    event.preventDefault();
+                });
+            </script>
+            <span class="htmx-indicator absolute right-2.5 top-2.5 hidden">
+                    <img alt="Searching..." class="w-4 h-4" src="/img/bars.svg">
+                </span>
         </div>
     </div>
 
-    <!-- Appointments Table -->
     <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full">
@@ -34,46 +50,10 @@
                     <th class="px-4 py-3 text-left font-medium">Service</th>
                     <th class="px-4 py-3 text-left font-medium">Date</th>
                     <th class="px-4 py-3 text-right font-medium">Amount</th>
-                    <th class="px-4 py-3 w-[100px]"></th>
                 </tr>
                 </thead>
-                <tbody>
-                <th:block th:each="i : ${#numbers.sequence(1, 3)}">
-                    <tr class="border-b">
-                        <td class="px-4 py-3">
-                            <div class="flex items-center gap-3">
-                                <img alt="Customer" class="w-8 h-8 rounded-full object-cover"
-                                     src="https://via.placeholder.com/32"/>
-                                <span class="font-medium" th:text="${'Customer ' + i}">Customer Name</span>
-                            </div>
-                        </td>
-                        <td class="px-4 py-3">
-                            <div class="flex items-center gap-2">
-                                <img alt="Vehicle" class="w-12 h-8 object-contain"
-                                     src="https://via.placeholder.com/48x32"/>
-                                <div>
-                                    <span th:text="${'Vehicle ' + i}">Vehicle Make Model</span>
-                                    <div class="text-xs text-gray-500" th:text="${'ABC-' + (100 + i)}">ABC-123</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-4 py-3">
-                                                <span class="text-sm bg-gray-100 px-2 py-1 rounded-full"
-                                                      th:text="${'Service ' + i}">Service Type</span>
-                        </td>
-                        <td class="px-4 py-3">
-                            <span th:text="${'May ' + i + ', 2025'}">May 1, 2025</span>
-                            <div class="text-xs text-gray-500" th:text="${(9 + i) + ':00 AM'}">9:00 AM</div>
-                        </td>
-                        <td class="px-4 py-3 text-right font-medium" th:text="${'$' + (100 * i) + '.00'}">$100.00</td>
-                        <td class="px-4 py-3">
-                            <button @click="showDetailsDialog = true; selectedAppointment = $el.closest('tr')"
-                                    class="px-3 py-1 text-sm hover:bg-gray-100 rounded-md">
-                                Details
-                            </button>
-                        </td>
-                    </tr>
-                </th:block>
+                <tbody id="search-results">
+                <!-- Results will be dynamically loaded here -->
                 </tbody>
             </table>
         </div>

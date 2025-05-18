@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class completedAppointmentService {
@@ -108,5 +109,14 @@ public class completedAppointmentService {
     public List<completedAppointment> getLatest3Appointments(String license) {
         List<completedAppointment> sorted = getAllAppointmentsSorted(license);
         return sorted.subList(0, Math.min(3, sorted.size()));
+    }
+
+    public List<completedAppointment> searchAppointments(String search) {
+        return completedAppointmentRepository.findAll().stream()
+                .filter(appointment -> appointment.getVehicle().getClient().getName().toLowerCase().contains(search.toLowerCase())
+                        || appointment.getVehicle().getLicense().toLowerCase().contains(search.toLowerCase())
+                        || appointment.getServiceNames().stream().anyMatch(service -> service.toLowerCase().contains(search.toLowerCase()))
+                        || appointment.getId().getCompletedTime().toString().contains(search))
+                .collect(Collectors.toList());
     }
 }

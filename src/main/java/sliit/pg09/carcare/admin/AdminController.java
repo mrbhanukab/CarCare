@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import sliit.pg09.carcare.client.ClientService;
+import sliit.pg09.carcare.completedAppointment.completedAppointmentService;
 import sliit.pg09.carcare.emergency.Emergency;
 import sliit.pg09.carcare.emergency.EmergencyService;
 import sliit.pg09.carcare.newAppointment.NewAppointment;
@@ -32,6 +33,8 @@ public class AdminController {
     private NewAppointmentService newAppointmentService;
     @Autowired
     private OngoingAppointmentService ongoingAppointmentService;
+    @Autowired
+    private completedAppointmentService completedAppointmentService;
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
@@ -73,6 +76,8 @@ public class AdminController {
     @HxRequest
     @GetMapping("/screen/completed-appointments")
     public String getCompletedAppointmentsRequests(Model model) {
+//        List<completedAppointment> completedAppointments = completedAppointmentService.getAllAppointments();
+//        model.addAttribute("completedAppointments", completedAppointments);
         return adminService.verifyUserStatus("Admin/Screens/CompletedDashboard", model);
     }
 
