@@ -1,0 +1,39 @@
+<tr th:class="border-b" th:each="appointment : ${completedAppointments}">
+    <td class="px-4 py-3">
+        <div class="flex items-center gap-3">
+            <img class="w-12 h-12 rounded-full object-cover"
+                 referrerpolicy="no-referrer"
+                 th:alt="${appointment.vehicle.client.name + ' Photo'}"
+                 th:src="${appointment.vehicle.client.imageUrl}"/>
+            <span class="font-medium" th:text="${appointment.vehicle.client.name}">Customer Name</span>
+        </div>
+    </td>
+    <td class="px-4 py-3">
+        <div class="flex items-center gap-2">
+            <img alt="Vehicle" class="w-12 h-8 object-contain"
+                 th:src="${appointment.vehicle.model.image}"/>
+            <div>
+                <div class="text-sm"
+                     th:text="${appointment.vehicle != null and appointment.vehicle.model != null ?
+                                             appointment.vehicle.model.number + ' (' + appointment.vehicle.model.year + ')' : 'Vehicle information unavailable'}">
+                </div>
+                <div class="text-xs text-gray-500" th:text="${appointment.vehicle.license}">License</div>
+            </div>
+        </div>
+    </td>
+    <td class="px-4 py-3">
+    <span class="text-sm bg-gray-100 p-1 rounded-lg"
+          th:each="service : ${appointment.serviceNames}"
+          th:text="${service}">Service
+    </span>
+    </td>
+    <td class="px-4 py-3">
+        <span th:text="${#temporals.format(appointment.id.completedTime, 'yyyy-MM-dd')}">Date</span>
+        <div class="text-xs text-gray-500" th:text="${#temporals.format(appointment.id.completedTime, 'hh:mm a')}">9:00
+            AM
+        </div>
+    </td>
+    <td class="px-4 py-3 text-right font-medium"
+        th:text="${'Rs ' + #numbers.formatDecimal(appointment.billingInfo.total, 2, 2)}">Amount
+    </td>
+</tr>
