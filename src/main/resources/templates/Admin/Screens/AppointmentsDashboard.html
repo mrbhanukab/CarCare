@@ -9,74 +9,115 @@
 
     <!-- Appointments Grid -->
     <div class="grid gap-6 md:grid-cols-2">
-        <div class="bg-white rounded-lg shadow-sm border overflow-hidden"
+        <div class="bg-white rounded-lg shadow-md border overflow-hidden"
              th:each="appointment : ${appointments}">
-            <div class="flex flex-row items-center justify-between p-4 border-b">
+            <!-- Card Header -->
+            <div class="flex items-center justify-between p-4 bg-gray-100 border-b">
                 <div class="flex items-center gap-3">
-                    <img alt="Customer Photo" class="w-10 h-10 rounded-full object-cover"
+                    <img class="w-12 h-12 rounded-full object-cover"
+                         referrerpolicy="no-referrer"
+                         th:alt="${appointment.vehicle.client.name + ' Photo'}"
                          th:src="${appointment.vehicle.client.imageUrl}"/>
-                    <h3 class="text-lg font-bold" th:text="${appointment.vehicle.client.name}">Customer Name</h3>
+                    <div>
+                        <h3 class="text-lg font-bold" th:text="${appointment.vehicle.client.name}">Customer Name</h3>
+                        <p class="text-sm text-gray-500" th:text="${appointment.vehicle.client.phone}">Phone Number</p>
+                    </div>
                 </div>
-                <div class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">New Request</div>
+                <div class="bg-blue-500 text-white text-xs px-3 py-1 rounded-full">New Request</div>
             </div>
 
+            <!-- Card Body -->
             <div class="p-4 space-y-4">
+                <!-- Vehicle Information -->
                 <div class="space-y-2">
-                    <div class="font-medium">Customer Information</div>
-                    <div class="text-sm" th:text="${appointment.vehicle.client.name}">Customer Name</div>
-                    <div class="text-sm" th:text="${appointment.vehicle.client.phone}">Phone Number</div>
-                </div>
-
-                <div class="space-y-2">
-                    <div class="font-medium">Vehicle Information</div>
+                    <div class="font-medium text-gray-700">Vehicle Information</div>
                     <div class="flex items-center gap-3">
                         <img alt="Vehicle" class="w-16 h-12 object-contain"
                              th:src="${appointment.vehicle.model.image}"/>
                         <div>
-                            <div class="text-sm" th:text="${appointment.vehicle.model.number}">Vehicle Make Model</div>
-                            <div class="text-sm">
-                                License Plate: <span class="font-medium" th:text="${appointment.vehicle.license}">ABC-123</span>
-                            </div>
+                            <p class="text-sm font-medium" th:text="${appointment.vehicle.model.number}">Vehicle Make
+                                Model</p>
+                            <p class="text-sm text-gray-500">
+                                License Plate: <span th:text="${appointment.vehicle.license}">ABC-123</span>
+                            </p>
                         </div>
                     </div>
                 </div>
 
+                <!-- Preferred Dates -->
                 <div class="space-y-2">
-                    <div class="font-medium">Preferred Dates</div>
+                    <div class="font-medium text-gray-700">Preferred Dates</div>
                     <div class="grid gap-2">
-                        <div class="flex items-center justify-between p-2 border rounded-md"
-                             th:each="date : ${appointment.preferredDateTimes}">
-                            <div class="flex items-center gap-2">
-                                <span class="text-sm"
-                                      th:text="${#temporals.format(date, 'yyyy-MM-dd')}">2025-05-10</span>
-                                <span class="text-sm" th:text="${#temporals.format(date, 'hh:mm a')}">10:00 AM</span>
+                        <form hx-post="/admin/appointments/select-date"
+                              hx-swap="outerHTML"
+                              hx-target="closest .bg-white"
+                              th:each="date : ${appointment.preferredDateTimes}">
+                            <div class="flex items-center justify-between p-2 border rounded-md">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-sm"
+                                          th:text="${#temporals.format(date, 'yyyy-MM-dd')}">2025-05-10</span>
+                                    <span class="text-sm"
+                                          th:text="${#temporals.format(date, 'hh:mm a')}">10:00 AM</span>
+                                </div>
+                                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                                <input name="license" th:value="${appointment.vehicle.license}" type="hidden"/>
+                                <input name="createdTime" th:value="${appointment.id.createdTime}" type="hidden"/>
+                                <input name="selectedDate" th:value="${date}" type="hidden"/>
+                                <button class="px-4 py-1 text-sm border-2 border-black rounded-full hover:bg-black hover:text-white transition-colors">
+                                    Select
+                                </button>
                             </div>
-                            <button class="px-4 py-1 text-sm border-2 border-black rounded-full hover:bg-black hover:text-white transition-colors">
-                                Select
-                            </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
 
-                <div class="flex justify-between items-center pt-2">
-                    <a class="flex items-center justify-center w-full px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-black hover:text-white focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black gap-2"
-                       th:href="@{'tel:+' +${appointment.vehicle.client.phone}}">
-                        Call Customer
-                    </a>
-                    <form class="w-full"
-                          hx-delete="/admin/appointments/reject"
-                          hx-swap="outerHTML"
-                          hx-target="closest .bg-white">
-                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                        <input name="license" th:value="${appointment.vehicle.license}" type="hidden">
-                        <input name="createdTime" th:value="${appointment.id.createdTime}" type="hidden">
-                        <button class="flex items-center justify-center w-full ml-2 px-6 py-2.5 text-center text-white duration-200 bg-red-600 border-2 border-red-600 rounded-full hover:bg-transparent hover:text-red-600 focus:outline-none focus-visible:outline-red-600 text-sm focus-visible:ring-red-600 gap-2"
-                                type="submit">
-                            Reject Request
-                        </button>
-                    </form>
+                <!-- Notes -->
+                <div class="space-y-2">
+                    <div class="font-medium text-gray-700">Notes</div>
+                    <p class="text-sm text-gray-600" th:text="${appointment.notes}">No notes available</p>
+                </div>
+
+                <!-- Services -->
+                <div class="space-y-2">
+                    <div class="font-medium text-gray-700">Services</div>
+                    <div class="flex items-center gap-2">
+                                <span class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500"
+                                      th:each="service : ${appointment.services}">
+                                    <i class="fas fa-cog"></i> <!-- Replace with your desired icon -->
+                                </span>
+                    </div>
                 </div>
             </div>
+
+            <!-- Card Footer -->
+            <div class="flex justify-between items-center p-4 border-t bg-gray-50">
+                <a class="flex items-center justify-center w-full px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-black hover:text-white focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black gap-2"
+                   th:href="@{'tel:+' +${appointment.vehicle.client.phone}}">
+                    Call Customer
+                </a>
+                <form class="w-full"
+                      hx-delete="/admin/appointments/reject"
+                      hx-swap="outerHTML"
+                      hx-target="closest .bg-white">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <input name="license" th:value="${appointment.vehicle.license}" type="hidden">
+                    <input name="createdTime" th:value="${appointment.id.createdTime}" type="hidden">
+                    <button class="flex items-center justify-center w-full ml-2 px-6 py-2.5 text-center text-white duration-200 bg-red-600 border-2 border-red-600 rounded-full hover:bg-transparent hover:text-red-600 focus:outline-none focus-visible:outline-red-600 text-sm focus-visible:ring-red-600 gap-2"
+                            type="submit">
+                        Reject Request
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col-span-full bg-white rounded-lg shadow-sm border p-10 flex flex-col items-center justify-center"
+             th:if="${#lists.isEmpty(appointments)}">
+            <svg class="text-green-500 mb-4" fill="none" height="48" viewBox="0 0 24 24" width="48"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999M22 4L12 14.01L9 11.01"
+                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg>
+            <p class="text-lg font-medium">No active appointment requests</p>
+            <p class="text-sm text-gray-500">All appointment requests have been handled</p>
         </div>
     </div>
 </div>

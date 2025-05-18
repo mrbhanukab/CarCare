@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sliit.pg09.carcare.common.ServiceType;
+import sliit.pg09.carcare.ongoingAppointment.OngoingAppointmentService;
 import sliit.pg09.carcare.vehicle.Vehicle;
 import sliit.pg09.carcare.vehicle.VehicleService;
 
@@ -87,6 +88,8 @@ public class NewAppointmentController {
             private NewAppointmentController parentController;
             @Autowired
             private NewAppointmentService newAppointmentService;
+            @Autowired
+            private OngoingAppointmentService ongoingAppointmentService;
 
             @HxRequest
             @DeleteMapping("/appointments/reject")
@@ -103,6 +106,40 @@ public class NewAppointmentController {
                     return "Admin/Components/AppointmentCounter :: requestCounterElement";
                 } catch (Exception e) {
                     model.addAttribute("message", "Failed to reject appointment: " + e.getMessage());
+                    return "Components/Error :: error";
+                }
+            }
+
+            @HxRequest
+            @PostMapping("/appointments/select-date")
+            public String selectPreferredDate(
+                    @RequestParam String license,
+                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime createdTime,
+                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime selectedDate,
+                    Model model) {
+                try {
+                    // Fetch the new appointment to get services
+                    NewAppointment.PendingAppointmentId id = new NewAppointment.PendingAppointmentId();
+                    id.setLicense(license);
+                    id.setCreatedTime(createdTime);
+                    NewAppointment newAppointment = newAppointmentService.getNewAppointmentsByVehicle(license)
+                            .stream()
+                            .filter(a -> a.getId().equals(id))
+                            .findFirst()
+                            .orElseThrow(() -> new IllegalArgumentException("Appointment not found"));
+
+                    // Create an ongoing appointment
+                    ongoingAppointmentService.createOngoingAppointment(license, selectedDate, newAppointment.getServiceNames());
+
+                    // Delete the new appointment
+                    newAppointmentService.deleteAppointmentById(id);
+
+                    // Update the active count
+                    List<NewAppointment> remainingAppointments = newAppointmentService.getNewAppointments();
+                    model.addAttribute("activeCount", remainingAppointments.size());
+                    return "Admin/Components/AppointmentCounter :: requestCounterElement";
+                } catch (Exception e) {
+                    model.addAttribute("message", "Failed to select date: " + e.getMessage());
                     return "Components/Error :: error";
                 }
             }
