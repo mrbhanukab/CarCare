@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:hx-on="http://www.w3.org/1999/xhtml">
 <body>
 <div @closeModal.window="$el.remove()"
      @showError.window="document.getElementById('errorContainer').innerHTML = $event.detail.value"
@@ -39,7 +39,7 @@
     <div class="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-auto my-auto overflow-hidden border border-gray-700">
         <div class="p-6">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-cyan-400">Account Details</h2>
+                <h2 class="text-xl font-bold text-red-400">Account Details</h2>
                 <button class="text-gray-400 hover:text-gray-200"
                         hx-on:click="document.getElementById('modal-container').innerHTML = ''">
                     <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -74,7 +74,7 @@
                 <!-- Name field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1" for="name">Name</label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                    <input class="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-gray-200"
                            id="name"
                            name="name"
                            th:value="${user.name}"
@@ -85,7 +85,7 @@
                 <!-- Email field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1" for="email">Email</label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                    <input class="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-gray-200"
                            disabled
                            id="email"
                            name="email"
@@ -99,7 +99,7 @@
                 <!-- Phone field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1" for="phone">Phone</label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                    <input class="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-gray-200"
                            id="phone"
                            name="phone"
                            th:value="${user.phone}"
@@ -110,7 +110,7 @@
                 <!-- Phone field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1" for="nic">NIC</label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                    <input class="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-gray-200"
                            id="nic"
                            name="nic"
                            th:value="${user.nic}"
@@ -121,7 +121,7 @@
                 <!-- Address field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1" for="address">Address</label>
-                    <input class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-gray-200"
+                    <input class="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-gray-200"
                            id="address"
                            name="address"
                            th:value="${user.address}"
@@ -132,13 +132,13 @@
                 <div id="errorContainer"></div>
 
                 <div class="mt-6 flex justify-end gap-3">
-                    <button class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    <button class="px-4 py-2 border border-gray-900 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                             hx-on:click="document.getElementById('modal-container').innerHTML = ''"
                             type="button">
                         Cancel
                     </button>
                     <button :disabled="isLoading"
-                            class="px-4 py-2 bg-cyan-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-50"
+                            class="px-4 py-2 bg-red-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50"
                             type="submit">
                         <span x-show="!isLoading">Save Changes</span>
                         <span x-show="isLoading">Saving...</span>
