@@ -61,6 +61,11 @@
             document.getElementById('modal-container').innerHTML = '';
         });
     </script>
+    <style>
+        .red-hover-border:hover {
+            border-color: #ef4444 !important; /* Tailwind's red-500 color */
+        }
+    </style>
 </head>
 <body class="min-h-screen w-screen gap-6 bg-gray-900 text-gray-100">
 <!--{ Background }-->
@@ -78,7 +83,7 @@
         <div class="relative" id="dropdown-container">
             <img
                     alt="Profile Image"
-                    class="size-10 rounded-full bg-gray-800 cursor-pointer border-2 border-transparent hover:border-cyan-400 transition-all"
+                    class="size-10 rounded-full bg-gray-800 cursor-pointer border-2 border-transparent red-hover-border transition-all"
                     id="profile-button"
                     referrerPolicy="no-referrer"
                     th:src="${user.imageUrl}"
