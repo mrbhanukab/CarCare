@@ -144,6 +144,12 @@
     </section>
 
     <div class="relative z-50" id="modal-container"></div>
+    <div
+        hx-get="/client/account/details"
+        hx-target="body"
+        hx-trigger="load"
+        th:if="${isNewAccount}"
+    ></div>
 </main>
 </body>
 </html>
