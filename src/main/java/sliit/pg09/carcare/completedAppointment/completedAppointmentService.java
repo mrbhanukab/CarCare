@@ -25,7 +25,7 @@ public class completedAppointmentService {
     }
 
     // Insert a new appointment (links are set here)
-    public void insertAppointment(completedAppointment appointment) {
+    public void insertAppointment(completedAppointment appointment, BillingInfo billingInfo) {
         String license = appointment.getVehicle().getLicense();
         completedAppointment first = getFirstAppointment(license);
 
@@ -46,6 +46,7 @@ public class completedAppointmentService {
         // Save the new appointment first (so it gets an ID)
         appointment.setPreviousAppointment(last);
         appointment.setNextAppointment(null);
+        appointment.setBillingInfo(billingInfo);
         completedAppointmentRepository.save(appointment);
 
         // Now update the last node to point to the new appointment
@@ -98,6 +99,10 @@ public class completedAppointmentService {
             }
         }
         return all;
+    }
+
+    public List<completedAppointment> getAllAppointments() {
+        return completedAppointmentRepository.findAll();
     }
 
     public List<completedAppointment> getLatest3Appointments(String license) {

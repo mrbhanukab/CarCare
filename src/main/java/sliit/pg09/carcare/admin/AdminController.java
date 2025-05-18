@@ -11,6 +11,8 @@ import sliit.pg09.carcare.emergency.Emergency;
 import sliit.pg09.carcare.emergency.EmergencyService;
 import sliit.pg09.carcare.newAppointment.NewAppointment;
 import sliit.pg09.carcare.newAppointment.NewAppointmentService;
+import sliit.pg09.carcare.ongoingAppointment.OngoingAppointment;
+import sliit.pg09.carcare.ongoingAppointment.OngoingAppointmentService;
 import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.util.List;
@@ -28,6 +30,8 @@ public class AdminController {
     private VehicleService vehicleService;
     @Autowired
     private NewAppointmentService newAppointmentService;
+    @Autowired
+    private OngoingAppointmentService ongoingAppointmentService;
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
@@ -60,6 +64,9 @@ public class AdminController {
     @HxRequest
     @GetMapping("/screen/ongoing-appointments")
     public String getOngoingAppointmentsRequests(Model model) {
+        List<OngoingAppointment> ongoingAppointments = ongoingAppointmentService.getAllOngoingAppointments();
+        model.addAttribute("ongoingAppointments", ongoingAppointments);
+        model.addAttribute("activeCount", ongoingAppointments.size());
         return adminService.verifyUserStatus("Admin/Screens/OngoingDashboard", model);
     }
 

@@ -4,18 +4,12 @@ import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import sliit.pg09.carcare.client.ClientService;
-import sliit.pg09.carcare.common.ServiceType;
-import sliit.pg09.carcare.completedAppointment.BillingInfo;
-import sliit.pg09.carcare.completedAppointment.completedAppointment;
 import sliit.pg09.carcare.completedAppointment.completedAppointmentService;
 import sliit.pg09.carcare.emergency.EmergencyService;
 import sliit.pg09.carcare.vehicle.CarModel.CarModel;
 import sliit.pg09.carcare.vehicle.CarModel.CarModelService;
-import sliit.pg09.carcare.vehicle.Vehicle;
 import sliit.pg09.carcare.vehicle.VehicleService;
 
-import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.stream.IntStream;
 
 @Component
@@ -107,30 +101,30 @@ public class SampleDataLoader implements CommandLineRunner {
 //    }
 
 
-    public void completedAppointmentsLoader() {
-        String[] licenses = {"BB-001", "BB-002"};
-        for (String license : licenses) {
-            Vehicle vehicle = vehicleService.getVehicleByLicense(license);
-            for (int i = 0; i < 10; i++) {
-                LocalDateTime completedTime = LocalDateTime.now().minusDays(faker.number().numberBetween(1, 365));
-                Set<ServiceType> services = Set.of(ServiceType.values()[faker.random().nextInt(ServiceType.values().length)]);
-                BillingInfo billing = new BillingInfo();
-                billing.setLabour(faker.number().randomDouble(2, 1000, 5000));
-                billing.setParts(faker.number().randomDouble(2, 500, 2000));
-                billing.setAdditional(faker.number().randomDouble(2, 0, 500));
-                billing.setDiscount(faker.number().randomDouble(2, 0, 300));
-                String notes = faker.lorem().sentence();
-
-                completedAppointment appointment = new completedAppointment();
-                appointment.setAppointmentDetails(vehicle, completedTime);
-                appointment.setServices(services);
-                appointment.setBillingInfo(billing);
-                appointment.setNotes(notes);
-
-                completedAppointmentService.insertAppointment(appointment);
-            }
-        }
-    }
+//    public void completedAppointmentsLoader() {
+//        String[] licenses = {"BB-001", "BB-002"};
+//        for (String license : licenses) {
+//            Vehicle vehicle = vehicleService.getVehicleByLicense(license);
+//            for (int i = 0; i < 10; i++) {
+//                LocalDateTime completedTime = LocalDateTime.now().minusDays(faker.number().numberBetween(1, 365));
+//                Set<ServiceType> services = Set.of(ServiceType.values()[faker.random().nextInt(ServiceType.values().length)]);
+//                BillingInfo billing = new BillingInfo();
+//                billing.setLabour(faker.number().randomDouble(2, 1000, 5000));
+//                billing.setParts(faker.number().randomDouble(2, 500, 2000));
+//                billing.setAdditional(faker.number().randomDouble(2, 0, 500));
+//                billing.setDiscount(faker.number().randomDouble(2, 0, 300));
+//                String notes = faker.lorem().sentence();
+//
+//                completedAppointment appointment = new completedAppointment();
+//                appointment.setAppointmentDetails(vehicle, completedTime);
+//                appointment.setServices(services);
+//                appointment.setBillingInfo(billing);
+//                appointment.setNotes(notes);
+//
+//                completedAppointmentService.insertAppointment(appointment);
+//            }
+//        }
+//    }
 
     @Override
     public void run(String... args) throws Exception {
