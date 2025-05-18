@@ -43,11 +43,11 @@
 
     <!-- Right Column -->
     <div class="flex flex-col gap-6 p-6 lg:p-10 lg:pb-40 w-full lg:w-1/2 lg:overflow-y-auto">
-        <div th:replace="~{Client/Components/NextServiceCard :: nextServiceCard()}"></div>
+        <div th:replace="~{Client/Components/NextServiceCard :: nextServiceCard(${nextService})}"></div>
         <div th:replace="~{Client/Components/EmergencyCard :: emergencyCard(${vehicle})}"></div>
         <div th:replace="~{Client/Components/NewAppointmentCard :: newAppointmentCard()}"></div>
         <div th:replace="~{Client/Components/UpcomingServiceCard :: upcomingServiceCard(${pendingAppointments})}"></div>
-        <div th:replace="~{Client/Components/RecentCard :: recentCard()}"></div>
+        <div th:replace="~{Client/Components/RecentCard :: recentCard(${vehicle}, ${recentAppointments})}"></div>
     </div>
 </div>
 </html>

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sliit.pg09.carcare.completedAppointment.completedAppointmentService;
 import sliit.pg09.carcare.newAppointment.NewAppointmentService;
+import sliit.pg09.carcare.nextService.NextServiceService;
 import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.util.List;
@@ -19,12 +21,17 @@ public class ClientController {
     private final ClientService clientService;
     private final VehicleService vehicleService;
     private final NewAppointmentService newAppointmentService;
+    private final completedAppointmentService completedAppointmentService;
+    private final NextServiceService nextServiceService;
 
     public ClientController(ClientService clientService, VehicleService vehicleService,
-                            NewAppointmentService newAppointmentService) {
+                            NewAppointmentService newAppointmentService, completedAppointmentService completedAppointmentService,
+                            NextServiceService nextServiceService) {
         this.clientService = clientService;
         this.vehicleService = vehicleService;
         this.newAppointmentService = newAppointmentService;
+        this.completedAppointmentService = completedAppointmentService;
+        this.nextServiceService = nextServiceService;
     }
 
     @RequestMapping(value = {"", "/"})
@@ -37,9 +44,19 @@ public class ClientController {
             // Get pending appointments for this vehicle
             var pendingAppointments = newAppointmentService.getNewAppointmentsByVehicle(vehicle.getLicense());
             model.addAttribute("pendingAppointments", pendingAppointments);
+
+            // Get latest 3 completed appointments
+            var recentAppointments = completedAppointmentService.getLatest3Appointments(vehicle.getLicense());
+            model.addAttribute("recentAppointments", recentAppointments);
+
+            // Get next service for this vehicle
+            var nextServiceOpt = nextServiceService.getNextServiceByLicense(vehicle.getLicense());
+            model.addAttribute("nextService", nextServiceOpt.orElse(null));
         } else {
+            model.addAttribute("nextService", null);
             model.addAttribute("pendingAppointments", null);
             model.addAttribute("vehicle", null);
+            model.addAttribute("recentAppointments", null);
         }
 
         return clientService.verifyUserStatus("Client/Dashboard", model);

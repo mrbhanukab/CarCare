@@ -25,11 +25,11 @@
                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                 <!-- Vehicle info -->
                 <div class="mb-4 p-4 bg-gray-700/50 rounded-lg flex items-center gap-3 border border-gray-600">
-                    <img class="w-16 h-12 object-contain" th:alt="${vehicle.model.make + ' ' + vehicle.model.number}"
+                    <img class="w-16 h-12 object-contain" th:alt="${'Porsche ' + vehicle.model.number}"
                          th:src="${vehicle.model.image}"/>
                     <div>
                         <div class="font-medium text-white"
-                             th:text="${vehicle.model.make + ' ' + vehicle.model.number + ' (' + vehicle.model.year + ')'}"></div>
+                             th:text="${'Porsche ' + vehicle.model.number + ' (' + vehicle.model.year + ')'}"></div>
                         <div class="text-sm text-gray-300" th:text="${'License: ' + vehicle.license}"></div>
                     </div>
                 </div>

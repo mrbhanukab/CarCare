@@ -15,7 +15,8 @@
         <div class="p-6">
             <p class="mb-4 text-gray-300">
                 You are about to request emergency service for your
-                <span th:text="${vehicle.model.make + ' ' + vehicle.model.type + ' (' + vehicle.model.year + ')'}"></span>
+                <span class="font-bold"
+                      th:text="${'Porsche ' + vehicle.model.number + ' (' + vehicle.model.year + ')'}"></span>
                 with license <span th:text="${vehicle.license}"></span>.
             </p>
 
@@ -66,7 +67,7 @@
 
             <div class="flex justify-end gap-3">
                 <button class="px-4 py-2 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-                        hx-on="click: document.getElementById('modal-container').innerHTML = ''"
+                        hx-on:click="document.getElementById('modal-container').innerHTML = ''"
                         type="button">
                     Cancel
                 </button>
