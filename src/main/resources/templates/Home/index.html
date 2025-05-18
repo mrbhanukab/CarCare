@@ -8,36 +8,39 @@
     <link rel="shortcut_icon" th:href="@{/images/LOGO.webp}" type="image/png"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
 
-    <title>LuxAuto - Premium Vehicle Care</title>
+    <title>PORSCHE- Authorized Service Center</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
         html {
             scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Barlow', sans-serif;
         }
+
 
         .luxury-font {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Barlow', sans-serif;
         }
 
-        .blue-gradient {
-            background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #1E40AF 100%);
+
+        /* Porsche brand colors */
+        .porsche-gradient {
+            background: linear-gradient(135deg, #000000 0%, #A43131 50%, #000000 100%);
         }
 
-        .text-blue {
-            color: #3B82F6;
+        .text-porsche {
+            color: #A43131;
         }
 
-        .border-blue {
-            border-color: #3B82F6;
+        .border-porsche {
+            border-color: #A43131;
         }
 
         .bg-dark {
-            background-color: #0F0F0F;
+            background-color: #000000;
         }
 
         .bg-lighter-dark {
@@ -66,7 +69,7 @@
 
         .divider {
             height: 2px;
-            background: linear-gradient(90deg, transparent 0%, #3B82F6 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, #A43131 50%, transparent 100%);
         }
 
         .image-transition {
@@ -113,7 +116,7 @@
             left: 0;
             height: 2px;
             width: 100%;
-            background: #3B82F6;
+            background: #A43131;
             transform: scaleX(0);
             transform-origin: right;
             transition: transform 0.3s ease;
@@ -161,7 +164,7 @@
             height: 2px;
             bottom: -4px;
             left: 0;
-            background-color: #3B82F6;
+            background-color: #A43131;
             visibility: hidden;
             transition: all 0.3s ease-in-out;
         }
@@ -178,6 +181,19 @@
 
         .text-shadow-sm {
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Secondary accent color from Porsche branding */
+        .accent-gold {
+            color: #C29049;
+        }
+
+        .bg-accent-gold {
+            background-color: #C29049;
+        }
+
+        .border-accent-gold {
+            border-color: #C29049;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -207,12 +223,22 @@
 </head>
 <body class="bg-dark text-gray-200">
 <section class="relative flex min-h-screen w-screen flex-col items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 -z-50" hx-get="/next-image" hx-trigger="every 4s" id="dynamic-image-container">
-        <img alt="Luxury vehicle" class="image-transition h-full w-full" hx-swap="outerHTML"
-             hx-target="this" th:src="@{/images/home/1.webp}"/>
+    <div class="absolute inset-0 -z-50" id="dynamic-video-container">
+        <video
+                class="h-full w-full object-fill"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                id="background-video">
+            <source th:src="@{/images/home/VD.mp4}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
 
     <div class="hero-overlay absolute inset-0 -z-40"></div>
+
 
     <div class="absolute flex h-full w-full flex-col justify-between p-8 lg:p-12">
         <header class="sticky top-0 flex h-fit w-full items-center justify-between">
@@ -234,45 +260,55 @@
                     </div>
                 </div>
             </a>
+            <nav aria-label="Global" class="hidden lg:flex w-full items-center justify-between px-8 py-4">
 
-            <nav aria-label="Global" class="hidden lg:block">
-                <ul class="flex items-center gap-8 text-sm">
-                    <li>
-                        <a class="nav-item group relative text-lg font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
-                           data-section="about" href="#about">
-                            <span>About</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-item group relative text-lg font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
-                           data-section="contact" href="#contact">
-                            <span>Contact</span>
-                        </a>
-                    </li>
-                    <li>
-                        <form action="/oauth2/authorization/google" class="google-button-wrapper" method="GET">
-                        <button class="button relative flex h-fit w-fit items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100"
-                                type="submit">
-                            <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path class="blue"
-                                      d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
-                                      fill="#4285F4"></path>
-                                <path class="green"
-                                      d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
-                                      fill="#34A853"></path>
-                                <path class="yellow"
-                                      d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
-                                      fill="#FBBC05"></path>
-                                <path class="red"
-                                      d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
-                                      fill="#EB4335"></path>
-                            </svg>
-                            <span class="text z-10 text-sm font-medium text-gray-800">Sign in</span>
-                        </button>
-                        </form>
-                    </li>
-                </ul>
+
+
+
+                <div class="flex-1 flex justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4500 300" class="h-6 mx-auto"><title>Porsche</title><path d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"></path></svg>
+                </div>
+
+
+                <div class="w-1/6 flex items-center justify-end">
+                    <ul class="flex items-center gap-5 text-sm">
+                        <li>
+                            <a class="nav-item group relative text-base font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
+                               data-section="about" href="#about">
+                                <span>About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-item group relative text-base font-light tracking-wider text-gray-300 transition-all duration-300 hover:text-white"
+                               data-section="contact" href="#contact">
+                                <span>Contact</span>
+                            </a>
+                        </li>
+                        <li>
+                            <form action="/oauth2/authorization/google" class="google-button-wrapper" method="GET">
+                                <button class="button relative flex h-fit w-28 items-center gap-3 overflow-hidden rounded-full border border-gray-300 bg-white p-2 px-4 font-bold transition-colors duration-300 outline-none hover:bg-gray-100"
+                                        type="submit">
+                                    <svg class="svg h-6" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path class="blue"
+                                              d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+                                              fill="#4285F4"></path>
+                                        <path class="green"
+                                              d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+                                              fill="#34A853"></path>
+                                        <path class="yellow"
+                                              d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+                                              fill="#FBBC05"></path>
+                                        <path class="red"
+                                              d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+                                              fill="#EB4335"></path>
+                                    </svg>
+                                    <span class="text z-10 text-sm font-medium text-gray-800 whitespace-nowrap">Sign in</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </nav>
 
             <button aria-label="Toggle menu" class="text-white lg:hidden" id="mobile-menu-button" type="button">
@@ -283,133 +319,89 @@
             </button>
         </header>
 
-        <div class="mx-auto flex h-full w-full max-w-4xl flex-col justify-center px-4">
-            <div class="animate__animated animate__fadeInUp mb-16">
-                <h1 class="luxury-font mb-6 text-5xl leading-tight font-medium text-white md:text-5xl lg:text-6xl xl:text-7xl">
-                    <span class="block">Elevate Your</span>
-                    <span class="bg-gradient-to-r from-blue-300 via-blue-200 to-blue-400 bg-clip-text text-transparent">Driving Experience</span>
-                </h1>
+        <div class="animate-fade-up mb-16 max-w-4xl mx-auto text-center">
+            <h1 class="luxury-font mb-6 text-xl font-medium text-white md:text-4xl lg:text-5xl xl:text-6xl whitespace-nowrap overflow-hidden text-ellipsis">
+                <span class="bg-gradient-to-r from-red-600 via-red-500 to-red-700 bg-clip-text text-transparent">Elevate Your Porsche Experience</span>
+            </h1>
 
-                <p class="mb-10 max-w-2xl text-xl leading-relaxed font-light opacity-90 md:text-2xl">Precision care for
-                    your luxury vehicle. Our concierge-level service ensures peak performance and timeless elegance.</p>
+            <div class="flex flex-col gap-7 sm:flex-row justify-center">
+                <a class="group bg-red-600 hover:bg-opacity-90 relative flex items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 scroll-smooth"
+                   href="#contact">
+                    <span>Request Consultation</span>
+                    <svg class="ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd"
+                              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                              fill-rule="evenodd"/>
+                    </svg>
+                </a>
 
-                <div class="flex flex-col gap-6 sm:flex-row">
-                    <a class="shine-effect bg-blue-600 hover:bg-opacity-90 relative flex transform items-center justify-center overflow-hidden rounded-sm px-8 py-4 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105 smooth-scroll"
-                       href="#contact">
-                        <span>Request Consultation</span>
-                        <svg class="ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path clip-rule="evenodd"
-                                  d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                                  fill-rule="evenodd"/>
-                        </svg>
-                    </a>
-
-                    <a class="border-blue-500 text-blue-400 hover:bg-blue-500 hover:bg-opacity-10 flex transform items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105 smooth-scroll"
-                       href="#about">
-                        <span>Explore Services</span>
-                    </a>
-                </div>
-            </div>
-
-
-            <div class="animate__animated animate__fadeIn animate__delay-1s">
-                <div class="flex items-center justify-center gap-6 lg:justify-start">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
-                        <span class="text-sm tracking-wider">PREMIUM CARE</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
-                        <span class="text-sm tracking-wider">CERTIFIED TECHNICIANS</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="bg-blue-500 h-3 w-3 rounded-full"></div>
-                        <span class="text-sm tracking-wider">DISCRETE SERVICE</span>
-                    </div>
-                </div>
+                <a class="bg-black border-black text-white hover:bg-red-600 hover:bg-opacity-10 flex items-center justify-center rounded-sm border px-8 py-4 text-lg font-medium tracking-wider transition-all duration-300 hover:scale-105 scroll-smooth"
+                   href="#about">
+                    <span>Explore Services</span>
+                </a>
             </div>
         </div>
     </div>
 
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
-        <a class="text-blue-400 smooth-scroll" href="#about">
-            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </svg>
-        </a>
-    </div>
 </section>
 
 <section class="bg-lighter-dark relative px-6 py-24" id="about">
-    <div class="mx-auto max-w-7xl">
-        <div class="mb-20 text-center">
-            <span class="text-blue-400 letter-spacing-wide text-sm tracking-widest">EXCLUSIVE SERVICE</span>
-            <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">The LuxAuto Difference</h2>
-            <div class="divider mx-auto my-6 w-24"></div>
-            <p class="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400">Where precision engineering meets
-                unparalleled luxury. Our bespoke vehicle care solutions are tailored for the most discerning automotive
-                enthusiasts.</p>
+    <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <div class="hover-scale relative">
+            <div class="border-red-600 border-opacity-30 absolute -inset-4 z-0 rotate-1 transform border"></div>
+            <img alt="Luxury car maintenance" class="relative z-10 h-auto w-full object-cover"
+                 th:src="@{/images/home/2.webp}"/>
         </div>
 
-        <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-            <div class="hover-scale relative">
-                <div class="border-blue-500 border-opacity-30 absolute -inset-4 z-0 rotate-1 transform border"></div>
-                <img alt="Luxury car maintenance" class="relative z-10 h-auto w-full object-cover"
-                     th:src="@{/images/home/2.webp}"/>
-            </div>
+        <div>
+            <h3 class="luxury-font mb-6 text-3xl text-white">Your Porsche Deserves the Pinnacle of Care</h3>
+            <p class="mb-8 leading-relaxed text-gray-400">At our Official Porsche Service Center, we know your Porsche is more than a vehicle — it's a legacy of innovation, performance, and prestige.
+                That's why our master technicians deliver service worthy of the crest.</p>
 
-            <div>
-                <h3 class="luxury-font mb-6 text-3xl text-white">Your Vehicle Deserves The Best</h3>
-                <p class="mb-8 leading-relaxed text-gray-400">At LuxAuto, we understand that your vehicle is more than
-                    just transportation—it's a statement of excellence. Our team of master technicians brings decades of
-                    experience servicing the world's most prestigious automotive marques.</p>
-
-                <div class="space-y-6">
-                    <!-- Card 1 -->
-                    <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                        <div class="flex-shrink-0">
-                            <div class="bg-blue-500 bg-opacity-100 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                                <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="mb-2 text-xl font-semibold text-white">Factory-Trained Specialists</h4>
-                            <p class="text-gray-400">Our technicians receive continuous training directly from manufacturers to maintain the highest standards.</p>
+            <div class="space-y-6">
+                <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex-shrink-0">
+                        <div class="bg-red-600 bg-opacity-100 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                            </svg>
                         </div>
                     </div>
+                    <div>
+                        <h4 class="mb-2 text-xl font-semibold text-white">Factory-Certified Porsche Technicians</h4>
+                        <p class="text-gray-400">Our specialists are trained and certified by Porsche AG, with continuous education on the latest Porsche technologies, systems, and engineering updates —
+                            ensuring authentic, precision-driven service.</p>
+                    </div>
+                </div>
 
-                    <!-- Card 2 -->
-                    <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                        <div class="flex-shrink-0">
-                            <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                                <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 15l8-8m0 0l-8-8m8 8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="mb-2 text-xl font-semibold text-white">Performance Optimization</h4>
-                            <p class="text-gray-400">Beyond maintenance, we enhance your vehicle's performance to factory-exceeding standards.</p>
+                <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex-shrink-0">
+                        <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 15l8-8m0 0l-8-8m8 8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                            </svg>
                         </div>
                     </div>
+                    <div>
+                        <h4 class="mb-2 text-xl font-semibold text-white">Performance-Driven Excellence</h4>
+                        <p class="text-gray-400">We go beyond standard maintenance. Whether it's tuning, diagnostics, or component upgrades,
+                            we optimize your Porsche to deliver exhilarating performance — true to its motorsport DNA.</p>
+                    </div>
+                </div>
 
-                    <!-- Card 3 -->
-                    <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                        <div class="flex-shrink-0">
-                            <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                                <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-                                </svg>
-                            </div>
+                <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex-shrink-0">
+                        <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
+                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                            </svg>
                         </div>
-                        <div>
-                            <h4 class="mb-2 text-xl font-semibold text-white">Concierge Service</h4>
-                            <p class="text-gray-400">White-glove pickup and delivery, loaner vehicles, and personalized attention to every detail.</p>
-                        </div>
+                    </div>
+                    <div>
+                        <h4 class="mb-2 text-xl font-semibold text-white">Concierge-Level Experience</h4>
+                        <p class="text-gray-400">From white-glove pickup and delivery to Porsche-approved loaner vehicles and personalized service touchpoints,
+                            your comfort and confidence are at the center of everything we do.</p>
                     </div>
                 </div>
             </div>
@@ -419,36 +411,35 @@
 
 <section class="relative overflow-hidden bg-black py-20">
     <div class="absolute inset-0 opacity-10">
-        <div class="from-blue-500 absolute inset-0 w-1/3 bg-gradient-to-r to-transparent"></div>
+        <div class="from-red-600 absolute inset-0 w-1/3 bg-gradient-to-r to-transparent"></div>
     </div>
 
     <div class="relative mx-auto max-w-7xl px-6">
         <div class="grid grid-cols-1 gap-12 text-center md:grid-cols-3">
             <div class="p-8">
-                <div class="luxury-font text-blue-400 mb-4 text-5xl">250+</div>
+                <div class="luxury-font text-red-600 mb-4 text-5xl">250+</div>
                 <h3 class="mb-2 text-xl text-white">Satisfied Clients</h3>
                 <p class="text-gray-400">Elite vehicle owners who trust our service</p>
             </div>
 
             <div class="p-8">
-                <div class="luxury-font text-blue-400 mb-4 text-5xl">98%</div>
+                <div class="luxury-font text-red-600 mb-4 text-5xl">98%</div>
                 <h3 class="mb-2 text-xl text-white">Client Retention</h3>
                 <p class="text-gray-400">Of clients return for ongoing maintenance</p>
             </div>
 
             <div class="p-8">
-                <div class="luxury-font text-blue-400 mb-4 text-5xl">24/7</div>
-                <h3 class="mb-2 text-xl text-white">Support</h3>
+                <div class="luxury-font text-red-600 mb-4 text-5xl">24/7</div>
+                <h3 class="mb-2 text-xl text-white">Concierge Support</h3>
                 <p class="text-gray-400">Dedicated concierge available anytime</p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="bg-lighter-dark px-6 py-24">
+<section class="bg-lighter-dark px-4 py-20">
     <div class="mx-auto max-w-7xl">
         <div class="mb-20 text-center">
-            <span class="text-blue-400 letter-spacing-wide text-sm tracking-widest">OUR OFFERINGS</span>
             <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Bespoke Automotive Care</h2>
             <div class="divider mx-auto my-6 w-24"></div>
             <p class="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400">Comprehensive services designed to
@@ -456,15 +447,15 @@
         </div>
 
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+            <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
                     <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Performance Tuning</h3>
-                <p class="mb-6 text-gray-400">Optimize your vehicle's ECU for enhanced power delivery and throttle response while maintaining reliability.</p>
-                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <p class="mb-6 text-gray-400">Optimize your Porsche's ECU for enhanced power delivery and throttle response while maintaining reliability.</p>
+                <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -472,15 +463,15 @@
                 </a>
             </div>
 
-            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+            <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
                     <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Detailing Excellence</h3>
-                <p class="mb-6 text-gray-400">Show-car quality detailing using only the finest ceramic coatings and leather conditioners.</p>
-                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <p class="mb-6 text-gray-400">Show-your porsche quality detailing using only the finest ceramic coatings and leather conditioners.</p>
+                <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -488,15 +479,15 @@
                 </a>
             </div>
 
-            <div class="bg-opacity-50 hover:border-blue-500 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
-                <div class="bg-blue-500 bg-opacity-10 border-blue-500 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
+            <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
+                <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
                     <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Security Enhancements</h3>
                 <p class="mb-6 text-gray-400">Discrete installation of the latest anti-theft and tracking systems to protect your investment.</p>
-                <a class="text-blue-400 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
+                <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -528,7 +519,7 @@
                     </div>
                     <div>
                         <h4 class="font-medium text-white">James Wilson</h4>
-                        <p class="text-sm text-gray-400">Ferrari 812 Owner</p>
+                        <p class="text-sm text-gray-400">911 Carrera Owner</p>
                     </div>
                 </div>
             </div>
@@ -543,23 +534,21 @@
                     </div>
                     <div>
                         <h4 class="font-medium text-white">Sarah Chen</h4>
-                        <p class="text-sm text-gray-400">Rolls-Royce Cullinan Owner</p>
+                        <p class="text-sm text-gray-400">Cayenne GTS Owner</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
 </section>
 
-<section class="from-gold relative overflow-hidden bg-gradient-to-b to-black px-6 py-24">
+<section class="from-gold relative overflow-hidden bg-gradient-to-b to-black px-1 py-18">
     <div class="mx-auto max-w-4xl text-center">
-        <h2 class="luxury-font mt-4 mb-6 text-4xl text-gray-300 md:text-5xl">Experience The LuxAuto Standard</h2>
+        <h2 class="luxury-font mt-4 mb-6 text-4xl text-gray-300 md:text-5xl">Experience the Porsche Standard</h2>
         <div class="divider bg-opacity-30 mx-auto my-6 w-24 bg-gray-300"></div>
-        <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white">Schedule a consultation with our
-            specialists to discuss your vehicle's unique needs.</p>
-        <a class="hover:bg-opacity-90 inline-block transform rounded-sm bg-blue-700 px-10 py-5 text-lg font-medium tracking-wider text-white transition-all duration-300 hover:scale-105"
-           href="#contact">
-            Contact Our Concierge </a>
+        <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white">Schedule a personalized consultation with our certified 
+            specialists to discuss the unique care and performance needs of your Porsche
+        </p>
     </div>
 </section>
 
@@ -568,11 +557,12 @@
         <div class="grid grid-cols-1 gap-16 lg:grid-cols-2">
             <div>
                 <span class="text-gold letter-spacing-wide text-sm tracking-widest">GET IN TOUCH</span>
-                <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Contact Our Concierge</h2>
+                <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Contact Our Porsche Concierge</h2>
                 <div class="divider my-6 w-24"></div>
-                <p class="mb-10 leading-relaxed text-white">Our team is available 24/7 to assist with your inquiries.
-                    For immediate assistance, please call our direct line. For service inquiries or to schedule an
-                    appointment, please complete the contact form.</p>
+                <p class="mb-10 leading-relaxed text-white">Our dedicated team is available 24/7 to provide personalized assistance for all your Porsche service needs.
+                    For immediate support, please call our direct line.
+                    To schedule service or submit an inquiry, kindly complete the contact form — a concierge specialist will follow up promptly.
+                </p>
                 <div class="space-y-8">
                     <div class="flex items-start gap-6">
                         <div class="flex-shrink-0">
@@ -604,13 +594,13 @@
                         </div>
                         <div>
                             <h4 class="mb-2 text-xl text-white">Email</h4>
-                            <p class="text-gray-200">concierge@luxauto.lk</p>
-                            <p class="text-gray-200">service@luxauto.lk</p>
+                            <p class="text-gray-200">concierge@porsche.lk</p>
+                            <p class="text-gray-200">service@porsche.lk</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-6">
                         <div class="flex-shrink-0">
-                            <div class="bg-gold bg-opacity-10 border-gold border-opacity-30 flex h-12 w-12 items-center justify-center rounded-full border">
+                            <div class="bg-gold bg-opacity-10 border-gold border-opacity-30 flex h-12 w-12 items-center justify W-12 items-center justify-center rounded-full border">
                                 <svg class="text-gold h-5 w-5" fill="none" stroke="currentColor"
                                      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
@@ -678,9 +668,9 @@
                     </div>
                     <div>
                         <div class="mt-6 flex justify-center">
-                            <button class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-500 to-blue-400 px-8 py-5 font-medium tracking-wider text-black transition-all duration-500 hover:shadow-lg hover:shadow-yellow-500/30 active:scale-95"
+                            <button class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-red-600 to-red-500 px-8 py-5 font-medium tracking-wider text-white transition-all duration-500 hover:shadow-lg hover:shadow-red-600/30 active:scale-95"
                                     type="submit">
-                                <span class="absolute inset-0 bg-gradient-to-r from-yellow-400/30 via-yellow-200/50 to-yellow-400/30 opacity-0 transition-all duration-700 group-hover:[transform:translateX(100%)] group-hover:opacity-100"></span>
+                                <span class="absolute inset-0 bg-gradient-to-r from-gold/30 via-gold/50 to-gold/30 opacity-0 transition-all duration-700 group-hover:[transform:translateX(100%)] group-hover:opacity-100"></span>
                                 <span class="relative z-10 flex items-center gap-2">
                       Send Message
                       <svg class="h-5 w-5 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110"
@@ -690,7 +680,7 @@
                               stroke-width="2"/>
                       </svg>
                     </span>
-                                <span class="absolute inset-0 rounded-full border-2 border-blue-300 opacity-0 transition-all duration-500 group-hover:animate-[pulse_1.5s_ease-in-out_infinite] group-hover:opacity-100"></span>
+                                <span class="absolute inset-0 rounded-full border-2 border-red-600 opacity-0 transition-all duration-500 group-hover:animate-[pulse_1.5s_ease-in-out_infinite] group-hover:opacity-100"></span>
                             </button>
                         </div>
                     </div>
@@ -702,12 +692,14 @@
 
 <footer class="border-t border-gray-900 bg-black px-6 py-16">
     <div class="mx-auto max-w-7xl">
-        <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
-            <div>
-                <img alt="LuxAuto Logo" class="mb-6 h-20 w-auto" src="/images/LOGO.webp"/>
-                <p class="text-sm leading-relaxed text-gray-400">Premium automotive care for the most discerning
-                    enthusiasts. LuxAuto delivers unparalleled service and craftsmanship.</p>
-            </div>
+        <!-- Logo and description moved to top for more prominence -->
+        <div class="flex flex-col items-center justify-center mb-12 text-center">
+            <img alt="LuxAuto Logo" class="mb-6 h-20         w-auto" src="/images/LOGO.webp"/>
+        </div>
+        
+        <!-- Main content grid rearranged -->
+        <div class="grid grid-cols-1 gap-12 md:grid-cols-3">
+            <!-- Services column -->
             <div>
                 <h4 class="mb-6 text-lg font-medium text-white">Services</h4>
                 <ul class="space-y-3">
@@ -723,6 +715,8 @@
                         Service</a></li>
                 </ul>
             </div>
+            
+            <!-- Company column -->
             <div>
                 <h4 class="mb-6 text-lg font-medium text-white">Company</h4>
                 <ul class="space-y-3">
@@ -738,9 +732,27 @@
                            href="#">Press</a></li>
                 </ul>
             </div>
+            
+            <!-- Newsletter moved to third column -->
             <div>
-                <h4 class="mb-6 text-lg font-medium text-white">Connect</h4>
-                <div class="mb-6 flex gap-4">
+                <h4 class="mb-4 text-lg font-medium text-white">Newsletter</h4>
+                <p class="mb-4 text-sm text-gray-400">Subscribe for exclusive updates and offers</p>
+                <form class="flex mb-8">
+                    <input class="focus:border-gold w-full border border-gray-800 bg-gray-900 px-4 py-3 text-sm text-white focus:outline-none"
+                           placeholder="Your email"
+                           type="email"/>
+                    <button class="bg-gold flex items-center justify-center px-4 text-black" type="submit">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd"
+                                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                  fill-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </form>
+                
+                <!-- Social links moved below newsletter -->
+                <h4 class="mb-4 text-lg font-medium text-white">Connect</h4>
+                <div class="flex gap-4">
                     <a class="hover:bg-gold flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 transition-colors duration-300 hover:text-black"
                        href="#">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -760,175 +772,46 @@
                         </svg>
                     </a>
                 </div>
-                <h4 class="mb-4 text-lg font-medium text-white">Newsletter</h4>
-                <p class="mb-4 text-sm text-gray-400">Subscribe for exclusive updates and offers</p>
-                <form class="flex">
-                    <input class="focus:border-gold w-full border border-gray-800 bg-gray-900 px-4 py-3 text-sm text-white focus:outline-none"
-                           placeholder="Your email"
-                           type="email"/>
-                    <button class="bg-gold flex items-center justify-center px-4 text-black" type="submit">
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path clip-rule="evenodd"
-                                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                                  fill-rule="evenodd"/>
-                        </svg>
-                    </button>
-                </form>
             </div>
         </div>
-        <div class="mt-16 flex flex-col items-center justify-between border-t border-gray-900 pt-8 md:flex-row">
-            <p class="text-sm text-gray-500">© 2023 LuxAuto. All rights reserved.</p>
-            <div class="mt-4 flex gap-6 md:mt-0">
-                <a class="hover:text-gold text-sm text-gray-500 transition-colors duration-300" href="#">Privacy
-                    Policy</a>
-                <a class="hover:text-gold text-sm text-gray-500 transition-colors duration-300" href="#">Terms of
-                    Service</a>
-            </div>
+        
+       <div>
+    
+
+    <div style="margin-top: 2rem;">
+    <div>
+        <pnav-footer-p-divider class="divider hydrated">
+            <hr>
+        </pnav-footer-p-divider>
+    </div>
+
+    <div class="mt-16 flex flex-col items-center justify-between md:flex-row">
+        <p class="text-sm text-gray-500">© 2023 LuxAuto. All rights reserved.</p>
+        <div class="mt-4 flex gap-6 md:mt-0">
+            <a class="hover:text-gold text-sm text-gray-500 transition-colors duration-300" href="#">Privacy Policy</a>
+            <a class="hover:text-gold text-sm text-gray-500 transition-colors duration-300" href="#">Terms of Service</a>
         </div>
     </div>
+
+    <div>
+        <pnav-fine-print class="hydrated">
+            <section>
+                <div></div>
+            </section>
+        </pnav-fine-print>
+    </div>
+
+    <div class="wordmark flex justify-center mt-6">
+        <pnav-footer-p-wordmark class="hydrated">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4500 300" class="h-8 text-gray-400">
+                <title>Porsche</title>
+                <path fill="currentColor" d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"/>
+            </svg>
+        </pnav-footer-p-wordmark>
+    </div>
+</div>
+       </div
+       ></div>
 </footer>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const animateOnScroll = function () {
-            const elements = document.querySelectorAll('.hover-scale, .shine-effect');
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-
-                if (elementPosition < screenPosition) {
-                    element.classList.add('animate__animated', 'animate__fadeInUp');
-                }
-            });
-        };
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll();
-
-        const smoothScrollLinks = document.querySelectorAll('.smooth-scroll, .nav-item');
-
-        smoothScrollLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-
-                if (targetSection) {
-                    document.querySelectorAll('.nav-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-
-                    if (this.classList.contains('nav-item')) {
-                        this.classList.add('active');
-                    }
-
-                    targetSection.classList.add('section-target');
-
-                    const glowEffect = document.createElement('div');
-                    glowEffect.classList.add('scroll-glow-effect');
-                    glowEffect.style.position = 'fixed';
-                    glowEffect.style.top = '0';
-                    glowEffect.style.left = '50%';
-                    glowEffect.style.transform = 'translateX(-50%)';
-                    glowEffect.style.width = '4px';
-                    glowEffect.style.height = '0';
-                    glowEffect.style.background = 'linear-gradient(to bottom, rgba(59, 130, 246, 0.8), rgba(59, 130, 246, 0))';
-                    glowEffect.style.zIndex = '9999';
-                    glowEffect.style.pointerEvents = 'none';
-                    document.body.appendChild(glowEffect);
-
-                    const flashEffect = document.createElement('div');
-                    flashEffect.classList.add('flash-effect');
-                    flashEffect.style.position = 'absolute';
-                    flashEffect.style.top = '0';
-                    flashEffect.style.left = '0';
-                    flashEffect.style.right = '0';
-                    flashEffect.style.bottom = '0';
-                    flashEffect.style.background = 'rgba(59, 130, 246, 0.1)';
-                    flashEffect.style.opacity = '0';
-                    flashEffect.style.zIndex = '1';
-                    flashEffect.style.pointerEvents = 'none';
-                    targetSection.style.position = 'relative';
-                    targetSection.appendChild(flashEffect);
-
-                    let start = null;
-                    const targetTop = targetSection.getBoundingClientRect().top + window.pageYOffset;
-                    const duration = 800;
-
-                    function animateScroll(timestamp) {
-                        if (!start) start = timestamp;
-                        const progress = timestamp - start;
-                        const easeProgress = Math.min(progress / duration, 1);
-                        const easedProgress = easeInOutCubic(easeProgress);
-
-                        const maxHeight = targetTop - window.pageYOffset;
-                        glowEffect.style.height = `${easedProgress * maxHeight}px`;
-
-                        const currentPosition = window.pageYOffset;
-                        const distance = targetTop - currentPosition;
-                        window.scrollTo(0, currentPosition + distance * easedProgress);
-
-                        if (progress < duration) {
-                            window.requestAnimationFrame(animateScroll);
-                        } else {
-                            flashEffect.style.transition = 'opacity 0.5s ease';
-                            flashEffect.style.opacity = '1';
-
-                            setTimeout(() => {
-                                glowEffect.remove();
-                                flashEffect.style.opacity = '0';
-                                setTimeout(() => {
-                                    flashEffect.remove();
-                                }, 500);
-                            }, 300);
-
-                            const childElements = targetSection.querySelectorAll('h2, h3, p, .divider, .grid > div');
-                            childElements.forEach((el, index) => {
-                                el.style.opacity = '0';
-                                setTimeout(() => {
-                                    el.classList.add('fade-in-up');
-                                    el.style.opacity = '1';
-                                    el.style.animationDelay = `${index * 100}ms`;
-                                }, 300);
-                            });
-                        }
-                    }
-
-                    window.requestAnimationFrame(animateScroll);
-                }
-            });
-        });
-
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        function highlightActiveSection() {
-            const sections = document.querySelectorAll('section[id]');
-            const navItems = document.querySelectorAll('.nav-item');
-
-            let currentSection = '';
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (window.pageYOffset >= sectionTop - 300) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                const sectionName = item.getAttribute('data-section');
-                if (sectionName === currentSection) {
-                    item.classList.add('active');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', highlightActiveSection);
-        highlightActiveSection();
-    });
-</script>
 </body>
 </html>
