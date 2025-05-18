@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sliit.pg09.carcare.nextService.NextServiceService;
 import sliit.pg09.carcare.vehicle.CarModel.CarModel;
 import sliit.pg09.carcare.vehicle.CarModel.CarModelRepository;
 import sliit.pg09.carcare.vehicle.CarModel.CarModelService;
@@ -21,6 +22,8 @@ public class VehicleController {
         private VehicleService vehicleService;
         @Autowired
         private CarModelService carModelService;
+        @Autowired
+        private NextServiceService nextServiceService;
 
         @HxRequest
         @GetMapping("/vehicle")
@@ -29,6 +32,11 @@ public class VehicleController {
                 Vehicle vehicle = vehicleService.getVehicleByLicense(license);
                 if (vehicle != null) {
                     model.addAttribute("vehicle", vehicle);
+
+                    // Add this block:
+                    var nextServiceOpt = nextServiceService.getNextServiceByLicense(vehicle.getLicense());
+                    model.addAttribute("nextService", nextServiceOpt.orElse(null));
+
                     response.setHeader("HX-Trigger", "closeModal");
                     return "Client/Screens/Vehicle-X :: vehicle";
                 } else {

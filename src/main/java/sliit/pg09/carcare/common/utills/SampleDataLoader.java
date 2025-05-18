@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import sliit.pg09.carcare.client.ClientService;
+import sliit.pg09.carcare.completedAppointment.completedAppointmentService;
 import sliit.pg09.carcare.emergency.EmergencyService;
 import sliit.pg09.carcare.vehicle.CarModel.CarModel;
 import sliit.pg09.carcare.vehicle.CarModel.CarModelService;
@@ -18,16 +19,18 @@ public class SampleDataLoader implements CommandLineRunner {
     private final VehicleService vehicleService;
     private final ClientService clientService;
     private final CarModelService carModelService;
+    private final completedAppointmentService completedAppointmentService;
 
     public SampleDataLoader(
             ClientService clientService,
             CarModelService carModelService,
             VehicleService vehicleService,
-            EmergencyService emergencyService) {
+            EmergencyService emergencyService, completedAppointmentService completedAppointmentService) {
         this.clientService = clientService;
         this.carModelService = carModelService;
         this.vehicleService = vehicleService;
         this.emergencyService = emergencyService;
+        this.completedAppointmentService = completedAppointmentService;
         this.faker = new Faker();
     }
 
@@ -97,8 +100,47 @@ public class SampleDataLoader implements CommandLineRunner {
 //        }
 //    }
 
+
+//    public void completedAppointmentsLoader() {
+//        String[] licenses = {"BB-001", "BB-002"};
+//        for (String license : licenses) {
+//            Vehicle vehicle = vehicleService.getVehicleByLicense(license);
+//            for (int i = 0; i < 10; i++) {
+//                LocalDateTime completedTime = LocalDateTime.now().minusDays(faker.number().numberBetween(1, 365));
+//                Set<ServiceType> services = Set.of(ServiceType.values()[faker.random().nextInt(ServiceType.values().length)]);
+//                BillingInfo billing = new BillingInfo();
+//                billing.setLabour(faker.number().randomDouble(2, 1000, 5000));
+//                billing.setParts(faker.number().randomDouble(2, 500, 2000));
+//                billing.setAdditional(faker.number().randomDouble(2, 0, 500));
+//                billing.setDiscount(faker.number().randomDouble(2, 0, 300));
+//                String notes = faker.lorem().sentence();
+//
+//                completedAppointment appointment = new completedAppointment();
+//                appointment.setAppointmentDetails(vehicle, completedTime);
+//                appointment.setServices(services);
+//                appointment.setBillingInfo(billing);
+//                appointment.setNotes(notes);
+//
+//                completedAppointmentService.insertAppointment(appointment);
+//            }
+//        }
+//    }
+
     @Override
     public void run(String... args) throws Exception {
+//        completedAppointmentsLoader();
+
+
+//        // Test selection sort and print as table
+//        var sorted = completedAppointmentService.getAllAppointmentsSorted("BB-001");
+//        System.out.printf("%-20s | %-30s | %-10s\n", "License", "Completed Time", "Notes");
+//        System.out.println("--------------------------------------------------------------------------");
+//        for (var appt : sorted) {
+//            System.out.printf("%-20s | %-30s | %-10s\n",
+//                    appt.getVehicle().getLicense(),
+//                    appt.getId().getCompletedTime(),
+//                    appt.getNotes());
+//        }
 //        clientsLoader();
 //        modelLoader();
 //        vehicleLoader();

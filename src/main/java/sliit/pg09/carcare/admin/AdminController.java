@@ -6,8 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import sliit.pg09.carcare.client.ClientService;
+import sliit.pg09.carcare.completedAppointment.completedAppointmentService;
 import sliit.pg09.carcare.emergency.Emergency;
 import sliit.pg09.carcare.emergency.EmergencyService;
+import sliit.pg09.carcare.newAppointment.NewAppointment;
+import sliit.pg09.carcare.newAppointment.NewAppointmentService;
+import sliit.pg09.carcare.ongoingAppointment.OngoingAppointment;
+import sliit.pg09.carcare.ongoingAppointment.OngoingAppointmentService;
+import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.util.List;
 
@@ -18,6 +25,16 @@ public class AdminController {
     AdminService adminService;
     @Autowired
     EmergencyService emergencyService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private VehicleService vehicleService;
+    @Autowired
+    private NewAppointmentService newAppointmentService;
+    @Autowired
+    private OngoingAppointmentService ongoingAppointmentService;
+    @Autowired
+    private completedAppointmentService completedAppointmentService;
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
@@ -41,31 +58,42 @@ public class AdminController {
     @HxRequest
     @GetMapping("/screen/appointments-requests")
     public String getAppointmentsRequests(Model model) {
+        List<NewAppointment> newAppointments = newAppointmentService.getNewAppointments();
+        model.addAttribute("appointments", newAppointments);
+        model.addAttribute("activeCount", newAppointments.size());
         return adminService.verifyUserStatus("Admin/Screens/AppointmentsDashboard", model);
     }
 
     @HxRequest
     @GetMapping("/screen/ongoing-appointments")
     public String getOngoingAppointmentsRequests(Model model) {
+        List<OngoingAppointment> ongoingAppointments = ongoingAppointmentService.getAllOngoingAppointments();
+        model.addAttribute("ongoingAppointments", ongoingAppointments);
+        model.addAttribute("activeCount", ongoingAppointments.size());
         return adminService.verifyUserStatus("Admin/Screens/OngoingDashboard", model);
     }
 
     @HxRequest
     @GetMapping("/screen/completed-appointments")
     public String getCompletedAppointmentsRequests(Model model) {
+//        List<completedAppointment> completedAppointments = completedAppointmentService.getAllAppointments();
+//        model.addAttribute("completedAppointments", completedAppointments);
         return adminService.verifyUserStatus("Admin/Screens/CompletedDashboard", model);
-    }
-
-    @HxRequest
-    @GetMapping("/screen/log")
-    public String getLogs(Model model) {
-        return adminService.verifyUserStatus("Admin/Screens/LogsDashboard", model);
     }
 
     @HxRequest
     @GetMapping("/screen/clients")
     public String getClients(Model model) {
+        model.addAttribute("clients", clientService.findAllClients());
+
+
         return adminService.verifyUserStatus("Admin/Screens/Clients", model);
+    }
+
+    @GetMapping("/screen/vehicles")
+    public String getVehicles(Model model) {
+        model.addAttribute("vehicles", vehicleService.findAll());
+        return adminService.verifyUserStatus("Admin/Screens/Vehicles", model);
     }
 
     @GetMapping("/login")

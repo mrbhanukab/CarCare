@@ -24,6 +24,7 @@
                 <!-- Header -->
                 <div class="flex flex-row items-center p-4 border-b gap-3">
                     <img class="w-10 h-10 rounded-full object-cover bg-gray-300"
+                         referrerpolicy="no-referrer"
                          th:alt="${emergency.vehicle.client.name + ' Photo'}"
                          th:src="${emergency.vehicle.client.imageUrl}"/>
                     <div>
@@ -46,7 +47,7 @@
                         <div class="flex items-center justify-center gap-3">
                             <!-- Check for null vehicle and model -->
                             <img class="w-20 h-auto object-contain"
-                                 th:alt="${emergency.vehicle.model.make}"
+                                 th:alt="${emergency.vehicle.model.number}"
                                  th:if="${emergency.vehicle != null and emergency.vehicle.model != null and emergency.vehicle.model.image != null}"
                                  th:src="${emergency.vehicle.model.image}"/>
                             <!-- Fallback image -->
@@ -56,8 +57,8 @@
                                  th:unless="${emergency.vehicle != null and emergency.vehicle.model != null and emergency.vehicle.model.image != null}"/>
                             <div>
                                 <div class="text-sm"
-                                     th:text="${emergency.vehicle != null and emergency.vehicle.model != null ? 
-                                             emergency.vehicle.model.make + ' ' + emergency.vehicle.model.year : 'Vehicle information unavailable'}">
+                                     th:text="${emergency.vehicle != null and emergency.vehicle.model != null ?
+                                             emergency.vehicle.model.number + ' (' + emergency.vehicle.model.year + ')' : 'Vehicle information unavailable'}">
                                 </div>
                                 <div class="text-sm">
                                     License Plate:
@@ -126,6 +127,17 @@
                         </form>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-span-full bg-white rounded-lg shadow-sm border p-10 flex flex-col items-center justify-center"
+                 th:if="${#lists.isEmpty(emergencies)}">
+                <svg class="text-green-500 mb-4" fill="none" height="48" viewBox="0 0 24 24" width="48"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999M22 4L12 14.01L9 11.01"
+                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+                <p class="text-lg font-medium">No active emergencies</p>
+                <p class="text-sm text-gray-500">All emergency requests have been handled</p>
             </div>
         </div>
     </div>

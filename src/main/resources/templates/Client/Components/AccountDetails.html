@@ -171,5 +171,14 @@
         </div>
     </div>
 </div>
+<form
+    hx-post="/client/updtae"
+    hx-target="#accountModal"
+    hx-swap="oterHTML"
+>
+    <input type="text" name="nic" placeholder="NIC" required />
+    <input type="text" name="name" placeholder="Name" required />
+    <button type="submit">Save Info</button>
+</form>
 </body>
 </html>

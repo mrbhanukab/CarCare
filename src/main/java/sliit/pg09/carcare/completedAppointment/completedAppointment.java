@@ -37,10 +37,20 @@ public class completedAppointment {
 
     private String notes;
 
-    // Client link for linked list implementation
-    @Column(columnDefinition = "jsonb")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private ClientLink clientLink;
+    // Self-referencing associations for doubly linked list
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "prev_license", referencedColumnName = "vehicle_license"),
+            @JoinColumn(name = "prev_completed_time", referencedColumnName = "completedTime")
+    })
+    private completedAppointment previousAppointment;
+
+    @OneToOne
+    @JoinColumns({
+            @JoinColumn(name = "next_license", referencedColumnName = "vehicle_license"),
+            @JoinColumn(name = "next_completed_time", referencedColumnName = "completedTime")
+    })
+    private completedAppointment nextAppointment;
 
     // Method to get services as ServiceType set
     public Set<ServiceType> getServices() {
@@ -77,24 +87,4 @@ public class completedAppointment {
         private String license;
         private LocalDateTime completedTime;
     }
-}
-
-@Data
-class BillingInfo {
-    private double labour;
-    private double parts;
-    private double additional;
-    private double discount;
-
-    public double getTotal() {
-        return labour + parts + additional - discount;
-    }
-}
-
-@Data
-class ClientLink {
-    private String nextVehicleLicense;
-    private LocalDateTime nextAppointmentTime;
-    private String previousVehicleLicense;
-    private LocalDateTime previousAppointmentTime;
 }

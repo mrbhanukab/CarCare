@@ -1,0 +1,86 @@
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn overflow-y-auto p-4"
+     th:fragment="finalizeBill">
+    <div class="bg-white rounded-lg shadow-lg max-w-md w-full">
+        <div class="p-6">
+            <h3 class="text-lg font-medium mb-4">Finalize Bill</h3>
+
+            <div class="space-y-4" th:if="${selectedAppointment}">
+                <div class="space-y-1">
+                    <div class="text-sm font-medium">
+                        <span th:text="${selectedAppointment.vehicle.client.name}"></span> -
+                        <span>Porsche</span>
+                        <span th:text="${selectedAppointment.vehicle.model.number} +'('+ ${selectedAppointment.vehicle.model.year} +')'"></span>
+                    </div>
+                    <div class="text-sm text-gray-500" th:text="${selectedAppointment.serviceNames[0]}"></div>
+                </div>
+
+                <form hx-post="/admin/finalize-bill" hx-swap="none" hx-trigger="submit">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium" for="labor-cost">Labor Cost (Rs)</label>
+                        <input class="w-full px-3 py-2 border rounded-md" id="labor-cost" name="laborCost"
+                               oninput="calculateTotal()" placeholder="0.00" required type="number"/>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium" for="parts-cost">Parts Cost (Rs)</label>
+                        <input class="w-full px-3 py-2 border rounded-md" id="parts-cost" name="partsCost"
+                               oninput="calculateTotal()" placeholder="0.00" required type="number"/>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium" for="additional-fees">Additional Fees (Rs)</label>
+                        <input class="w-full px-3 py-2 border rounded-md" id="additional-fees" name="additionalFees"
+                               oninput="calculateTotal()" placeholder="0.00" required type="number"/>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium" for="discount">Discount (Rs)</label>
+                        <input class="w-full px-3 py-2 border rounded-md" id="discount" name="discount"
+                               oninput="calculateTotal()" placeholder="0.00" required type="number"/>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium" for="notes">Notes</label>
+                        <textarea class="w-full px-3 py-2 border rounded-md" id="notes" name="notes"
+                                  placeholder="Enter any notes here"></textarea>
+                    </div>
+
+                    <input name="license" th:value="${selectedAppointment.vehicle.license}" type="hidden"/>
+                    <input name="appointmentTime" th:value="${selectedAppointment.id.appointmentTime}" type="hidden"/>
+
+                    <div class="pt-2 border-t">
+                        <div class="flex justify-between font-medium">
+                            <span>Total</span>
+                            <span id="total-cost">0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between pt-4">
+                        <button class="flex items-center justify-center px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-gray-100 focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
+                                hx-on:click="document.getElementById('modal-container').innerHTML = ''"
+                                type="button">
+                            Cancel
+                        </button>
+                        <button class="flex items-center justify-center px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
+                                type="submit">
+                            Complete & Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calculateTotal() {
+            const labor = parseFloat(document.getElementById('labor-cost').value) || 0;
+            const parts = parseFloat(document.getElementById('parts-cost').value) || 0;
+            const additional = parseFloat(document.getElementById('additional-fees').value) || 0;
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+
+            const total = labor + parts + additional - discount;
+            document.getElementById('total-cost').textContent = total.toFixed(2);
+        }
+    </script>
+</div>

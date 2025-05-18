@@ -2,21 +2,27 @@ package sliit.pg09.carcare.vehicle;
 
 import org.springframework.stereotype.Service;
 import sliit.pg09.carcare.client.ClientService;
+import sliit.pg09.carcare.common.ServiceType;
+import sliit.pg09.carcare.nextService.NextService;
+import sliit.pg09.carcare.nextService.NextServiceService;
 import sliit.pg09.carcare.vehicle.CarModel.CarModel;
 import sliit.pg09.carcare.vehicle.CarModel.CarModelService;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
     private final CarModelService carModelService;
     private final ClientService clientService;
+    private final NextServiceService nextServiceService;
 
-    public VehicleService(VehicleRepository vehicleRepository, CarModelService carModelService, ClientService clientService) {
+    public VehicleService(VehicleRepository vehicleRepository, CarModelService carModelService, ClientService clientService, NextServiceService nextServiceService) {
         this.vehicleRepository = vehicleRepository;
         this.carModelService = carModelService;
         this.clientService = clientService;
+        this.nextServiceService = nextServiceService;
     }
 
 
@@ -51,7 +57,17 @@ public class VehicleService {
 
         Vehicle vehicle = new Vehicle(license, carModel, clientOptional.get());
         vehicle.setRemoved(false);
-        return vehicleRepository.save(vehicle);
+        Vehicle savedVehicle = vehicleRepository.save(vehicle);
+
+        // Create NextService record
+        NextService nextService = new NextService();
+        nextService.setVehicle(savedVehicle);
+        nextService.setCurrentMileage(0);
+        nextService.setNextServiceMileage(5000);
+        nextService.setServiceTypes(Set.of(ServiceType.GENERAL_REPAIR));
+        nextServiceService.saveNextService(nextService);
+
+        return savedVehicle;
     }
 
     public Vehicle getVehicleByLicense(String license) {
@@ -73,3 +89,4 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
 }
+
