@@ -32,11 +32,6 @@
            hx-target="#dashboard-content">
             <nav th:replace="~{Admin/Components/nav.html :: navItem('Completed Appointments')}"></nav>
         </a>
-        <a hx-get="/admin/screen/log"
-           hx-swap="innerHTML"
-           hx-target="#dashboard-content">
-            <nav th:replace="~{Admin/Components/nav.html :: navItem('Activity Log')}"></nav>
-        </a>
         <a hx-get="/admin/screen/clients"
            hx-swap="innerHTML"
            hx-target="#dashboard-content">
