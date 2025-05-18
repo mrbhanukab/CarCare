@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn"
+     th:fragment="appointmentHistory(appointments)">
+    <div class="bg-gray-800 rounded-xl shadow-2xl max-w-3xl w-full mx-4 overflow-hidden border border-gray-700">
+        <div class="p-6 border-b border-gray-700">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-green-400">Service History</h2>
+                <button class="text-gray-400 hover:text-gray-200" onclick="this.closest('.fixed').remove()">
+                    <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="p-6 max-h-[70vh] overflow-y-auto">
+            <div class="space-y-4">
+                <div class="text-center py-8" th:if="${#lists.isEmpty(appointments)}">
+                    <p class="text-gray-400">No service history available for this vehicle.</p>
+                </div>
+                <div class="border border-gray-700 rounded-lg overflow-hidden bg-gray-800/50 hover:shadow-[0_0_15px_rgba(74,222,128,0.2)] transition-shadow"
+                     th:each="appointment : ${appointments}">
+                    <div class="bg-gray-700/50 p-3 flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <svg class="text-green-400" fill="none" height="20" viewBox="0 0 24 24"
+                                 width="20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z"
+                                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2"/>
+                            </svg>
+                            <span class="font-medium text-white"
+                                  th:text="${#temporals.format(appointment.id.completedTime, 'MMMM d, yyyy')}"></span>
+                            <span class="text-sm text-gray-300"
+                                  th:text="${#temporals.format(appointment.id.completedTime, 'h:mm a')}"></span>
+                        </div>
+                        <div class="bg-green-900/30 text-green-400 text-xs px-2 py-1 rounded-full border border-green-500/30">
+                            Completed
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex gap-2 items-center">
+                            <span th:each="service, iterStat : ${appointment.services}"
+                                  th:if="${iterStat.index < 4}">
+                                <svg class="text-cyan-400" fill="none" height="20" viewBox="0 0 24 24" width="20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-linecap="round"
+                                          stroke-width="2"/>
+                                </svg>
+                            </span>
+                            <span class="text-xs bg-cyan-900/40 text-cyan-300 px-2 py-0.5 rounded-full border border-cyan-400/30 ml-1"
+                                  th:if="${#lists.size(appointment.services) > 4}"
+                                  th:text="'+' + (${#lists.size(appointment.services)} - 4)"></span>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-700">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-sm text-gray-400 mb-1">Bill Details</div>
+                                    <div class="space-y-1 text-sm">
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-300">Labor:</span>
+                                            <span class="text-gray-200"
+                                                  th:text="'Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.labour, 1, 'COMMA', 2, 'POINT')}"></span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-300">Parts:</span>
+                                            <span class="text-gray-200"
+                                                  th:text="'Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.parts, 1, 'COMMA', 2, 'POINT')}"></span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-300">Additional Fees:</span>
+                                            <span class="text-gray-200"
+                                                  th:text="'Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.additional, 1, 'COMMA', 2, 'POINT')}"></span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-300">Discount:</span>
+                                            <span class="text-gray-200"
+                                                  th:text="'-Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.discount, 1, 'COMMA', 2, 'POINT')}"></span>
+                                        </div>
+                                        <div class="flex justify-between pt-1 border-t border-gray-700">
+                                            <span class="font-medium text-gray-300">Total:</span>
+                                            <span class="font-medium text-green-400"
+                                                  th:text="'Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.total, 1, 'COMMA', 2, 'POINT')}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="text-sm text-gray-400 mb-1">Notes</div>
+                                    <p class="text-sm text-gray-300" th:text="${appointment.notes}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-700 bg-gray-800/80">
+            <div class="flex justify-end">
+                <button class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                        onclick="this.closest('.fixed').remove()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

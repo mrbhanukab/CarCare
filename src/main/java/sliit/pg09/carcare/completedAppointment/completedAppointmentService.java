@@ -75,7 +75,6 @@ public class completedAppointmentService {
 
     // Get all appointments for a vehicle, sorted by completedTime using selection sort
     public List<completedAppointment> getAllAppointmentsSorted(String license) {
-        // Collect all appointments for the vehicle
         List<completedAppointment> all = new ArrayList<>();
         completedAppointment current = getFirstAppointment(license);
         while (current != null) {
@@ -83,21 +82,26 @@ public class completedAppointmentService {
             current = current.getNextAppointment();
         }
 
-        // Selection sort by completedTime
+        // Selection sort: latest to oldest
         int n = all.size();
         for (int i = 0; i < n - 1; i++) {
-            int minIdx = i;
+            int maxIdx = i;
             for (int j = i + 1; j < n; j++) {
-                if (all.get(j).getId().getCompletedTime().isBefore(all.get(minIdx).getId().getCompletedTime())) {
-                    minIdx = j;
+                if (all.get(j).getId().getCompletedTime().isAfter(all.get(maxIdx).getId().getCompletedTime())) {
+                    maxIdx = j;
                 }
             }
-            if (minIdx != i) {
+            if (maxIdx != i) {
                 completedAppointment temp = all.get(i);
-                all.set(i, all.get(minIdx));
-                all.set(minIdx, temp);
+                all.set(i, all.get(maxIdx));
+                all.set(maxIdx, temp);
             }
         }
         return all;
+    }
+
+    public List<completedAppointment> getLatest3Appointments(String license) {
+        List<completedAppointment> sorted = getAllAppointmentsSorted(license);
+        return sorted.subList(0, Math.min(3, sorted.size()));
     }
 }

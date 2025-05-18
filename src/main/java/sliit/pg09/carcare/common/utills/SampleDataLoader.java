@@ -134,19 +134,19 @@ public class SampleDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        completedAppointmentsLoader();
+//        completedAppointmentsLoader();
 
 
-        // Test selection sort and print as table
-        var sorted = completedAppointmentService.getAllAppointmentsSorted("BB-001");
-        System.out.printf("%-20s | %-30s | %-10s\n", "License", "Completed Time", "Notes");
-        System.out.println("--------------------------------------------------------------------------");
-        for (var appt : sorted) {
-            System.out.printf("%-20s | %-30s | %-10s\n",
-                    appt.getVehicle().getLicense(),
-                    appt.getId().getCompletedTime(),
-                    appt.getNotes());
-        }
+//        // Test selection sort and print as table
+//        var sorted = completedAppointmentService.getAllAppointmentsSorted("BB-001");
+//        System.out.printf("%-20s | %-30s | %-10s\n", "License", "Completed Time", "Notes");
+//        System.out.println("--------------------------------------------------------------------------");
+//        for (var appt : sorted) {
+//            System.out.printf("%-20s | %-30s | %-10s\n",
+//                    appt.getVehicle().getLicense(),
+//                    appt.getId().getCompletedTime(),
+//                    appt.getNotes());
+//        }
 //        clientsLoader();
 //        modelLoader();
 //        vehicleLoader();

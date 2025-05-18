@@ -2,55 +2,51 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-[0_0_15px_rgba(56,189,248,0.2)] transition-shadow border border-gray-700"
-     th:fragment="recentCard()">
+     th:fragment="recentCard(vehicle, recentAppointments)">
     <div class="mb-4 flex justify-between items-center">
         <h3 class="text-xl font-bold text-green-400">Recent</h3>
-        <button
-                class="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-                hx-get="/client/history"
+        <form
+                hx-get="/client/completedAppointment"
                 hx-target="#modal-container">
-            View Full History
-        </button>
+            <input name="license" th:value="${vehicle.license}" type="hidden"/>
+            <button
+                    class="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+                    type="submit">
+                View Full History
+            </button>
+        </form>
     </div>
 
     <div class="flex flex-col gap-3">
-        <!-- Loop through 3 sample service cards -->
         <div class="bg-gray-700/50 rounded-lg overflow-hidden transition-all duration-300 border border-gray-600"
-             th:each="i : ${#numbers.sequence(1, 3)}">
-
+             th:each="appointment : ${recentAppointments}">
             <!-- Card Header -->
             <div class="p-3 flex justify-between items-center">
                 <div>
                     <div class="flex gap-2 mb-1">
-                        <!-- Oil Service Icon -->
-                        <div class="w-6 h-6 rounded-full bg-green-900/30 border border-green-500/30 flex items-center justify-center text-green-400">
-                            <svg fill="none" height="16" viewBox="0 0 24 24" width="16"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10 3L8 12L16 12L14 3M14 18H10M12 12V21M3 12H6M3 9H6M3 15H6M3 18H6M18 12H21M18 9H21M18 15H21M18 18H21"
-                                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="1.5"/>
-                            </svg>
-                        </div>
-                        <!-- Repair Service Icon -->
-                        <div class="w-6 h-6 rounded-full bg-green-900/30 border border-green-500/30 flex items-center justify-center text-green-400">
-                            <svg fill="none" height="16" viewBox="0 0 24 24" width="16"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
-                                      stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="1.5"/>
-                            </svg>
-                        </div>
+                        <span th:each="service, iterStat : ${appointment.services}"
+                              th:if="${iterStat.index < 4}">
+                            <div class="w-6 h-6 rounded-full bg-green-900/30 border border-green-500/30 flex items-center justify-center text-green-400">
+                                <svg fill="none" height="16" viewBox="0 0 24 24" width="16"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 3L8 12L16 12L14 3M14 18H10M12 12V21M3 12H6M3 9H6M3 15H6M3 18H6M18 12H21M18 9H21M18 15H21M18 18H21"
+                                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="1.5"/>
+                                </svg>
+                            </div>
+                        </span>
+                        <span class="text-xs bg-green-900/40 text-green-300 px-2 py-0.5 rounded-full border border-green-400/30 ml-1"
+                              th:if="${#lists.size(appointment.services) > 4}"
+                              th:text="'+' + (${#lists.size(appointment.services)} - 4)"></span>
                     </div>
-                    <span class="text-xs text-gray-300"
-                          th:text="${i == 1 ? 'Completed' : (i == 2 ? 'Completed' : 'Completed')}">Status</span>
+                    <span class="text-xs text-gray-300">Completed</span>
                 </div>
-
                 <div class="flex items-center gap-3">
                     <div class="text-right">
                         <span class="text-sm text-gray-200"
-                              th:text="${i == 1 ? '2024-02-15' : (i == 2 ? '2024-01-20' : '2023-12-25')}">Date</span>
+                              th:text="${#temporals.format(appointment.id.completedTime, 'yyyy-MM-dd')}">Date</span>
                         <div class="text-xs text-gray-400"
-                             th:text="${i == 1 ? '10:00 AM' : (i == 2 ? '02:30 PM' : '11:15 AM')}">Time
+                             th:text="${#temporals.format(appointment.id.completedTime, 'hh:mm a')}">Time
                         </div>
                     </div>
                     <button class="w-8 h-8 rounded-full bg-gray-600/50 flex items-center justify-center transition-transform duration-300 hover:bg-gray-600"
@@ -62,33 +58,34 @@
                     </button>
                 </div>
             </div>
-
             <!-- Expandable Content -->
             <div class="p-4 bg-gray-800/50 border-t border-gray-600 animate-fadeIn hidden"
                  data-expand-content>
                 <div class="space-y-3">
                     <div class="flex justify-between">
                         <span class="text-sm text-gray-400">Labor Cost:</span>
-                        <span class="text-sm text-gray-200" th:text="${'$' + (i * 150) + '.00'}">$150.00</span>
+                        <span class="text-sm text-gray-200"
+                              th:text="'Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.labour, 1, 'COMMA', 2, 'POINT')}"></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-sm text-gray-400">Parts Cost:</span>
-                        <span class="text-sm text-gray-200" th:text="${'$' + (i * 200) + '.00'}">$200.00</span>
+                        <span class="text-sm text-gray-200"
+                              th:text="'Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.parts, 1, 'COMMA', 2, 'POINT')}"></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-sm text-gray-400">Additional Fees:</span>
-                        <span class="text-sm text-gray-200" th:text="${'$' + (i * 50) + '.00'}">$50.00</span>
+                        <span class="text-sm text-gray-200"
+                              th:text="'Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.additional, 1, 'COMMA', 2, 'POINT')}"></span>
                     </div>
                     <div class="flex justify-between pt-2 border-t border-gray-600">
                         <span class="font-medium text-gray-300">Total:</span>
-                        <span class="font-medium text-green-400" th:text="${'$' + (i * 400) + '.00'}">$400.00</span>
+                        <span class="font-medium text-green-400"
+                              th:text="'Rs: ' + ${#numbers.formatDecimal(appointment.billingInfo.total, 1, 'COMMA', 2, 'POINT')}"></span>
                     </div>
                     <div class="pt-2">
                         <span class="text-sm text-gray-400">Details:</span>
                         <p class="text-sm mt-1 text-gray-300"
-                           th:text="${i == 1 ? 'Regular maintenance and oil change' : (i == 2 ? 'Brake system repair and tire rotation' : 'Engine tune-up and filter replacement')}">
-                            Service details
-                        </p>
+                           th:text="${appointment.notes}">Service details</p>
                     </div>
                 </div>
             </div>
