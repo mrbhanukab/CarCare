@@ -1,79 +1,82 @@
-<div class="space-y-6" th:fragment="appointments" x-data="{selectedAppointment: null}">
+<div class="space-y-6" th:fragment="appointments">
     <!-- Header -->
     <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold tracking-tight">Appointment Requests</h2>
         <div class="px-3 py-1 border rounded-md flex items-center gap-1">
-            <span th:text="${activeCount + ' Active Requests'}">Active Requests</span>
+            <span id="appointment-counter" th:text="${activeCount + ' Active Requests'}">Active Requests</span>
         </div>
     </div>
 
     <!-- Appointments Grid -->
     <div class="grid gap-6 md:grid-cols-2">
-        <!-- Appointment Request Cards -->
-        <th:block th:each="i : ${#numbers.sequence(1, 2)}">
-            <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
-                <div class="flex flex-row items-center justify-between p-4 border-b">
-                    <div class="flex items-center gap-3">
-                        <img alt="Customer Photo" class="w-10 h-10 rounded-full object-cover"
-                             src="https://via.placeholder.com/40"/>
-                        <h3 class="text-lg font-bold" th:text="${'Customer ' + i}">Customer Name</h3>
-                    </div>
-                    <div class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">New Request</div>
+        <div class="bg-white rounded-lg shadow-sm border overflow-hidden"
+             th:each="appointment : ${appointments}">
+            <div class="flex flex-row items-center justify-between p-4 border-b">
+                <div class="flex items-center gap-3">
+                    <img alt="Customer Photo" class="w-10 h-10 rounded-full object-cover"
+                         th:src="${appointment.vehicle.client.imageUrl}"/>
+                    <h3 class="text-lg font-bold" th:text="${appointment.vehicle.client.name}">Customer Name</h3>
+                </div>
+                <div class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">New Request</div>
+            </div>
+
+            <div class="p-4 space-y-4">
+                <div class="space-y-2">
+                    <div class="font-medium">Customer Information</div>
+                    <div class="text-sm" th:text="${appointment.vehicle.client.name}">Customer Name</div>
+                    <div class="text-sm" th:text="${appointment.vehicle.client.phone}">Phone Number</div>
                 </div>
 
-                <div class="p-4 space-y-4">
-                    <!-- Customer Information -->
-                    <div class="space-y-2">
-                        <div class="font-medium">Customer Information</div>
-                        <div class="text-sm" th:text="${'Customer ' + i}">Customer Name</div>
-                        <div class="text-sm" th:text="${'+1 (555) ' + (100 + i) + '-' + (1000 + i)}">Phone Number</div>
-                    </div>
-
-                    <!-- Vehicle Information -->
-                    <div class="space-y-2">
-                        <div class="font-medium">Vehicle Information</div>
-                        <div class="flex items-center gap-3">
-                            <img alt="Vehicle" class="w-16 h-12 object-contain"
-                                 src="https://via.placeholder.com/160x120"/>
-                            <div>
-                                <div class="text-sm" th:text="${'Vehicle ' + i}">Vehicle Make Model</div>
-                                <div class="text-sm">
-                                    License Plate: <span class="font-medium"
-                                                         th:text="${'ABC-' + (100 + i)}">ABC-123</span>
-                                </div>
+                <div class="space-y-2">
+                    <div class="font-medium">Vehicle Information</div>
+                    <div class="flex items-center gap-3">
+                        <img alt="Vehicle" class="w-16 h-12 object-contain"
+                             th:src="${appointment.vehicle.model.image}"/>
+                        <div>
+                            <div class="text-sm" th:text="${appointment.vehicle.model.number}">Vehicle Make Model</div>
+                            <div class="text-sm">
+                                License Plate: <span class="font-medium" th:text="${appointment.vehicle.license}">ABC-123</span>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Preferred Dates -->
-                    <div class="space-y-2">
-                        <div class="font-medium">Preferred Dates</div>
-                        <div class="grid gap-2">
-                            <th:block th:each="j : ${#numbers.sequence(1, 3)}">
-                                <div class="flex items-center justify-between p-2 border rounded-md">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-sm" th:text="${'2025-05-' + (9 + j)}">2025-05-10</span>
-                                        <span class="text-sm" th:text="${(9 + j) + ':00 AM'}">10:00 AM</span>
-                                    </div>
-                                    <button class="px-4 py-1 text-sm border-2 border-black rounded-full hover:bg-black hover:text-white transition-colors">
-                                        Select
-                                    </button>
-                                </div>
-                            </th:block>
+                <div class="space-y-2">
+                    <div class="font-medium">Preferred Dates</div>
+                    <div class="grid gap-2">
+                        <div class="flex items-center justify-between p-2 border rounded-md"
+                             th:each="date : ${appointment.preferredDateTimes}">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm"
+                                      th:text="${#temporals.format(date, 'yyyy-MM-dd')}">2025-05-10</span>
+                                <span class="text-sm" th:text="${#temporals.format(date, 'hh:mm a')}">10:00 AM</span>
+                            </div>
+                            <button class="px-4 py-1 text-sm border-2 border-black rounded-full hover:bg-black hover:text-white transition-colors">
+                                Select
+                            </button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Action Buttons -->
-                    <div class="flex justify-between items-center pt-2">
-                        <button class="flex items-center justify-center w-full px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-black hover:text-white focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black gap-2">
-                            Call Customer
-                        </button>
-                        <button class="flex items-center justify-center w-full ml-2 px-6 py-2.5 text-center text-white duration-200 bg-red-600 border-2 border-red-600 rounded-full hover:bg-transparent hover:text-red-600 focus:outline-none focus-visible:outline-red-600 text-sm focus-visible:ring-red-600 gap-2">
+                <div class="flex justify-between items-center pt-2">
+                    <a class="flex items-center justify-center w-full px-6 py-2.5 text-center text-black duration-200 bg-transparent border-2 border-black rounded-full hover:bg-black hover:text-white focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black gap-2"
+                       th:href="@{'tel:+' +${appointment.vehicle.client.phone}}">
+                        Call Customer
+                    </a>
+                    <form class="w-full"
+                          hx-delete="/admin/appointments/reject"
+                          hx-swap="outerHTML"
+                          hx-target="closest .bg-white">
+                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <input name="license" th:value="${appointment.vehicle.license}" type="hidden">
+                        <input name="createdTime" th:value="${appointment.id.createdTime}" type="hidden">
+                        <button class="flex items-center justify-center w-full ml-2 px-6 py-2.5 text-center text-white duration-200 bg-red-600 border-2 border-red-600 rounded-full hover:bg-transparent hover:text-red-600 focus:outline-none focus-visible:outline-red-600 text-sm focus-visible:ring-red-600 gap-2"
+                                type="submit">
                             Reject Request
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
-        </th:block>
+        </div>
     </div>
 </div>

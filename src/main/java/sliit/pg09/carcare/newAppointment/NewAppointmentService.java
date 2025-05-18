@@ -23,4 +23,12 @@ public class NewAppointmentService {
     public void saveAppointment(NewAppointment newAppointment) {
         newAppointmentRepository.save(newAppointment);
     }
+
+    public List<NewAppointment> getNewAppointments() {
+        return newAppointmentRepository.findAll();
+    }
+
+    public void deleteAppointmentById(NewAppointment.PendingAppointmentId id) {
+        newAppointmentRepository.deleteById(id);
+    }
 }
