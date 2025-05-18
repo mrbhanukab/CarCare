@@ -17,9 +17,7 @@ import sliit.pg09.carcare.vehicle.VehicleService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class EmergencyController {
@@ -113,16 +111,6 @@ public class EmergencyController {
         private EmergencyController emergencyController;
         @Autowired
         private EmergencyService emergencyService;
-
-        @GetMapping("/emergencies")
-        public String getEmergencies(Model model) {
-            List<Emergency> activeEmergencies = emergencyService.getActiveEmergencies().stream()
-                    .sorted(Comparator.comparing(e -> e.getId().getEmergencyTime()))
-                    .collect(Collectors.toList());
-
-            model.addAttribute("activeEmergencies", activeEmergencies);
-            return "Admin/Components/Emergency";
-        }
 
         @PostMapping("/emergency/handle")
         public String markAsHandled(
