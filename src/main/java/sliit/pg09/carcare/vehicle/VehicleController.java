@@ -2,7 +2,7 @@ package sliit.pg09.carcare.vehicle;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,17 +13,16 @@ import sliit.pg09.carcare.vehicle.CarModel.CarModelRepository;
 import sliit.pg09.carcare.vehicle.CarModel.CarModelService;
 
 @Controller
+@RequiredArgsConstructor
 public class VehicleController {
 
     @Controller
     @RequestMapping("/client")
+    @RequiredArgsConstructor
     public static class ClientVehicleController {
-        @Autowired
-        private VehicleService vehicleService;
-        @Autowired
-        private CarModelService carModelService;
-        @Autowired
-        private NextServiceService nextServiceService;
+        private final VehicleService vehicleService;
+        private final CarModelService carModelService;
+        private final NextServiceService nextServiceService;
 
         @HxRequest
         @GetMapping("/vehicle")
@@ -33,7 +32,6 @@ public class VehicleController {
                 if (vehicle != null) {
                     model.addAttribute("vehicle", vehicle);
 
-                    // Add this block:
                     var nextServiceOpt = nextServiceService.getNextServiceByLicense(vehicle.getLicense());
                     model.addAttribute("nextService", nextServiceOpt.orElse(null));
 
@@ -76,16 +74,11 @@ public class VehicleController {
 
     @Controller
     @RequestMapping("/admin")
+    @RequiredArgsConstructor
     public static class AdminVehicleController {
         private final VehicleRepository vehicleRepository;
-        @Autowired
-        private CarModelRepository carModelRepository;
-        @Autowired
-        private CarModelService carModelService;
-
-        public AdminVehicleController(VehicleRepository vehicleRepository) {
-            this.vehicleRepository = vehicleRepository;
-        }
+        private final CarModelRepository carModelRepository;
+        private final CarModelService carModelService;
 
         @DeleteMapping
         public ResponseEntity<String> deleteVehicle(@PathVariable String license) {
@@ -98,7 +91,6 @@ public class VehicleController {
             carModelRepository.save(model);
             return ResponseEntity.ok("Model added");
         }
-
 
         public ResponseEntity<CarModel> getModel(@PathVariable String number) {
             CarModel model = carModelService.getModelByNumber(number);

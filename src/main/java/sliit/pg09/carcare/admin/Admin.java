@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Admin {
     @Id
-    private String email;  // Changed from username to email
+    private String email;
     private String password;
     private String name;
 

@@ -1,6 +1,7 @@
 package sliit.pg09.carcare.client;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,22 +19,13 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/client")
+@RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
     private final VehicleService vehicleService;
     private final NewAppointmentService newAppointmentService;
     private final completedAppointmentService completedAppointmentService;
     private final NextServiceService nextServiceService;
-
-    public ClientController(ClientService clientService, VehicleService vehicleService,
-                            NewAppointmentService newAppointmentService, completedAppointmentService completedAppointmentService,
-                            NextServiceService nextServiceService) {
-        this.clientService = clientService;
-        this.vehicleService = vehicleService;
-        this.newAppointmentService = newAppointmentService;
-        this.completedAppointmentService = completedAppointmentService;
-        this.nextServiceService = nextServiceService;
-    }
 
     @RequestMapping(value = {"", "/"})
     public String getDashboard(Model model) {
@@ -42,15 +34,12 @@ public class ClientController {
             var vehicle = vehicles.getFirst();
             model.addAttribute("vehicle", vehicle);
 
-            // Get pending appointments for this vehicle
             var pendingAppointments = newAppointmentService.getNewAppointmentsByVehicle(vehicle.getLicense());
             model.addAttribute("pendingAppointments", pendingAppointments);
 
-            // Get latest 3 completed appointments
             var recentAppointments = completedAppointmentService.getLatest3Appointments(vehicle.getLicense());
             model.addAttribute("recentAppointments", recentAppointments);
 
-            // Get next service for this vehicle
             var nextServiceOpt = nextServiceService.getNextServiceByLicense(vehicle.getLicense());
             model.addAttribute("nextService", nextServiceOpt.orElse(null));
         } else {
@@ -79,12 +68,10 @@ public class ClientController {
         return clientService.verifyUserStatus("Client/Components/AccountDetails", model);
     }
 
-
-    @GetMapping("/vehicle/new")  // Changed from nested controller
+    @GetMapping("/vehicle/new")
     public String getAddVehicleModal() {
         return "Client/Components/AddVehicleModal :: addVehicleModal";
     }
-
 
     @HxRequest
     @PostMapping("/account")
@@ -137,6 +124,5 @@ public class ClientController {
             return ResponseEntity.ok()
                     .body("<div class='alert alert-danger'>A client with this email already exists</div>");
         }
-
     }
 }

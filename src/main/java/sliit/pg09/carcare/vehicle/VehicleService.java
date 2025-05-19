@@ -1,5 +1,6 @@
 package sliit.pg09.carcare.vehicle;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sliit.pg09.carcare.client.ClientService;
 import sliit.pg09.carcare.common.ServiceType;
@@ -12,19 +13,12 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
     private final CarModelService carModelService;
     private final ClientService clientService;
     private final NextServiceService nextServiceService;
-
-    public VehicleService(VehicleRepository vehicleRepository, CarModelService carModelService, ClientService clientService, NextServiceService nextServiceService) {
-        this.vehicleRepository = vehicleRepository;
-        this.carModelService = carModelService;
-        this.clientService = clientService;
-        this.nextServiceService = nextServiceService;
-    }
-
 
     public void updateVehicle(String license, String modelNumber) {
         Vehicle vehicle = vehicleRepository.findById(license).orElse(null);
@@ -89,4 +83,3 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
 }
-

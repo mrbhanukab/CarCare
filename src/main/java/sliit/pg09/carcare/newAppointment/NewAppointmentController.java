@@ -2,7 +2,7 @@ package sliit.pg09.carcare.newAppointment;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,26 +19,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
+@RequiredArgsConstructor
 public class NewAppointmentController {
-    @Autowired
-    NewAppointmentService newAppointmentService;
-
-    @Autowired
-    private VehicleService vehicleService;
-
-    public NewAppointmentController() {
-    }
+    private final NewAppointmentService newAppointmentService;
+    private final VehicleService vehicleService;
 
     @Controller
     @RequestMapping("/client")
+    @RequiredArgsConstructor
     public static class ClientPendingAppointment {
-        @Autowired
-        private NewAppointmentController parentController;
-
-        @Autowired
-        private VehicleService vehicleService;
-        @Autowired
-        private NewAppointmentService newAppointmentService;
+        private final VehicleService vehicleService;
+        private final NewAppointmentService newAppointmentService;
 
         @HxRequest
         @GetMapping("/new-appointment")
@@ -70,7 +61,6 @@ public class NewAppointmentController {
                 appointment.setNotes(notes);
                 newAppointmentService.saveAppointment(appointment);
 
-                // Close the modal upon success
                 response.setHeader("HX-Trigger", "closeModal");
                 response.setHeader("HX-Redirect", "/client/");
                 return null;
@@ -80,16 +70,12 @@ public class NewAppointmentController {
             }
         }
 
-        //
         @Controller
         @RequestMapping("/admin")
+        @RequiredArgsConstructor
         public static class AdminPendingAppointment {
-            @Autowired
-            private NewAppointmentController parentController;
-            @Autowired
-            private NewAppointmentService newAppointmentService;
-            @Autowired
-            private OngoingAppointmentService ongoingAppointmentService;
+            private final NewAppointmentService newAppointmentService;
+            private final OngoingAppointmentService ongoingAppointmentService;
 
             @HxRequest
             @DeleteMapping("/appointments/reject")
@@ -118,7 +104,6 @@ public class NewAppointmentController {
                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime selectedDate,
                     Model model) {
                 try {
-                    // Fetch the new appointment to get services
                     NewAppointment.PendingAppointmentId id = new NewAppointment.PendingAppointmentId();
                     id.setLicense(license);
                     id.setCreatedTime(createdTime);
@@ -128,13 +113,10 @@ public class NewAppointmentController {
                             .findFirst()
                             .orElseThrow(() -> new IllegalArgumentException("Appointment not found"));
 
-                    // Create an ongoing appointment
                     ongoingAppointmentService.createOngoingAppointment(license, selectedDate, newAppointment.getServiceNames());
 
-                    // Delete the new appointment
                     newAppointmentService.deleteAppointmentById(id);
 
-                    // Update the active count
                     List<NewAppointment> remainingAppointments = newAppointmentService.getNewAppointments();
                     model.addAttribute("activeCount", remainingAppointments.size());
                     return "Admin/Components/AppointmentCounter :: requestCounterElement";

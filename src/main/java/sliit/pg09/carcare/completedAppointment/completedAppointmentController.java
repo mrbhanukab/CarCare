@@ -1,6 +1,7 @@
 package sliit.pg09.carcare.completedAppointment;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,14 +13,12 @@ import java.util.List;
 
 @Controller
 public class completedAppointmentController {
+
     @Controller
     @RequestMapping("/client")
+    @RequiredArgsConstructor
     public static class ClientPendingAppointment {
         private final completedAppointmentService completedAppointmentService;
-
-        public ClientPendingAppointment(completedAppointmentService completedAppointmentService) {
-            this.completedAppointmentService = completedAppointmentService;
-        }
 
         @HxRequest
         @GetMapping("/completedAppointment")
@@ -32,24 +31,16 @@ public class completedAppointmentController {
 
     @Controller
     @RequestMapping("/admin")
+    @RequiredArgsConstructor
     public static class AdminPendingAppointment {
         private final completedAppointmentService completedAppointmentService;
-
-        public AdminPendingAppointment(completedAppointmentService completedAppointmentService) {
-            this.completedAppointmentService = completedAppointmentService;
-        }
 
         @HxRequest
         @PostMapping("/search-completed-appointments")
         public String searchCompletedAppointments(@RequestParam(required = false) String search, Model model) {
-            List<completedAppointment> appointments;
-            if (search == null || search.isEmpty()) {
-                // Load all appointments if no search query is provided
-                appointments = completedAppointmentService.getAllAppointments();
-            } else {
-                // Filter appointments based on the search query
-                appointments = completedAppointmentService.searchAppointments(search);
-            }
+            List<completedAppointment> appointments = (search == null || search.isEmpty())
+                    ? completedAppointmentService.getAllAppointments()
+                    : completedAppointmentService.searchAppointments(search);
             model.addAttribute("completedAppointments", appointments);
             return "Admin/Components/CompletedAppointmentsTable";
         }

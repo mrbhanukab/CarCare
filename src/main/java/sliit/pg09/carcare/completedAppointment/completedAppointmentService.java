@@ -1,5 +1,6 @@
 package sliit.pg09.carcare.completedAppointment;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -8,21 +9,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class completedAppointmentService {
     private final completedAppointmentRepository completedAppointmentRepository;
 
-    public completedAppointmentService(completedAppointmentRepository completedAppointmentRepository) {
-        this.completedAppointmentRepository = completedAppointmentRepository;
-    }
-
     // Get the first appointment for a vehicle (head of the list)
     public completedAppointment getFirstAppointment(String license) {
-        return completedAppointmentRepository.findAll().stream().filter(a -> a.getVehicle().getLicense().equals(license) && a.getPreviousAppointment() == null).findFirst().orElse(null);
+        return completedAppointmentRepository.findAll().stream()
+                .filter(a -> a.getVehicle().getLicense().equals(license) && a.getPreviousAppointment() == null)
+                .findFirst()
+                .orElse(null);
     }
 
     // Get appointment by id (license + completedTime)
     public completedAppointment getAppointmentById(String license, LocalDateTime completedTime) {
-        return completedAppointmentRepository.findAll().stream().filter(a -> a.getVehicle().getLicense().equals(license) && a.getId().getCompletedTime().equals(completedTime)).findFirst().orElse(null);
+        return completedAppointmentRepository.findAll().stream()
+                .filter(a -> a.getVehicle().getLicense().equals(license) && a.getId().getCompletedTime().equals(completedTime))
+                .findFirst()
+                .orElse(null);
     }
 
     // Insert a new appointment (links are set here)
@@ -31,26 +35,22 @@ public class completedAppointmentService {
         completedAppointment first = getFirstAppointment(license);
 
         if (first == null) {
-            // First appointment for this vehicle
             appointment.setPreviousAppointment(null);
             appointment.setNextAppointment(null);
             completedAppointmentRepository.save(appointment);
             return;
         }
 
-        // Find the last node
         completedAppointment last = first;
         while (last.getNextAppointment() != null) {
             last = last.getNextAppointment();
         }
 
-        // Save the new appointment first (so it gets an ID)
         appointment.setPreviousAppointment(last);
         appointment.setNextAppointment(null);
         appointment.setBillingInfo(billingInfo);
         completedAppointmentRepository.save(appointment);
 
-        // Now update the last node to point to the new appointment
         last.setNextAppointment(appointment);
         completedAppointmentRepository.save(last);
     }
@@ -84,7 +84,6 @@ public class completedAppointmentService {
             current = current.getNextAppointment();
         }
 
-        // Selection sort: latest to oldest
         int n = all.size();
         for (int i = 0; i < n - 1; i++) {
             int maxIdx = i;
