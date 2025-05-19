@@ -225,13 +225,13 @@
 <section class="relative flex min-h-screen w-screen flex-col items-center justify-center overflow-hidden">
     <div class="absolute inset-0 -z-50" id="dynamic-video-container">
         <video
-                class="h-full w-full object-fill"
                 autoplay
-                muted
+                class="h-full w-full object-cover"
+                id="background-video"
                 loop
+                muted
                 playsinline
-                preload="auto"
-                id="background-video">
+                preload="auto">
             <source th:src="@{/images/home/VD.mp4}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -261,11 +261,12 @@
             </a>
             <nav aria-label="Global" class="hidden lg:flex w-full items-center justify-between px-8 py-4">
 
-        <div class="flex-1 flex justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4500 300" class="h-8 text-white">
-                     <path fill="currentColor" d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"/>
-                </svg>                
-        </div>
+                <div class="flex-1 flex justify-center">
+                    <svg class="h-8 text-white" viewBox="0 0 4500 300" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"
+                              fill="currentColor"/>
+                    </svg>
+                </div>
 
                 <div class="w-1/6 flex items-center justify-end">
                     <ul class="flex items-center gap-5 text-sm">
@@ -353,21 +354,25 @@
 
         <div>
             <h3 class="luxury-font mb-6 text-3xl text-white">Your Porsche Deserves the Pinnacle of Care</h3>
-            <p class="mb-8 leading-relaxed text-gray-400">At our Official Porsche Service Center, we know your Porsche is more than a vehicle — it's a legacy of innovation, performance, and prestige.
+            <p class="mb-8 leading-relaxed text-gray-400">At our Official Porsche Service Center, we know your Porsche
+                is more than a vehicle — it's a legacy of innovation, performance, and prestige.
                 That's why our master technicians deliver service worthy of the crest.</p>
 
             <div class="space-y-6">
                 <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                     <div class="flex-shrink-0">
                         <div class="bg-red-600 bg-opacity-100 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="1.5"/>
                             </svg>
                         </div>
                     </div>
                     <div>
                         <h4 class="mb-2 text-xl font-semibold text-white">Factory-Certified Porsche Technicians</h4>
-                        <p class="text-gray-400">Our specialists are trained and certified by Porsche AG, with continuous education on the latest Porsche technologies, systems, and engineering updates —
+                        <p class="text-gray-400">Our specialists are trained and certified by Porsche AG, with
+                            continuous education on the latest Porsche technologies, systems, and engineering updates —
                             ensuring authentic, precision-driven service.</p>
                     </div>
                 </div>
@@ -375,29 +380,36 @@
                 <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                     <div class="flex-shrink-0">
                         <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 15l8-8m0 0l-8-8m8 8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 15l8-8m0 0l-8-8m8 8H4" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="1.5"/>
                             </svg>
                         </div>
                     </div>
                     <div>
                         <h4 class="mb-2 text-xl font-semibold text-white">Performance-Driven Excellence</h4>
-                        <p class="text-gray-400">We go beyond standard maintenance. Whether it's tuning, diagnostics, or component upgrades,
-                            we optimize your Porsche to deliver exhilarating performance — true to its motorsport DNA.</p>
+                        <p class="text-gray-400">We go beyond standard maintenance. Whether it's tuning, diagnostics, or
+                            component upgrades,
+                            we optimize your Porsche to deliver exhilarating performance — true to its motorsport
+                            DNA.</p>
                     </div>
                 </div>
 
                 <div class="flex items-start gap-6 p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                     <div class="flex-shrink-0">
                         <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-30 flex h-14 w-14 items-center justify-center rounded-full border">
-                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                            <svg class="text-white h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                                      stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                             </svg>
                         </div>
                     </div>
                     <div>
                         <h4 class="mb-2 text-xl font-semibold text-white">Concierge-Level Experience</h4>
-                        <p class="text-gray-400">From white-glove pickup and delivery to Porsche-approved loaner vehicles and personalized service touchpoints,
+                        <p class="text-gray-400">From white-glove pickup and delivery to Porsche-approved loaner
+                            vehicles and personalized service touchpoints,
                             your comfort and confidence are at the center of everything we do.</p>
                     </div>
                 </div>
@@ -446,15 +458,19 @@
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
                 <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
-                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Performance Tuning</h3>
-                <p class="mb-6 text-gray-400">Optimize your Porsche's ECU for enhanced power delivery and throttle response while maintaining reliability.</p>
+                <p class="mb-6 text-gray-400">Optimize your Porsche's ECU for enhanced power delivery and throttle
+                    response while maintaining reliability.</p>
                 <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </a>
@@ -462,15 +478,19 @@
 
             <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
                 <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
-                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                              stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Detailing Excellence</h3>
-                <p class="mb-6 text-gray-400">Show-your porsche quality detailing using only the finest ceramic coatings and leather conditioners.</p>
+                <p class="mb-6 text-gray-400">Show-your porsche quality detailing using only the finest ceramic coatings
+                    and leather conditioners.</p>
                 <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </a>
@@ -478,15 +498,19 @@
 
             <div class="bg-opacity-50 hover:border-red-600 hover:border-opacity-30 hover-scale group border border-gray-800 bg-black p-8 transition-all duration-300">
                 <div class="bg-red-600 bg-opacity-10 border-red-600 border-opacity-20 group-hover:bg-opacity-20 mb-6 flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300">
-                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                    <svg class="text-white h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                              stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <h3 class="mb-4 text-xl text-white">Security Enhancements</h3>
-                <p class="mb-6 text-gray-400">Discrete installation of the latest anti-theft and tracking systems to protect your investment.</p>
+                <p class="mb-6 text-gray-400">Discrete installation of the latest anti-theft and tracking systems to
+                    protect your investment.</p>
                 <a class="text-red-600 flex items-center gap-2 text-sm tracking-wider group-hover:underline" href="#">
                     Learn More
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </a>
@@ -536,14 +560,15 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 </section>
 
 <section class="from-gold relative overflow-hidden bg-gradient-to-b to-black px-1 py-18">
     <div class="mx-auto max-w-4xl text-center">
         <h2 class="luxury-font mt-4 mb-6 text-4xl text-gray-300 md:text-5xl">Experience the Porsche Standard</h2>
         <div class="divider bg-opacity-30 mx-auto my-6 w-24 bg-gray-300"></div>
-        <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white">Schedule a personalized consultation with our certified 
+        <p class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white">Schedule a personalized consultation with
+            our certified
             specialists to discuss the unique care and performance needs of your Porsche
         </p>
     </div>
@@ -556,9 +581,11 @@
                 <span class="text-gold letter-spacing-wide text-sm tracking-widest">GET IN TOUCH</span>
                 <h2 class="luxury-font mt-4 mb-6 text-4xl text-white md:text-5xl">Contact Our Porsche Concierge</h2>
                 <div class="divider my-6 w-24"></div>
-                <p class="mb-10 leading-relaxed text-white">Our dedicated team is available 24/7 to provide personalized assistance for all your Porsche service needs.
+                <p class="mb-10 leading-relaxed text-white">Our dedicated team is available 24/7 to provide personalized
+                    assistance for all your Porsche service needs.
                     For immediate support, please call our direct line.
-                    To schedule service or submit an inquiry, kindly complete the contact form — a concierge specialist will follow up promptly.
+                    To schedule service or submit an inquiry, kindly complete the contact form — a concierge specialist
+                    will follow up promptly.
                 </p>
                 <div class="space-y-8">
                     <div class="flex items-start gap-6">
@@ -689,11 +716,11 @@
 
 <footer class="border-t border-gray-900 bg-black px-6 py-16">
     <div class="mx-auto max-w-7xl">
-       
+
         <div class="flex flex-col items-center justify-center mb-12 text-center">
             <img alt="LuxAuto Logo" class="mb-6 h-20         w-auto" src="/images/LOGO.webp"/>
         </div>
-        
+
         <div class="grid grid-cols-1 gap-12 md:grid-cols-3">
             <div>
                 <h4 class="mb-6 text-lg font-medium text-white">Services</h4>
@@ -710,7 +737,7 @@
                         Service</a></li>
                 </ul>
             </div>
-            
+
             <div>
                 <h4 class="mb-6 text-lg font-medium text-white">Company</h4>
                 <ul class="space-y-3">
@@ -726,7 +753,7 @@
                            href="#">Press</a></li>
                 </ul>
             </div>
-            
+
             <div>
                 <h4 class="mb-4 text-lg font-medium text-white">Newsletter</h4>
                 <p class="mb-4 text-sm text-gray-400">Subscribe for exclusive updates and offers</p>
@@ -742,7 +769,7 @@
                         </svg>
                     </button>
                 </form>
-                
+
                 <h4 class="mb-4 text-lg font-medium text-white">Connect</h4>
                 <div class="flex gap-4">
                     <a class="hover:bg-gold flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 transition-colors duration-300 hover:text-black"
@@ -766,44 +793,48 @@
                 </div>
             </div>
         </div>
-        
-       <div>
-    
 
-    <div style="margin-top: 2rem;">
-    <div>
-        <pnav-footer-p-divider class="divider hydrated">
-            <hr>
-        </pnav-footer-p-divider>
-    </div>
+        <div>
 
-    <div class="mt-16 flex flex-col items-center justify-between md:flex-row">
-        <p class="text-sm text-gray-500">© 2023 LuxAuto. All rights reserved.</p>
-        <div class="mt-4 flex gap-6 md:mt-0">
-            <a class="hover:text-gold text-sm text-gray-500 transition-colors duration-300" href="#">Privacy Policy</a>
-            <a class="hover:text-gold text-sm text-gray-500 transition-colors duration-300" href="#">Terms of Service</a>
-        </div>
-    </div>
 
-    <div>
-        <pnav-fine-print class="hydrated">
-            <section>
-                <div></div>
-            </section>
-        </pnav-fine-print>
-    </div>
+            <div style="margin-top: 2rem;">
+                <div>
+                    <pnav-footer-p-divider class="divider hydrated">
+                        <hr>
+                    </pnav-footer-p-divider>
+                </div>
 
-    <div class="wordmark flex justify-center mt-6">
-        <pnav-footer-p-wordmark class="hydrated">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4500 300" class="h-8 text-white">
-                <title>Porsche</title>
-                <path fill="currentColor" d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"/>
-            </svg>
-        </pnav-footer-p-wordmark>
+                <div class="mt-16 flex flex-col items-center justify-between md:flex-row">
+                    <p class="text-sm text-gray-500">© 2023 LuxAuto. All rights reserved.</p>
+                    <div class="mt-4 flex gap-6 md:mt-0">
+                        <a class="hover:text-gold text-sm text-gray-500 transition-colors duration-300" href="#">Privacy
+                            Policy</a>
+                        <a class="hover:text-gold text-sm text-gray-500 transition-colors duration-300" href="#">Terms
+                            of Service</a>
+                    </div>
+                </div>
+
+                <div>
+                    <pnav-fine-print class="hydrated">
+                        <section>
+                            <div></div>
+                        </section>
+                    </pnav-fine-print>
+                </div>
+
+                <div class="wordmark flex justify-center mt-6">
+                    <pnav-footer-p-wordmark class="hydrated">
+                        <svg class="h-8 text-white" viewBox="0 0 4500 300" xmlns="http://www.w3.org/2000/svg">
+                            <title>Porsche</title>
+                            <path d="M502 221c48.1 0 74-25.9 74-74V74c0-48.1-25.9-74-74-74H0v300h68v-79h434zm6-143v65c0 7.8-4.2 12-12 12H68V66h428c7.8 0 12 4.2 12 12zm228 222c-48.1 0-74-25.9-74-74V74c0-48.1 25.9-74 74-74h417c48.1 0 74 25.9 74 74v152c0 48.1-25.9 74-74 74H736zm411-66c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12H742c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h405zm675-36c39.844 16.757 67.853 56.1 68 102h-68c0-54-25-79-79-79h-361v79h-68V0h502c48.1 0 74 25.9 74 74v50.14c0 46.06-23.75 71.76-68 73.86zm-12-43c7.8 0 12-4.2 12-12V78c0-7.8-4.2-12-12-12h-428v89h428zm162-81c0-48.1 25.9-74 74-74h492v56h-486c-7.8 0-12 4.2-12 12v42c0 7.8 4.2 12 12 12h422c48.1 0 74 25.9 74 74v30c0 48.1-25.9 74-74 74h-492v-56h486c7.8 0 12-4.2 12-12v-42c0-7.8-4.2-12-12-12h-422c-48.1 0-74-25.9-74-74V74zm661 0c0-48.1 25.9-74 74-74h480v66h-474c-7.8 0-12 4.2-12 12v144c0 7.8 4.2 12 12 12h474v66h-480c-48.1 0-74-25.9-74-74V74zM3817 0v300h-68V183h-407v117h-68V0h68v117h407V0h68zm156 56v66h527v56h-527v66h527v56h-595V0h595v56h-527z"
+                                  fill="currentColor"/>
+                        </svg>
+                    </pnav-footer-p-wordmark>
+                </div>
+            </div>
+        </div
+        >
     </div>
-</div>
-       </div
-       ></div>
 </footer>
 </body>
 </html>

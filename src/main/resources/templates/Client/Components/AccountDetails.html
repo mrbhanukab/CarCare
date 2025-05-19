@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:hx-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:hx-on="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
-<div @closeModal.window="$el.remove()"
-     @showError.window="document.getElementById('errorContainer').innerHTML = $event.detail.value"
-     class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn overflow-y-auto p-4"
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn overflow-y-auto p-4"
      th:fragment="accountDetails(user)"
      x-data="{
         isLoading: false,
@@ -172,12 +170,12 @@
     </div>
 </div>
 <form
-    hx-post="/client/updtae"
-    hx-target="#accountModal"
-    hx-swap="oterHTML"
+        hx-post="/client/updtae"
+        hx-swap="oterHTML"
+        hx-target="#accountModal"
 >
-    <input type="text" name="nic" placeholder="NIC" required />
-    <input type="text" name="name" placeholder="Name" required />
+    <input name="nic" placeholder="NIC" required type="text"/>
+    <input name="name" placeholder="Name" required type="text"/>
     <button type="submit">Save Info</button>
 </form>
 </body>
