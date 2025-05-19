@@ -2,7 +2,7 @@ package sliit.pg09.carcare.emergency;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,19 +16,16 @@ import sliit.pg09.carcare.vehicle.VehicleService;
 import java.time.LocalDateTime;
 
 @Controller
+@RequiredArgsConstructor
 public class EmergencyController {
-    @Autowired
-    EmergencyService emergencyService;
+    private final EmergencyService emergencyService;
 
     @Controller
     @RequestMapping("/client")
+    @RequiredArgsConstructor
     public static class AClientEmergency {
-        @Autowired
-        private EmergencyController emergencyController;
-        @Autowired
-        private EmergencyService emergencyService;
-        @Autowired
-        private VehicleService vehicleService;
+        private final EmergencyService emergencyService;
+        private final VehicleService vehicleService;
 
         @HxRequest
         @GetMapping("/emergency")
@@ -62,11 +59,9 @@ public class EmergencyController {
 
     @Controller
     @RequestMapping("/admin")
+    @RequiredArgsConstructor
     public static class AdminEmergency {
-        @Autowired
-        private EmergencyController emergencyController;
-        @Autowired
-        private EmergencyService emergencyService;
+        private final EmergencyService emergencyService;
 
         @PostMapping("/emergency/handle")
         public String markAsHandled(

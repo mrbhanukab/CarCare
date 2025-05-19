@@ -1,7 +1,7 @@
 package sliit.pg09.carcare.ongoingAppointment;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +18,10 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class OngoingAppointmentController {
-    @Autowired
-    OngoingAppointmentService ongoingAppointmentService;
-    @Autowired
-    private completedAppointmentService completedAppointmentService;
+    private final OngoingAppointmentService ongoingAppointmentService;
+    private final completedAppointmentService completedAppointmentService;
 
     @HxRequest
     @GetMapping("/finalize-bill")

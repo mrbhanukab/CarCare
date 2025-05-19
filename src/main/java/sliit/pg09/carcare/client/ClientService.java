@@ -1,5 +1,6 @@
 package sliit.pg09.carcare.client;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -10,13 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ClientService {
     private final ClientRepository clientRepository;
-
-    public ClientService(ClientRepository clientRepository) {
-
-        this.clientRepository = clientRepository;
-    }
 
     public Optional<Client> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -42,7 +39,6 @@ public class ClientService {
     }
 
     public void updateClient(Client client) {
-
         clientRepository.save(client);
     }
 

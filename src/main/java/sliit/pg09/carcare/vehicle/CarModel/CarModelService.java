@@ -1,15 +1,12 @@
 package sliit.pg09.carcare.vehicle.CarModel;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CarModelService {
     private final CarModelRepository carModelRepository;
-
-    public CarModelService(CarModelRepository carModelRepository) {
-
-        this.carModelRepository = carModelRepository;
-    }
 
     public CarModel getModelByNumber(String number) {
         return carModelRepository.findById(number).orElse(null);
