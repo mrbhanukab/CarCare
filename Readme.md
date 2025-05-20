@@ -1,1 +1,1 @@
-https://www.svgrepo.com/collection/solar-linear-icons
+Readme will Update asap (after final exam)
