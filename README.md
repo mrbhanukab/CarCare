@@ -73,6 +73,7 @@ both technically advanced and visually impressive.
   simplifies our development flow and enhances productivity.
 
 ## App Preview
+https://github.com/user-attachments/assets/fb71a0d3-cb28-4b0b-90eb-02bacea3a0c9
 
 <table>
  <tr>
@@ -84,5 +85,6 @@ both technically advanced and visually impressive.
  </tr>
 </table>
 
-> This project is licensed under a MIT open-source license.
+> This project is licensed under a MIT open-source license. <br />
+
 > ![GitHub License](https://img.shields.io/github/license/mrbhanukab/CarCare?style=for-the-badge)
