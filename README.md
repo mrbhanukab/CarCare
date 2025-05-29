@@ -31,6 +31,7 @@ both technically advanced and visually impressive.
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://mrbhanukab.github.io"><img src="https://avatars.githubusercontent.com/u/87383814?v=4?s=100" width="100px;" alt="Bhanuka Bandara"/><br /><sub><b>Bhanuka Bandara</b></sub></a><br /><a href="#code-mrbhanukab" title="Code">💻</a> <a href="#doc-mrbhanukab" title="Documentation">📖</a> <a href="#design-mrbhanukab" title="Design">🎨</a> <a href="#ideas-mrbhanukab" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MrVirul"><img src="https://avatars.githubusercontent.com/u/124700451?v=4?s=100" width="100px;" alt="Virul Methdinu Meemana"/><br /><sub><b>Virul Methdinu Meemana</b></sub></a><br /><a href="#code-MrVirul" title="Code">💻</a> <a href="#data-MrVirul" title="Data">🔣</a> <a href="#design-MrVirul" title="Design">🎨</a> <a href="#ideas-MrVirul" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
