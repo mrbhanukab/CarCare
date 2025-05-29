@@ -1,5 +1,24 @@
 {
   "projectName": "CarCare",
   "projectOwner": "mrbhanukab",
-  "commitConvention": "none"
+  "commitConvention": "none",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "mrbhanukab",
+      "name": "Bhanuka Bandara",
+      "avatar_url": "https://avatars.githubusercontent.com/u/87383814?v=4",
+      "profile": "https://mrbhanukab.github.io",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas"
+      ]
+    }
+  ]
 }
