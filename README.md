@@ -56,7 +56,7 @@ both technically advanced and visually impressive.
 
 ---
 
-## Technologies Used
+# Technologies Used
 
 ![Static Badge](https://img.shields.io/badge/htmx-s?style=for-the-badge&logo=htmx&labelColor=blue&color=black)
 ![Static Badge](https://img.shields.io/badge/springboot-s?style=for-the-badge&logo=springboot&labelColor=white&color=black)
@@ -72,19 +72,15 @@ both technically advanced and visually impressive.
   Application experience without full-page reloads and without relying on massive JavaScript libraries. This setup
   simplifies our development flow and enhances productivity.
 
-## App Preview
+# App Preview
+### Home
 https://github.com/user-attachments/assets/fb71a0d3-cb28-4b0b-90eb-02bacea3a0c9
-
-<table>
- <tr>
-  <td> <img src="https://github.com/mrbhanukab/TheGreenHouse/blob/2c40d16fde9d6785cb452699d527872c768daa9e/Documents/ReadmeContent/1.jpeg" /> </td>
-    <td> <img src="https://github.com/mrbhanukab/TheGreenHouse/blob/2c40d16fde9d6785cb452699d527872c768daa9e/Documents/ReadmeContent/2.jpeg" /> </td>
-    <td> <img src="https://github.com/mrbhanukab/TheGreenHouse/blob/2c40d16fde9d6785cb452699d527872c768daa9e/Documents/ReadmeContent/3.jpeg" /> </td>
-    <td> <img src="https://github.com/mrbhanukab/TheGreenHouse/blob/2c40d16fde9d6785cb452699d527872c768daa9e/Documents/ReadmeContent/4.jpeg" /> </td>
-    <td> <img src="https://github.com/mrbhanukab/TheGreenHouse/blob/2c40d16fde9d6785cb452699d527872c768daa9e/Documents/ReadmeContent/5.jpeg" /> </td>
- </tr>
-</table>
+### Client Login
+https://github.com/user-attachments/assets/54acb9e3-a514-4977-8c26-f71ec9a94925
+### Client Dashboard
+https://github.com/user-attachments/assets/41f83159-9485-44b7-8d94-4c132c5aff59
+### Admin Dashboard
+https://github.com/user-attachments/assets/7a564ca8-9238-49ff-87a9-40fd51ec1c42
 
 > This project is licensed under a MIT open-source license. <br />
-
 > ![GitHub License](https://img.shields.io/github/license/mrbhanukab/CarCare?style=for-the-badge)
