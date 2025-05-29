@@ -92,9 +92,5 @@ both technically advanced and visually impressive.
  </tr>
 </table>
 
-## License
-
-> **Contributions are welcome!** <br />
-> This project is licensed under a custom open-source license. Please make sure to review it before submitting pull
-> requests. We created this license to ensure you add **new and creative things!** We encourage you to fork the repo,
-> contribute, and build on our ideas. Together, we can make it even better.
+> This project is licensed under a MIT open-source license.
+> ![GitHub License](https://img.shields.io/github/license/mrbhanukab/CarCare?style=for-the-badge)
