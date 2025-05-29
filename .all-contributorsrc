@@ -8,48 +8,5 @@
   "commitConvention": "angular",
   "contributorsPerLine": 7,
   "contributors": [
-    {
-      "login": "mrbhanukab",
-      "name": "Bhanuka Bandara",
-      "avatar_url": "https://avatars.githubusercontent.com/u/87383814?v=4",
-      "profile": "https://mrbhanukab.github.io",
-      "contributions": [
-        "code",
-        "doc",
-        "design",
-        "ideas"
-      ]
-    },
-    {
-      "login": "IT24104095",
-      "name": "Dilni Nishshanka",
-      "avatar_url": "https://avatars.githubusercontent.com/u/185319454?v=4",
-      "profile": "https://github.com/IT24104095",
-      "contributions": [
-        "code",
-        "ideas"
-      ]
-    },
-    {
-      "login": "IT24104054",
-      "name": "IT24104054",
-      "avatar_url": "https://avatars.githubusercontent.com/u/185487630?v=4",
-      "profile": "https://github.com/IT24104054",
-      "contributions": [
-        "code",
-        "data",
-        "ideas"
-      ]
-    },
-    {
-      "login": "IT24103814",
-      "name": "KALINDU PABASARA",
-      "avatar_url": "https://avatars.githubusercontent.com/u/184896536?v=4",
-      "profile": "https://github.com/IT24103814",
-      "contributions": [
-        "code",
-        "ideas"
-      ]
-    }
   ]
 }
